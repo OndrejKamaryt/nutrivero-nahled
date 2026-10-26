@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="cs" data-base="%%BASE_PATH%%">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src https://calendar.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Výživová poradkyně online a jídelníček na míru · Nutrivero</title>
+<meta name="description" content="Online výživové poradenství a jídelníček na míru. Tříměsíční individuální program pro stravování, které zvládnete i v náročném týdnu. Úvodní hovor zdarma.">
+<link rel="canonical" href="%%SITE_URL%%/">
+<meta name="robots" content="%%ROBOTS%%">
+<meta name="theme-color" content="#C3CE94">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="cs_CZ">
+<meta property="og:site_name" content="Nutrivero">
+<meta property="og:title" content="Stravování, které obstojí i v náročném týdnu · Nutrivero">
+<meta property="og:description" content="Tříměsíční individuální program výživového poradenství. Ať už začínáte, nebo máte za sebou několik pokusů, postavíme spolu stravování na míru.">
+<meta property="og:url" content="%%SITE_URL%%/">
+<meta property="og:image" content="%%SITE_URL%%/assets/img/og-image-2.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Výživová poradkyně Tereza Ševčíková u notebooku a nápis „Stravování, které obstojí i v náročném týdnu“ – Nutrivero, nutriční poradenství">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Stravování, které obstojí i v náročném týdnu · Nutrivero">
+<meta name="twitter:description" content="Tříměsíční individuální program výživového poradenství. Ať už začínáte, nebo máte za sebou několik pokusů, postavíme spolu stravování na míru.">
+<meta name="twitter:image" content="%%SITE_URL%%/assets/img/og-image-2.jpg">
+<meta name="twitter:image:alt" content="Výživová poradkyně Tereza Ševčíková u notebooku a nápis „Stravování, které obstojí i v náročném týdnu“ – Nutrivero, nutriční poradenství">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/img/icons/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/assets/fonts/dm-sans-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/dm-sans-latin-ext-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="/assets/img/tereza-prace-1000.webp" imagesrcset="/assets/img/tereza-prace-640.webp 640w, /assets/img/tereza-prace-800.webp 800w, /assets/img/tereza-prace-1000.webp 1000w" imagesizes="(min-width: 524px) 563px, 108vw" type="image/webp" fetchpriority="high">
+<link rel="stylesheet" href="/assets/css/fonts.css">
+<link rel="stylesheet" href="/assets/css/site.css">
+<link rel="stylesheet" href="/assets/css/consent.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "%%SITE_URL%%/#website",
+      "url": "%%SITE_URL%%/",
+      "name": "Nutrivero",
+      "description": "Nutrivero – nutriční poradenství",
+      "inLanguage": "cs",
+      "publisher": {
+        "@id": "%%SITE_URL%%/#organizace"
+      }
+    },
+    {
+      "@type": "OnlineBusiness",
+      "@id": "%%SITE_URL%%/#organizace",
+      "name": "Nutrivero",
+      "alternateName": "Nutrivero – nutriční poradenství",
+      "legalName": "%%JMENO%%",
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "IČO",
+        "value": "%%ICO%%"
+      },
+      "description": "Tříměsíční individuální program výživového poradenství. Ať už začínáte, nebo máte za sebou několik pokusů, postavíme spolu stravování, které zvládnete i v náročném týdnu.",
+      "url": "%%SITE_URL%%/",
+      "image": "%%SITE_URL%%/assets/img/og-image-2.jpg",
+      "logo": "%%SITE_URL%%/assets/img/logogram.png",
+      "email": "%%EMAIL%%",
+      "telephone": "%%TELEFON_HREF%%",
+      "areaServed": {
+        "@type": "Country",
+        "name": "Česko",
+        "identifier": "CZ"
+      },
+      "knowsLanguage": "cs",
+      "founder": {
+        "@id": "%%SITE_URL%%/#tereza"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Výživové poradenství online",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "name": "Jednorázová konzultace s jídelníčkem",
+            "description": "Konzultace do 90 minut, jídelníček na míru a sbírka 20 jídel do 30 minut.",
+            "price": "2900",
+            "priceCurrency": "CZK",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Jednorázová konzultace s jídelníčkem"
+            }
+          },
+          {
+            "@type": "Offer",
+            "name": "Tříměsíční individuální program LIGHT",
+            "description": "Konzultace do 90 minut, jídelníček na míru, tři kontrolní hovory, písemné shrnutí po hovoru, podpora ve zprávách, týdenní check-in a sbírka 20 jídel do 30 minut.",
+            "price": "10900",
+            "priceCurrency": "CZK",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Tříměsíční individuální program LIGHT"
+            }
+          },
+          {
+            "@type": "Offer",
+            "name": "Tříměsíční individuální program FULL",
+            "description": "Konzultace do 90 minut, jídelníček na míru, šest navazujících hovorů (v programu LIGHT jsou tři), písemné shrnutí po hovoru, podpora ve zprávách, týdenní check-in, sbírka 20 jídel do 30 minut, společný nákup přes Rohlík, taháky na restaurace, cestování a krizové situace a další materiály podle potřeby.",
+            "price": "15900",
+            "priceCurrency": "CZK",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Tříměsíční individuální program FULL"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "%%SITE_URL%%/#tereza",
+      "name": "%%JMENO%%",
+      "jobTitle": "Výživová poradkyně",
+      "url": "%%SITE_URL%%/#o-mne",
+      "knowsLanguage": "cs",
+      "image": "%%SITE_URL%%/assets/img/tereza-portret-800.webp",
+      "worksFor": {
+        "@id": "%%SITE_URL%%/#organizace"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "%%SITE_URL%%/#otazky",
+      "url": "%%SITE_URL%%/",
+      "inLanguage": "cs",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Jak probíhá úvodní hovor zdarma?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Trvá 30\u00a0minut a\u00a0probíhá online. Zeptám se vás na váš běžný týden a\u00a0na to, co vám v\u00a0jídle nejvíc drhne, a\u00a0řeknu vám, jak by program vypadal ve vašem případě. Na konci se spolu rozhodneme, zda dává smysl. Nic vám nebudu vnucovat."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Proč doporučujete měření na InBody?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Měření složení těla ukáže víc než samotná váha, například poměr svalové hmoty a\u00a0tuku. Doporučuji ho udělat před naším prvním sezením, protože je důležité pro tvorbu jídelníčku. Měření stojí 300 až 500\u00a0Kč a\u00a0zařizujete si ho sami, s\u00a0hledáním nejbližšího místa vám ráda pomůžu. Po zaslání účtenky vám částku odečtu z\u00a0ceny programu."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Zvládnu program i\u00a0při náročném pracovním rozvrhu?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ano. Termíny hovorů přizpůsobujeme vašim možnostem. Program je navržen tak, aby nevyžadoval více času na vaření a\u00a0plánování, než máte k\u00a0dispozici dnes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Pomůže mi program zhubnout?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hubnutí může být jedním z\u00a0vašich cílů a\u00a0v\u00a0programu s\u00a0ním pracujeme. Konkrétní číslo vám ale slíbit nemohu, hmotnost ovlivňuje i\u00a0spánek, stres, cyklus nebo léky. Slíbit vám mohu, že budeme tři měsíce společně hledat způsob stravování, který vydrží i\u00a0v\u00a0horším týdnu."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Co když mi spolupráce nebude vyhovovat?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dejte mi to prosím vědět. Buď postup upravíme, nebo spolupráci ukončíme. Do 14\u00a0dnů od uzavření smlouvy můžete od programu odstoupit bez udání důvodu a\u00a0vrátím vám celou částku. Později vám vrátím poměrnou část ceny za týdny, které ještě nezačaly. Podrobnosti najdete v\u00a0obchodních podmínkách."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kolik změn mě na začátku čeká?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Méně, než možná čekáte. Změny zavedené najednou bývají ty, které po několika týdnech skončí. Postupujeme po jednotlivých krocích."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Nemám čas vařit. Má program v\u00a0mém případě smysl?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ano. Podklady stavíme na váš skutečný týden, včetně dnů, kdy na vaření čas není. Součástí programu je i\u00a0sbírka jídel, která připravíte do 30\u00a0minut."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Musím vážit jídlo a\u00a0počítat kalorie?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nemusíte. Na začátku vás požádám o\u00a0třídenní záznam jídla a\u00a0ten můžete udělat i\u00a0fotkami. Pokud vám vážení v\u00a0minulosti vyhovovalo, můžeme s\u00a0ním pracovat, program však na něm nestojí."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Co když v\u00a0průběhu programu odcestuji nebo onemocním?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Termíny hovorů posuneme. Ze závažného důvodu, například kvůli nemoci, lze program jednou přerušit až na čtyři týdny a\u00a0o\u00a0tuto dobu se prodlouží."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#obsah">Přeskočit na obsah</a>
+<div style="background-color:var(--color-bg); color:var(--color-text); font-family:var(--font-body); overflow-x:clip">
+
+  <header style="position:sticky; top:0; z-index:20; background-color:rgba(247,244,238,0.92); backdrop-filter:saturate(1.3) blur(10px)">
+    <div style="max-width:1232px; margin:0 auto; padding:0 clamp(16px,5vw,56px); min-height:72px; display:flex; align-items:center; justify-content:space-between; gap:12px">
+      <a href="/" aria-label="Nutrivero, nutriční poradenství" style="flex:none; display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--color-accent)">
+        <img src="/assets/img/logogram.webp" alt="" width="40" height="43" style="display:block; width:clamp(32px,8vw,40px); height:auto">
+        <span style="max-width:clamp(0px, (100vw - 400px) * 999, 240px); overflow:hidden; display:flex; flex-direction:column; gap:1px; line-height:1; white-space:nowrap">
+          <span style="font-size:clamp(16px,4.25vw,18.5px); font-weight:500; letter-spacing:-0.01em">Nutrivero</span>
+          <span style="max-height:clamp(0px, (100vw - 560px) * 999, 18px); overflow:hidden; font-size:11.5px; line-height:1.3; font-weight:500">nutriční poradenství</span>
+        </span>
+      </a>
+
+      <div style="display:flex; align-items:center; gap:clamp(8px,1.4vw,16px)">
+        <nav class="only-wide" aria-label="Hlavní menu">
+          <ul style="list-style:none; margin:0; padding:0; display:flex; align-items:center; gap:2px">
+            <li><a href="#jak-pracuji" class="nav-link" style="display:flex; align-items:center; min-height:40px; padding:0 12px; border-radius:999px; font-size:15px; font-weight:500; color:var(--color-text); text-decoration:none; white-space:nowrap; transition:background-color .15s ease">Jak pracuji</a></li>
+            <li><a href="#program" class="nav-link" style="display:flex; align-items:center; min-height:40px; padding:0 12px; border-radius:999px; font-size:15px; font-weight:500; color:var(--color-text); text-decoration:none; white-space:nowrap; transition:background-color .15s ease">Program</a></li>
+            <li><a href="#cena" class="nav-link" style="display:flex; align-items:center; min-height:40px; padding:0 12px; border-radius:999px; font-size:15px; font-weight:500; color:var(--color-text); text-decoration:none; white-space:nowrap; transition:background-color .15s ease">Cena</a></li>
+            <li><a href="#o-mne" class="nav-link" style="display:flex; align-items:center; min-height:40px; padding:0 12px; border-radius:999px; font-size:15px; font-weight:500; color:var(--color-text); text-decoration:none; white-space:nowrap; transition:background-color .15s ease">O&nbsp;mně</a></li>
+            <li><a href="#otazky" class="nav-link" style="display:flex; align-items:center; min-height:40px; padding:0 12px; border-radius:999px; font-size:15px; font-weight:500; color:var(--color-text); text-decoration:none; white-space:nowrap; transition:background-color .15s ease">Časté otázky</a></li>
+          </ul>
+        </nav>
+        <a href="#rezervace" class="btn btn-primary" style="min-height:44px; padding:0 clamp(14px,3.4vw,20px); font-size:15px; font-weight:600; white-space:nowrap">Úvodní hovor zdarma</a>
+        <button type="button" class="menu-toggle only-narrow" data-menu-toggle aria-expanded="false" aria-controls="mobilni-menu" aria-label="Otevřít menu" style="flex:none; width:44px; height:44px; display:flex; align-items:center; justify-content:center; padding:0; border:0; border-radius:50%; background-color:var(--color-accent-2-200); color:var(--color-accent); cursor:pointer; transition:background-color .15s ease">
+          <svg class="ico-open" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16"></path><path d="M4 12h16"></path><path d="M4 18h16"></path></svg>
+          <svg class="ico-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+        </button>
+      </div>
+    </div>
+    <nav id="mobilni-menu" class="only-narrow" aria-label="Menu" hidden style="position:absolute; top:calc(100% + 6px); right:clamp(10px,4vw,48px); width:min(380px, calc(100% - 2 * clamp(10px,4vw,48px))); padding:8px; border-radius:24px; background-color:#FDFBF7; box-shadow:var(--shadow-lg)">
+      <ul style="list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px">
+        <li><a href="#jak-pracuji" class="nav-link" style="display:flex; align-items:center; min-height:52px; padding:0 18px; border-radius:16px; font-size:17px; font-weight:500; color:var(--color-text); text-decoration:none; transition:background-color .15s ease">Jak pracuji</a></li>
+        <li><a href="#program" class="nav-link" style="display:flex; align-items:center; min-height:52px; padding:0 18px; border-radius:16px; font-size:17px; font-weight:500; color:var(--color-text); text-decoration:none; transition:background-color .15s ease">Program</a></li>
+        <li><a href="#cena" class="nav-link" style="display:flex; align-items:center; min-height:52px; padding:0 18px; border-radius:16px; font-size:17px; font-weight:500; color:var(--color-text); text-decoration:none; transition:background-color .15s ease">Cena</a></li>
+        <li><a href="#o-mne" class="nav-link" style="display:flex; align-items:center; min-height:52px; padding:0 18px; border-radius:16px; font-size:17px; font-weight:500; color:var(--color-text); text-decoration:none; transition:background-color .15s ease">O&nbsp;mně</a></li>
+        <li><a href="#otazky" class="nav-link" style="display:flex; align-items:center; min-height:52px; padding:0 18px; border-radius:16px; font-size:17px; font-weight:500; color:var(--color-text); text-decoration:none; transition:background-color .15s ease">Časté otázky</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div class="menu-backdrop only-narrow" data-menu-backdrop hidden aria-hidden="true" style="position:fixed; inset:0; z-index:19; background-color:rgba(32,30,29,0.24)"></div>
+
+  <main id="obsah">
+
+  <div style="padding:0 clamp(8px,1.4vw,16px)">
+    <section aria-labelledby="uvod-nadpis" style="position:relative; overflow:hidden; max-width:1400px; margin:0 auto; background-color:var(--color-accent-2); border-radius:clamp(28px,4vw,48px)">
+      <div style="max-width:1120px; margin:0 auto; padding:clamp(24px,3.5vw,48px) clamp(20px,5vw,56px) clamp(20px,3vw,36px); display:flex; flex-wrap:wrap; align-items:center; gap:clamp(32px,4vw,56px)">
+        <div style="flex:1.2 1 420px; min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:32px">
+          <div style="display:flex; flex-direction:column; gap:clamp(18px,2.2vw,26px)">
+            <h1 id="uvod-nadpis" style="margin:0; font-size:clamp(42px,5.4vw + 18px,59.5px); line-height:1.04; font-weight:400; letter-spacing:-0.035em; text-wrap:balance">Stravování, které obstojí i&nbsp;v&nbsp;<span style="color:#FDFBF7">náročném</span> týdnu</h1>
+            <p style="margin: 0; max-width: 34em; font-size: clamp(15.5px,1.36vw,18px); line-height: 1.5; text-wrap: pretty">Ať už začínáte, nebo máte za sebou několik pokusů, postavíme spolu stravování, které zvládnete i&nbsp;v&nbsp;náročném období.</p>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:flex-start; gap:16px">
+            <a href="#rezervace" class="btn btn-primary" style="min-height:56px; padding:0 32px; font-size:16px; font-weight:600">Domluvit nezávazný hovor</a>
+            <!-- K POTVRZENÍ MAJITELKOU: „akreditovaná poradkyně“ (i „s akreditací od roku 2024“ v sekci O mně a v obchodních podmínkách) uvést přesně podle osvědčení, např. profesní kvalifikace Výživový poradce (NSK 69-042-N), nebo absolventka kurzu akreditovaného MŠMT (název kurzu a instituce). -->
+            <div style="display:flex; flex-wrap:wrap; gap:8px 16px; font-size:14px; line-height:1.4; font-weight:500; white-space:nowrap"><span style="display:inline-flex; align-items:center; gap:7px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>30&nbsp;minut online</span><span style="display:inline-flex; align-items:center; gap:7px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>zdarma a&nbsp;nezávazně</span><span style="display:inline-flex; align-items:center; gap:7px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>akreditovaná poradkyně</span></div>
+            <span style="display:inline-flex; align-items:center; gap:10px; padding:7px 16px 7px 7px; border-radius:999px; background-color:#FDFBF7; font-size:14px; line-height:1.35; font-weight:500">
+              <span aria-hidden="true" style="flex:none; width:30px; height:30px; border-radius:50%; background-color:#E1C243; color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"></rect><path d="M12 8v13"></path><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"></path></svg></span>
+              <span>Po hovoru vám pošlu písemné shrnutí a&nbsp;první 2&nbsp;až 3&nbsp;kroky na míru</span>
+            </span>
+          </div>
+        </div>
+        <div style="flex:1 1 300px; min-width:0; max-width:min(450px,86vw); position:relative; aspect-ratio:4 / 5">
+          <span aria-hidden="true" style="position:absolute; right:-9%; top:-6%; width:62%; aspect-ratio:1 / 1; border-radius:50%; background-color:var(--color-accent-2-200)"></span>
+          <div style="position:absolute; inset:0; overflow:hidden; border-radius:46% 54% 42% 58% / 38% 40% 60% 62%; box-shadow:var(--shadow-lg)">
+            <img src="/assets/img/tereza-prace-1000.webp" srcset="/assets/img/tereza-prace-640.webp 640w, /assets/img/tereza-prace-800.webp 800w, /assets/img/tereza-prace-1000.webp 1000w" sizes="(min-width: 524px) 563px, 108vw" width="1000" height="1000" alt="Tereza Ševčíková, výživová poradkyně, při práci u notebooku" fetchpriority="high" decoding="async" style="display:block; width:100%; height:100%; max-width:none; object-fit:cover; object-position:center">
+          </div>
+          <img src="/assets/img/ikony/srdce.webp" alt="" aria-hidden="true" width="320" height="269" decoding="async" style="position:absolute; left:-7%; bottom:7%; width:24%; height:auto; pointer-events:none">
+          <img src="/assets/img/ikony/list.webp" alt="" aria-hidden="true" width="320" height="296" decoding="async" style="position:absolute; right:-3%; top:5%; width:17%; height:auto; pointer-events:none">
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section id="jak-pracuji" aria-labelledby="jak-pracuji-nadpis" style="padding:clamp(28px,3.5vw,44px) 0 clamp(24px,3vw,36px)">
+    <div style="max-width:1120px; margin:0 auto; padding:0 clamp(20px,5vw,56px); display:flex; flex-direction:column; gap:clamp(28px,3.5vw,44px)">
+      <div style="display:flex; flex-wrap:wrap; align-items:flex-start; gap:24px clamp(32px,5vw,64px)">
+        <div style="flex:1.5 1 420px; min-width:0; display:flex; flex-direction:column; gap:22px">
+          <h2 id="jak-pracuji-nadpis" style="margin:0; font-size:clamp(27px,4.08vw,44px); line-height:1.08; font-weight:400; letter-spacing:-0.025em; text-wrap:balance">Pro koho je program určen</h2>
+          <p style="margin:0; font-size:16px; line-height:1.65; text-wrap:pretty">Problémem zpravidla není nedostatek vůle ani informací. Většina plánů ale počítá s&nbsp;ideálním týdnem, nikoli s&nbsp;tím skutečným.</p>
+          <div style="display:flex; align-items:flex-start; gap:18px; padding:clamp(24px,3vw,34px); border-radius:var(--radius-lg); background-color:var(--color-accent-2-200)">
+            <span aria-hidden="true" style="flex:none; width:22px; height:22px; margin-top:6px; border-radius:0 100% 0 100%; background-color:#035144"></span>
+            <p style="margin:0; font-size:clamp(17px,1.7vw,20.5px); line-height:1.42; font-weight:500; letter-spacing:-0.01em; text-wrap:pretty">Program je určen těm, kteří chtějí víc než jídelníček na papíře: způsob stravování, který obstojí i&nbsp;ve chvíli, kdy na sebe nemají čas.</p>
+          </div>
+        </div>
+        <div style="flex:0 1 280px; min-width:0; max-width:280px; aspect-ratio:4 / 5">
+          <img src="/assets/img/den-planner-750.webp" srcset="/assets/img/den-planner-480.webp 718w, /assets/img/den-planner-750.webp 1122w" sizes="524px" width="1122" height="750" alt="Rozpracovaný stůl s hrnkem kávy a otevřeným diářem s týdenním plánem" loading="lazy" decoding="async" style="display:block; width:100%; height:100%; max-width:none; object-fit:cover; object-position:center; border-radius:28px">
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:clamp(18px,2.4vw,24px)">
+        <h3 style="margin:0; font-size:clamp(25.5px,3.23vw,35.5px); line-height:1.2; font-weight:400; letter-spacing:-0.015em">Proč změny stravy často nevydrží a&nbsp;jak pracuji</h3>
+        <ol style="list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); gap:clamp(20px,2.6vw,28px) 16px">
+          <li style="min-width:0; display:grid; grid-template-rows:subgrid; grid-row:span 2; gap:14px">
+            <div style="display:flex; align-items:baseline; gap:14px; padding:clamp(20px,2.4vw,26px); border-radius:var(--radius-lg); background-color:var(--color-surface)">
+              <span aria-hidden="true" style="flex:none; font-size:clamp(27px,2.89vw,34px); line-height:1; font-weight:300; letter-spacing:-0.03em; color:var(--color-accent-2-700)">01</span>
+              <p style="margin:0; font-size:clamp(16px,1.53vw,18px); line-height:1.35; font-weight:500; letter-spacing:-0.01em; text-wrap:pretty">Plán funguje, dokud se den nevyvine jinak.</p>
+            </div>
+            <div style="flex:1; padding:0 clamp(8px,1vw,12px); display:flex; flex-direction:column; gap:10px">
+              <div aria-hidden="true" style="display:flex; align-items:center; gap:10px; margin:2px 0 6px"><span style="flex:none; width:14px; height:14px; border-radius:0 100% 0 100%; background-color:#A5BA8F"></span><span style="flex:1; height:2px; border-radius:2px; background-color:var(--color-accent-2)"></span></div>
+              <div style="display:flex; align-items:center; gap:12px">
+                <span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg></span>
+                <h4 style="margin:0; font-size:15px; line-height:1.35; font-weight:600; letter-spacing:-0.015em; text-wrap:balance">Jídelníček dostanete, ale nezůstane u&nbsp;něj.</h4>
+              </div>
+              <p style="margin:0; font-size:15px; line-height:1.6; text-wrap:pretty">Stravovací podklad na míru je výchozí bod. Cílem je, abyste se v&nbsp;jídle uměli rozhodnout i&nbsp;tehdy, když se den vyvine jinak.</p>
+            </div>
+          </li>
+          <li style="min-width:0; display:grid; grid-template-rows:subgrid; grid-row:span 2; gap:14px">
+            <div style="display:flex; align-items:baseline; gap:14px; padding:clamp(20px,2.4vw,26px); border-radius:var(--radius-lg); background-color:var(--color-surface)">
+              <span aria-hidden="true" style="flex:none; font-size:clamp(27px,2.89vw,34px); line-height:1; font-weight:300; letter-spacing:-0.03em; color:var(--color-accent-2-700)">02</span>
+              <p style="margin:0; font-size:clamp(16px,1.53vw,18px); line-height:1.35; font-weight:500; letter-spacing:-0.01em; text-wrap:pretty">Bez podpory je snadné to po prvním zaváhání vzdát.</p>
+            </div>
+            <div style="flex:1; padding:0 clamp(8px,1vw,12px); display:flex; flex-direction:column; gap:10px">
+              <div aria-hidden="true" style="display:flex; align-items:center; gap:10px; margin:2px 0 6px"><span style="flex:none; width:14px; height:14px; border-radius:0 100% 0 100%; background-color:#A5BA8F"></span><span style="flex:1; height:2px; border-radius:2px; background-color:var(--color-accent-2)"></span></div>
+              <div style="display:flex; align-items:center; gap:12px">
+                <span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"></line><line x1="10" x2="3" y1="4" y2="4"></line><line x1="21" x2="12" y1="12" y2="12"></line><line x1="8" x2="3" y1="12" y2="12"></line><line x1="21" x2="16" y1="20" y2="20"></line><line x1="12" x2="3" y1="20" y2="20"></line><line x1="14" x2="14" y1="2" y2="6"></line><line x1="8" x2="8" y1="10" y2="14"></line><line x1="16" x2="16" y1="18" y2="22"></line></svg></span>
+                <h4 style="margin:0; font-size:15px; line-height:1.35; font-weight:600; letter-spacing:-0.015em; text-wrap:balance">Jsem s&nbsp;vámi i&nbsp;mezi hovory.</h4>
+              </div>
+              <p style="margin:0; font-size:15px; line-height:1.6; text-wrap:pretty">Když něco nevyjde, napíšete mi a&nbsp;společně najdeme, jak pokračovat. Zaváhání je součást změny, ne důvod skončit.</p>
+            </div>
+          </li>
+          <li style="min-width:0; display:grid; grid-template-rows:subgrid; grid-row:span 2; gap:14px">
+            <div style="display:flex; align-items:baseline; gap:14px; padding:clamp(20px,2.4vw,26px); border-radius:var(--radius-lg); background-color:var(--color-surface)">
+              <span aria-hidden="true" style="flex:none; font-size:clamp(27px,2.89vw,34px); line-height:1; font-weight:300; letter-spacing:-0.03em; color:var(--color-accent-2-700)">03</span>
+              <p style="margin:0; font-size:clamp(16px,1.53vw,18px); line-height:1.35; font-weight:500; letter-spacing:-0.01em; text-wrap:pretty">Když se sleduje jen váha, snadno se ztratí motivace.</p>
+            </div>
+            <div style="flex:1; padding:0 clamp(8px,1vw,12px); display:flex; flex-direction:column; gap:10px">
+              <div aria-hidden="true" style="display:flex; align-items:center; gap:10px; margin:2px 0 6px"><span style="flex:none; width:14px; height:14px; border-radius:0 100% 0 100%; background-color:#A5BA8F"></span><span style="flex:1; height:2px; border-radius:2px; background-color:var(--color-accent-2)"></span></div>
+              <div style="display:flex; align-items:center; gap:12px">
+                <span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg></span>
+                <h4 style="margin:0; font-size:15px; line-height:1.35; font-weight:600; letter-spacing:-0.015em; text-wrap:balance">Sledujeme víc než hmotnost.</h4>
+              </div>
+              <p style="margin:0; font-size:15px; line-height:1.6; text-wrap:pretty">Váha kolísá z&nbsp;důvodů, které se stravováním nesouvisejí. Na konci proto porovnáme i&nbsp;energii, chutě a&nbsp;vztah k&nbsp;jídlu.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <div class="only-wide" style="max-width:1120px; margin:0 auto clamp(28px,4vw,48px); padding:0 clamp(20px,5vw,56px)">
+    <div data-kvetiny-track style="position: relative; height: 78px"><div data-kvetiny aria-hidden="true" style="position:absolute; inset:0; pointer-events:none"></div><a href="#rezervace" class="btn btn-primary" data-kvetiny-btn style="position:absolute; z-index:2; left:0; bottom:18px; white-space:nowrap; will-change:transform; min-height:56px; padding:0 32px; font-size:16px; font-weight:600">Úvodní hovor zdarma</a></div>
+  </div>
+
+  <section id="program" aria-labelledby="program-nadpis" style="padding:0 0 clamp(24px,3vw,36px)">
+    <div style="max-width:1120px; margin:0 auto; padding:0 clamp(20px,5vw,56px)">
+      <h2 id="program-nadpis" style="margin:0; font-size:clamp(27px,4.08vw,44px); line-height:1.08; font-weight:400; letter-spacing:-0.025em; text-wrap:balance">Co program zahrnuje</h2>
+      <ul style="list-style:none; margin:clamp(28px,4vw,48px) 0 0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(clamp(clamp((100% - 49px) / 4, (880px - 100%) * 999, (100% - 17px) / 2), (520px - 100%) * 999, 100%),1fr)); gap:12px">
+        <li style="position:relative; display:flex; flex-direction:column; gap:12px; padding:clamp(18px,2vw,22px); border-radius:var(--radius-lg); background-color:var(--color-surface)">
+          <span aria-hidden="true" style="width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"></path><rect x="2" y="6" width="14" height="12" rx="2"></rect></svg></span>
+          <span style="font-size:15px; line-height:1.5; text-wrap:pretty"><strong style="font-weight:600">Profesionální konzultace v&nbsp;délce do 90&nbsp;minut:</strong> rozbor dosavadních zkušeností a&nbsp;první malá změna</span>
+        </li>
+        <li style="position:relative; display:flex; flex-direction:column; gap:12px; padding:clamp(18px,2vw,22px); border-radius:var(--radius-lg); background-color:var(--color-surface)">
+          <span aria-hidden="true" style="width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path><path d="m9 16 2 2 4-4"></path></svg></span>
+          <span style="font-size:15px; line-height:1.5; text-wrap:pretty"><strong style="font-weight:600">Navazující hovory:</strong> průběžně ladíme, co funguje, řešíme překážky a&nbsp;přidáváme další kroky. V&nbsp;programu LIGHT jsou hovory tři, ve FULL šest.</span>
+        </li>
+        <li style="position:relative; display:flex; flex-direction:column; gap:12px; padding:clamp(18px,2vw,22px); border-radius:var(--radius-lg); background-color:var(--color-surface)">
+          <span aria-hidden="true" style="width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><path d="M12 11h4"></path><path d="M12 16h4"></path><path d="M8 11h.01"></path><path d="M8 16h.01"></path></svg></span>
+          <span style="font-size:15px; line-height:1.5; text-wrap:pretty"><strong style="font-weight:600">Stravovací podklad na míru:</strong> varianty dne pro vaše obvyklé situace, nákupní kostra a&nbsp;pravidla pro dny, které se naplánovat nedají.</span>
+        </li>
+        <li style="position:relative; display:flex; flex-direction:column; gap:12px; padding:clamp(18px,2vw,22px); border-radius:var(--radius-lg); background-color:var(--color-surface)">
+          <span aria-hidden="true" style="width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path><path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path></svg></span>
+          <span style="font-size:15px; line-height:1.5; text-wrap:pretty"><strong style="font-weight:600">Písemné shrnutí po každém hovoru,</strong> ze kterého na konci vznikne váš vlastní návod</span>
+        </li>
+        <li style="position:relative; display:flex; flex-direction:column; gap:12px; padding:clamp(18px,2vw,22px); border-radius:var(--radius-lg); background-color:var(--color-surface)">
+          <span aria-hidden="true" style="width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg></span>
+          <span style="font-size:15px; line-height:1.5; text-wrap:pretty"><strong style="font-weight:600">Podporu ve zprávách po celou dobu programu:</strong> odpovídám do 24&nbsp;hodin v&nbsp;pracovních dnech</span>
+        </li>
+        <li style="position:relative; display:flex; flex-direction:column; gap:12px; padding:clamp(18px,2vw,22px); border-radius:var(--radius-lg); background-color:var(--color-surface)">
+          <span aria-hidden="true" style="width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg></span>
+          <span style="font-size:15px; line-height:1.5; text-wrap:pretty"><strong style="font-weight:600">Týdenní check-in:</strong> dvě minuty týdně, abychom viděli, co funguje</span>
+        </li>
+        <li style="position:relative; display:flex; flex-direction:column; gap:12px; padding:clamp(18px,2vw,22px); border-radius:var(--radius-lg); background-color:var(--color-surface)">
+          <span aria-hidden="true" style="width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 21h10"></path><path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"></path><path d="M11.38 12a2.4 2.4 0 0 1-.4-4.77 2.4 2.4 0 0 1 3.2-2.77 2.4 2.4 0 0 1 3.47-.63 2.4 2.4 0 0 1 3.37 3.37 2.4 2.4 0 0 1-1.1 3.7 2.51 2.51 0 0 1 .03 1.1"></path><path d="m13 12 4-4"></path><path d="M10.9 7.25A3.99 3.99 0 0 0 4 10c0 .73.2 1.41.54 2"></path></svg></span>
+          <span style="font-size:15px; line-height:1.5; text-wrap:pretty"><strong style="font-weight:600">Další materiály:</strong> sbírku 20&nbsp;jídel do 30&nbsp;minut s&nbsp;energií a&nbsp;živinami u&nbsp;každého receptu, v&nbsp;programu FULL i&nbsp;další podklady podle toho, co budete potřebovat</span>
+        </li>
+        <li style="position:relative; display:flex; flex-direction:column; gap:12px; padding:clamp(18px,2vw,22px); border-radius:var(--radius-lg); background-color:var(--color-surface)">
+          <span aria-hidden="true" style="width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 19-9-9 19-2-8-8-2z"></path></svg></span>
+          <span style="font-size:15px; line-height:1.5; text-wrap:pretty"><strong style="font-weight:600">Tahák na restaurace a&nbsp;cestování (program&nbsp;FULL):</strong> jak si vybrat z&nbsp;menu, na letišti i&nbsp;na dovolené</span>
+        </li>
+        <li style="position:relative; display:flex; flex-direction:column; gap:12px; padding:clamp(18px,2vw,22px); border-radius:var(--radius-lg); background-color:var(--color-surface)">
+          <span aria-hidden="true" style="width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg></span>
+          <span style="font-size:15px; line-height:1.5; text-wrap:pretty"><strong style="font-weight:600">Tahák na návyky a&nbsp;krizové situace (program&nbsp;FULL):</strong> co dělat, když přijde stres, chuť na sladké nebo náročný týden</span>
+        </li>
+        <li style="position:relative; display:flex; flex-direction:column; gap:12px; padding:clamp(18px,2vw,22px); border-radius:var(--radius-lg); background-color:var(--color-surface)">
+          <span aria-hidden="true" style="width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg></span>
+          <span style="font-size:15px; line-height:1.5; text-wrap:pretty"><strong style="font-weight:600">Společný nákup přes Rohlík (program&nbsp;FULL):</strong> projdeme spolu košík a&nbsp;sestavíme nákup, který vám bude fungovat</span>
+        </li>
+        <li style="display:flex; flex-direction:column; justify-content:space-between; gap:12px; padding:clamp(18px,2vw,22px); border-radius:var(--radius-lg); background-color:var(--color-accent); color:var(--color-bg)">
+          <img src="/assets/img/logogram-cream.webp" alt="" aria-hidden="true" width="224" height="241" loading="lazy" decoding="async" style="width:36px; height:auto">
+          <span style="font-size:16px; line-height:1.4; font-weight:500; text-wrap:pretty">Program probíhá výhradně online. Nevyžaduje dojíždění.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <div style="padding:0 clamp(16px,4vw,56px)">
+    <section id="reference" aria-labelledby="reference-nadpis" style="position: relative; overflow: hidden; margin: 0 auto; padding: clamp(22px,2.6vw,30px) 0; background-color: var(--color-accent-2); border-radius: clamp(28px,4vw,48px); max-width: 980px">
+      <img src="/assets/img/logogram-cream.webp" alt="" aria-hidden="true" width="224" height="241" loading="lazy" decoding="async" style="position:absolute; left:-16px; bottom:-80px; width:clamp(110px,13vw,150px); height:auto; opacity:0.5; pointer-events:none">
+      <div style="position:relative; max-width:1120px; margin:0 auto; padding:0 clamp(20px,4vw,44px); display:flex; flex-direction:column; gap:14px">
+        <div style="display:flex; align-items:center; gap:clamp(16px,2vw,24px)">
+          <h2 id="reference-nadpis" style="margin:0; font-size:clamp(22px,2.6vw,30px); line-height:1.08; font-weight:400; letter-spacing:-0.025em">Zkušenosti klientů</h2>
+          <div style="flex:none; display:flex; gap:8px">
+            <button type="button" class="ref-prev" data-ref-prev aria-controls="reference-pas" aria-label="Předchozí reference" style="width:40px; height:40px; border:0; border-radius:50%; background-color:#FDFBF7; color:var(--color-accent); display:flex; align-items:center; justify-content:center; cursor:pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg></button>
+            <button type="button" class="ref-next" data-ref-next aria-controls="reference-pas" aria-label="Další reference" style="width:40px; height:40px; border:0; border-radius:50%; background-color:var(--color-accent); color:var(--color-bg); display:flex; align-items:center; justify-content:center; cursor:pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button>
+          </div>
+        </div>
+        <div id="reference-pas" data-ref-track tabindex="0" role="group" aria-label="Reference klientů" style="display:flex; align-items:stretch; gap:clamp(24px,3vw,40px); overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; scrollbar-width:none; padding-bottom:4px">
+          <figure style="margin:0; flex:0 0 clamp(250px,40%,400px); scroll-snap-align:start; min-width:0; display:grid; grid-template-columns:32px minmax(0,1fr); column-gap:12px; row-gap:8px; align-content:start">
+            <span aria-hidden="true" style="position:relative; width:32px; height:32px; grid-row:span 2"><span style="position:absolute; inset:0; border-radius:50%; background-color:#E1C243; opacity:0.35"></span><span style="position:absolute; left:8px; top:2px; font-size:38px; line-height:1; font-weight:500; color:var(--color-accent)">“</span></span>
+            <blockquote style="margin:0; font-size:15.5px; line-height:1.5; letter-spacing:-0.005em; color:var(--color-accent); text-wrap:pretty">Konečně jsem našla způsob stravování, který mi vyhovuje a&nbsp;nemusím se kvůli němu vzdávat všeho, co mám ráda. <b>Cítím se lépe a&nbsp;změny zvládám bez stresu.</b></blockquote>
+            <figcaption style="display:flex; align-items:flex-start; gap:8px; font-size:14px; font-weight:600; color:var(--color-accent); opacity:1"><span aria-hidden="true" style="flex: 0 0 auto; width: 20px; height: 2px; margin-top: 8px; border-radius: 2px; background-color: rgb(225, 194, 67);"></span><span style="display:flex; flex-direction:column; gap:2px">Sabina Š.<span style="font-weight:400; font-size:14px; line-height:1.45; text-wrap:pretty">Manažerka se synem a&nbsp;nabitým kalendářem</span></span></figcaption>
+          </figure>
+          <figure style="margin:0; flex:0 0 clamp(250px,40%,400px); scroll-snap-align:start; min-width:0; display:grid; grid-template-columns:32px minmax(0,1fr); column-gap:12px; row-gap:8px; align-content:start">
+            <span aria-hidden="true" style="position:relative; width:32px; height:32px; grid-row:span 2"><span style="position:absolute; inset:0; border-radius:50%; background-color:#FDFBF7; opacity:0.8"></span><span style="position:absolute; left:8px; top:2px; font-size:38px; line-height:1; font-weight:500; color:var(--color-accent)">“</span></span>
+            <blockquote style="margin:0; font-size:15.5px; line-height:1.5; letter-spacing:-0.005em; color:var(--color-accent); text-wrap:pretty">Vyzkoušel jsem různé výživové směry a&nbsp;myslel si, že bez extrémů to nepůjde. Díky spolupráci jsem zjistil, že stačí najít rovnováhu a&nbsp;nastavit si udržitelný režim. <b>Výsledkem je nejen lepší vztah k&nbsp;jídlu, ale i&nbsp;10&nbsp;kg dole.</b> A&nbsp;to bez zbytečných zákazů a&nbsp;drastických diet.</blockquote>
+            <figcaption style="display:flex; align-items:flex-start; gap:8px; font-size:14px; font-weight:600; color:var(--color-accent); opacity:1"><span aria-hidden="true" style="margin-top:8px; flex: 0 0 auto; width: 20px; height: 2px; border-radius: 2px; background-color: rgb(253, 251, 247);"></span><span style="display:flex; flex-direction:column; gap:2px">Ondřej K.<span style="font-weight:400; font-size:14px; line-height:1.45; text-wrap:pretty">IT programátor&nbsp;</span></span></figcaption>
+          </figure>
+          <figure style="margin:0; flex:0 0 clamp(250px,40%,400px); scroll-snap-align:start; min-width:0; display:grid; grid-template-columns:32px minmax(0,1fr); column-gap:12px; row-gap:8px; align-content:start">
+            <span aria-hidden="true" style="position:relative; width:32px; height:32px; grid-row:span 2"><span style="position:absolute; inset:0; border-radius:50%; background-color:var(--color-accent); opacity:0.35"></span><span style="position:absolute; left:8px; top:2px; font-size:38px; line-height:1; font-weight:500; color:var(--color-accent)">“</span></span>
+            <blockquote style="margin:0; font-size:15.5px; line-height:1.5; letter-spacing:-0.005em; color:var(--color-accent); text-wrap:pretty">Na výživovém poradenství oceňuji především <b>praktický přístup a&nbsp;rady, které dávají smysl v&nbsp;běžném životě</b>. Žádné zbytečné zákazy ani drastické diety, ale udržitelné změny podle mých potřeb. Celá spolupráce pro mě byla velkým přínosem.</blockquote>
+            <figcaption style="display:flex; align-items:flex-start; gap:8px; font-size:14px; font-weight:600; color:var(--color-accent); opacity:1"><span aria-hidden="true" style="margin-top:8px; flex: 0 0 auto; width: 20px; height: 2px; border-radius: 2px; background-color: var(--color-accent);"></span><span style="display:flex; flex-direction:column; gap:2px">Anna Š.<span style="font-weight:400; font-size:14px; line-height:1.45; text-wrap:pretty">Staví s&nbsp;manželem dům s&nbsp;prací na plný úvazek</span></span></figcaption>
+          </figure>
+        </div>
+        <!-- K POTVRZENÍ MAJITELKOU: věta musí být pravdivá (§ 5a odst. 5 zák. č. 634/1992 Sb.). Každá reference je od skutečného klienta, zveřejněná s jeho souhlasem. Pokud má některý z autorů k majitelce osobní nebo pracovní vztah, je nutné to u reference uvést, nebo ji odstranit. -->
+        <p style="margin:0; max-width:46em; font-size:13px; line-height:1.5; color:var(--color-accent); text-wrap:pretty">Zveřejňuji jen zkušenosti klientů, se kterými jsem skutečně spolupracovala, a&nbsp;to s&nbsp;jejich souhlasem a&nbsp;pod zkráceným jménem. Výsledky jsou individuální a&nbsp;nelze je zaručit.</p>
+      </div>
+    </section>
+  </div>
+  <div style="padding:0 clamp(8px,1.4vw,16px) clamp(36px,4.5vw,56px)"></div>
+
+  <section id="cena" aria-labelledby="cena-nadpis" style="max-width:1120px; margin:0 auto; padding:0 clamp(20px,5vw,56px)">
+    <div style="display:flex; align-items:center; gap:clamp(16px,2vw,24px)">
+      <h2 id="cena-nadpis" style="margin:0; font-size:clamp(27px,4.08vw,44px); line-height:1.08; font-weight:400; letter-spacing:-0.025em">Cena</h2>
+      <div aria-hidden="true" style="flex:1; min-width:0; display:flex; align-items:center; gap:10px">
+        <span style="flex:none; display:flex; align-items:flex-end; gap:4px">
+          <span style="width:18px; height:18px; border-radius:0 100% 0 100%; background-color:var(--color-accent)"></span>
+          <span style="width:22px; height:22px; border-radius:50%; background-color:#E1C243"></span>
+          <span style="width:18px; height:18px; border-radius:100% 0 100% 0; background-color:#A5BA8F"></span>
+        </span>
+        <span style="flex:1; height:2px; border-radius:2px; background-color:var(--color-accent-2)"></span>
+        <span style="flex:none; width:12px; height:12px; border-radius:0 100% 0 100%; background-color:#A5BA8F"></span>
+      </div>
+    </div>
+    <div style="margin-top:clamp(20px,2.6vw,32px); display:flex; flex-wrap:wrap; align-items:stretch; gap:16px">
+      <div style="flex:1 1 280px; min-width:0; background-color:var(--color-surface); border-radius:clamp(24px,3vw,32px); padding:clamp(22px,3vw,34px); display:flex; flex-direction:column; gap:14px">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px">
+          <div style="display:flex; flex-direction:column; gap:8px">
+            <h3 style="margin: 0; font-size: 17px; line-height: 1.35; font-weight: 500; max-width: 191px">Jednorázová konzultace s&nbsp;jídelníčkem</h3><span style="font-size:clamp(29px,3.4vw,37.5px); line-height:1; font-weight:400; letter-spacing:-0.03em">2&nbsp;900&nbsp;Kč</span>
+          </div>
+          <span aria-hidden="true" style="flex:none; width:48px; height:48px; border-radius:50%; background-color:var(--color-accent-2); color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"></path><rect x="2" y="6" width="14" height="12" rx="2"></rect></svg></span>
+        </div>
+        <ul style="list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; font-size:15px; line-height:1.5">
+          <li style="display:flex; align-items:flex-start; gap:10px"><span aria-hidden="true" style="flex:none; margin-top:5px; width:10px; height:10px; border-radius:0 100% 0 100%; background-color:var(--color-accent)"></span><span>Profesionální konzultace do 90&nbsp;minut</span></li>
+          <li style="display:flex; align-items:flex-start; gap:10px"><span aria-hidden="true" style="flex:none; margin-top:5px; width:10px; height:10px; border-radius:0 100% 0 100%; background-color:var(--color-accent)"></span><span>Jídelníček na míru</span></li>
+          <li style="display:flex; align-items:flex-start; gap:10px"><span aria-hidden="true" style="flex:none; margin-top:5px; width:10px; height:10px; border-radius:0 100% 0 100%; background-color:var(--color-accent)"></span><span>Sbírka 20&nbsp;jídel do 30&nbsp;minut</span></li>
+        </ul>
+        <p style="margin:6px 0 0; font-size:15px; line-height:1.55; text-wrap:pretty">Pokud se do 30&nbsp;dnů rozhodnete pro program, cenu konzultace vám odečtu z&nbsp;ceny programu.</p>
+        <div style="margin-top:auto; padding-top:6px; display:flex"><a href="mailto:%%EMAIL%%?subject=Rezervace%20jednor%C3%A1zov%C3%A9%20konzultace" class="btn btn-primary" style="width:100%; justify-content:center; text-align:center; min-height:56px; padding:0 24px; font-size:16px; font-weight:600">Rezervovat konzultaci</a></div>
+      </div>
+      <div class="card-dark" style="position:relative; flex:1.35 1 340px; min-width:0; background-color:var(--color-accent); color:var(--color-bg); border-radius:clamp(24px,3vw,32px); padding:clamp(22px,3vw,34px); display:flex; flex-direction:column; gap:16px">
+        <!-- K POTVRZENÍ MAJITELKOU: původní štítek „Nejčastější volba“ je tvrzení o skutečnosti (§ 5 odst. 1 zák. č. 634/1992 Sb.). Vrátit ho lze jen tehdy, pokud ho doloží skutečné objednávky; jinak zůstává popisný štítek. -->
+        <span style="position:absolute; top:0; left:50%; transform:translate(-50%,-50%); padding:6px 16px; border-radius:999px; background-color:#E1C243; color:var(--color-accent); font-size:13px; line-height:1.3; font-weight:700; letter-spacing:0.02em; white-space:nowrap">Nejkomplexnější varianta</span>
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px">
+          <div style="display:flex; flex-direction:column; gap:8px">
+            <h3 style="margin:0; font-size:17px; line-height:1.35; font-weight:500; letter-spacing:normal; color:var(--color-accent-2)">Tříměsíční individuální <br>program FULL</h3>
+            <span style="font-size:clamp(34px,4.25vw,47.5px); line-height:1; font-weight:400; letter-spacing:-0.03em">15&nbsp;900&nbsp;Kč</span>
+            <div style="margin-top:4px; display:flex; flex-wrap:wrap; gap:8px"><span style="padding:5px 12px; border-radius:999px; background-color:var(--color-accent-2); color:var(--color-accent); font-size:13px; line-height:1.2; font-weight:600; white-space:nowrap">5&nbsp;300&nbsp;Kč / měsíc</span></div>
+          </div>
+          <span aria-hidden="true" style="flex:none; width:48px; height:48px; border-radius:50%; background-color:var(--color-accent-2); color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path><path d="m9 16 2 2 4-4"></path></svg></span>
+        </div>
+        <ul style="list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; font-size:15px; line-height:1.5">
+          <li style="display:flex; align-items:flex-start; gap:10px"><span aria-hidden="true" style="flex:none; margin-top:5px; width:10px; height:10px; border-radius:0 100% 0 100%; background-color:#A5BA8F"></span><span>Profesionální konzultace do 90&nbsp;minut</span></li>
+          <li style="display:flex; align-items:flex-start; gap:10px"><span aria-hidden="true" style="flex:none; margin-top:5px; width:10px; height:10px; border-radius:0 100% 0 100%; background-color:#A5BA8F"></span><span>Jídelníček na míru</span></li>
+          <li style="display:flex; align-items:flex-start; gap:10px"><span aria-hidden="true" style="flex:none; margin-top:5px; width:10px; height:10px; border-radius:0 100% 0 100%; background-color:#A5BA8F"></span><span>Písemné shrnutí po hovoru</span></li>
+          <li style="display:flex; align-items:flex-start; gap:10px"><span aria-hidden="true" style="flex:none; margin-top:5px; width:10px; height:10px; border-radius:0 100% 0 100%; background-color:#A5BA8F"></span><span>Podpora ve zprávách</span></li>
+          <li style="display:flex; align-items:flex-start; gap:10px"><span aria-hidden="true" style="flex:none; margin-top:5px; width:10px; height:10px; border-radius:0 100% 0 100%; background-color:#A5BA8F"></span><span>Týdenní check-in</span></li>
+          <li style="display:flex; align-items:flex-start; gap:10px"><span aria-hidden="true" style="flex:none; margin-top:5px; width:10px; height:10px; border-radius:0 100% 0 100%; background-color:#A5BA8F"></span><span>Sbírka 20&nbsp;jídel do 30&nbsp;minut</span></li>
+          <li style="margin-top:6px; font-size:13px; font-weight:600; letter-spacing:0.02em; color:#E1C243">Navíc oproti LIGHT</li>
+          <li style="display:flex; align-items:flex-start; gap:10px; font-weight:600"><span aria-hidden="true" style="flex:none; margin-top:5px; width:10px; height:10px; border-radius:50%; background-color:#E1C243"></span><span>Šest navazujících hovorů místo tří</span></li>
+          <li style="display:flex; align-items:flex-start; gap:10px; font-weight:600"><span aria-hidden="true" style="flex:none; margin-top:5px; width:10px; height:10px; border-radius:50%; background-color:#E1C243"></span><span>Společný nákup přes Rohlík</span></li>
+          <li style="display:flex; align-items:flex-start; gap:10px; font-weight:600"><span aria-hidden="true" style="flex:none; margin-top:5px; width:10px; height:10px; border-radius:50%; background-color:#E1C243"></span><span>Taháky na restaurace, cestování a&nbsp;krizové situace</span></li>
+          <li style="display:flex; align-items:flex-start; gap:10px; font-weight:600"><span aria-hidden="true" style="flex:none; margin-top:5px; width:10px; height:10px; border-radius:50%; background-color:#E1C243"></span><span>Další materiály podle potřeby</span></li>
+        </ul>
+        <div style="margin-top:auto; padding-top:6px; display:flex; flex-wrap:wrap; align-items:center; gap:16px 28px">
+          <a href="#rezervace" class="btn btn-sage" style="width:100%; justify-content:center; text-align:center; min-height:56px; padding:0 24px; font-size:16px; font-weight:600; background-color:var(--color-accent-2); color:var(--color-accent)">Domluvit nezávazný hovor</a>
+        </div>
+      </div>
+      <div style="flex:1 1 280px; min-width:0; background-color:var(--color-accent-2); border-radius:clamp(24px,3vw,32px); padding:clamp(22px,3vw,34px); display:flex; flex-direction:column; gap:14px">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px">
+          <div style="display:flex; flex-direction:column; gap:8px">
+            <h3 style="margin:0; font-size:17px; line-height:1.35; font-weight:500">Tříměsíční individuální program LIGHT</h3>
+            <span style="font-size:clamp(29px,3.4vw,37.5px); line-height:1; font-weight:400; letter-spacing:-0.03em">10&nbsp;900&nbsp;Kč</span><span style="align-self: flex-start; margin-top: 4px; padding: 5px 12px; border-radius: 999px; background-color: #FDFBF7; color: var(--color-accent); font-size: 13px; line-height: 1.2; font-weight: 600; white-space: nowrap">≈&nbsp;3&nbsp;630&nbsp;Kč / měsíc</span>
+          </div>
+          <span aria-hidden="true" style="flex:none; width:48px; height:48px; border-radius:50%; background-color:#FDFBF7; color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21.801 10A10 10 0 1 1 17 3.335"></path><path d="m9 11 3 3L22 4"></path></svg></span>
+        </div>
+        <ul style="list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; font-size:15px; line-height:1.5">
+          <li style="display:flex; align-items:flex-start; gap:10px"><span aria-hidden="true" style="flex:none; margin-top:5px; width:10px; height:10px; border-radius:0 100% 0 100%; background-color:var(--color-accent)"></span><span>Profesionální konzultace do 90&nbsp;minut</span></li>
+          <li style="display:flex; align-items:flex-start; gap:10px"><span aria-hidden="true" style="flex:none; margin-top:5px; width:10px; height:10px; border-radius:0 100% 0 100%; background-color:var(--color-accent)"></span><span>Jídelníček na míru</span></li>
+          <li style="display:flex; align-items:flex-start; gap:10px"><span aria-hidden="true" style="flex:none; margin-top:5px; width:10px; height:10px; border-radius:0 100% 0 100%; background-color:var(--color-accent)"></span><span>Tři kontrolní hovory</span></li>
+          <li style="display:flex; align-items:flex-start; gap:10px"><span aria-hidden="true" style="flex:none; margin-top:5px; width:10px; height:10px; border-radius:0 100% 0 100%; background-color:var(--color-accent)"></span><span>Písemné shrnutí po hovoru</span></li>
+          <li style="display:flex; align-items:flex-start; gap:10px"><span aria-hidden="true" style="flex:none; margin-top:5px; width:10px; height:10px; border-radius:0 100% 0 100%; background-color:var(--color-accent)"></span><span>Podpora ve zprávách</span></li>
+          <li style="display:flex; align-items:flex-start; gap:10px"><span aria-hidden="true" style="flex:none; margin-top:5px; width:10px; height:10px; border-radius:0 100% 0 100%; background-color:var(--color-accent)"></span><span>Týdenní check-in</span></li>
+          <li style="display:flex; align-items:flex-start; gap:10px"><span aria-hidden="true" style="flex:none; margin-top:5px; width:10px; height:10px; border-radius:0 100% 0 100%; background-color:var(--color-accent)"></span><span>Sbírka 20&nbsp;jídel do 30&nbsp;minut</span></li>
+        </ul>
+        <div style="margin-top:auto; padding-top:6px; display:flex"><a href="#rezervace" class="btn btn-primary" style="width:100%; justify-content:center; text-align:center; min-height:56px; padding:0 24px; font-size:16px; font-weight:600">Domluvit nezávazný hovor</a></div>
+      </div>
+    </div>
+    <div style="margin-top:16px; display:flex; align-items:flex-start; gap:14px; padding:clamp(16px,2vw,20px) clamp(18px,2.4vw,26px); border-radius:var(--radius-lg); background-color:var(--color-surface)">
+      <span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="M7 21h10"></path><path d="M12 3v18"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"></path></svg></span>
+      <p style="margin:0; font-size:15px; line-height:1.6; text-wrap:pretty"><strong style="font-weight:600">Před naším sezením doporučuji měření na InBody.</strong> Stojí 300 až 500&nbsp;Kč a&nbsp;je důležité pro tvorbu jídelníčku. S&nbsp;hledáním místa na měření vám ráda pomůžu. Po zaslání účtenky vám částku za měření odečtu z&nbsp;ceny programu.</p>
+    </div>
+  </section>
+  <div style="padding:0 0 clamp(36px,4.5vw,56px)"></div>
+
+  <section id="o-mne" aria-labelledby="o-mne-nadpis" style="padding:0 0 clamp(36px,4.5vw,56px)">
+    <div style="max-width:1120px; margin:0 auto; padding:0 clamp(20px,5vw,56px); display:flex; flex-wrap:wrap; align-items:center; gap:clamp(32px,5vw,64px)">
+      <div style="flex:1 1 300px; min-width:0; max-width:430px; position:relative; aspect-ratio:4 / 5">
+        <span aria-hidden="true" style="position:absolute; right:-7%; top:-5%; width:64%; aspect-ratio:1 / 1; border-radius:50%; background-color:var(--color-accent-2)"></span>
+        <div style="position:absolute; inset:0; overflow:hidden; border-radius:48% 52% 44% 56% / 40% 42% 58% 60%">
+          <img src="/assets/img/tereza-portret-800.webp" srcset="/assets/img/tereza-portret-480.webp 480w, /assets/img/tereza-portret-800.webp 800w" sizes="(min-width: 470px) 538px, calc(125vw - 50px)" width="800" height="800" alt="Tereza Ševčíková" loading="lazy" decoding="async" style="display:block; width:100%; height:100%; max-width:none; object-fit:cover; object-position:center">
+        </div>
+        <img src="/assets/img/logogram.webp" alt="" aria-hidden="true" width="224" height="241" loading="lazy" decoding="async" style="position:absolute; left:-3%; bottom:2%; width:clamp(56px,7vw,76px); height:auto; pointer-events:none">
+      </div>
+      <div style="flex: 1.3 1 380px; min-width: 0; max-width: 600px; display: flex; flex-direction: column; gap: 20px; position: relative">
+        <h2 id="o-mne-nadpis" style="margin:0; font-size:clamp(27px,4.08vw,44px); line-height:1.08; font-weight:400; letter-spacing:-0.025em">O&nbsp;mně</h2>
+        <p style="margin:0; font-size:clamp(16px,1.44vw,18.5px); line-height:1.5; font-weight:500; text-wrap:pretty">Jmenuji se Tereza Ševčíková a&nbsp;stojím za značkou Nutrivero.</p>
+        <!-- K POTVRZENÍ MAJITELKOU: přesný název osvědčení (viz poznámka u štítku v úvodu stránky). -->
+        <p style="margin:0; font-size:16px; line-height:1.65; text-wrap:pretty">Jsem výživová poradkyně s&nbsp;akreditací od roku 2024 a&nbsp;věřím, že zdravé stravování nemusí být o&nbsp;striktních pravidlech, zákazech ani neustálé kontrole. Mým cílem je pomáhat lidem najít cestu ke stravování, které podporuje jejich zdraví, odpovídá jejich individuálním potřebám a&nbsp;zároveň je dlouhodobě udržitelné.</p>
+        <p style="margin:0; font-size:16px; line-height:1.65; text-wrap:pretty">Ve své praxi vycházím především z&nbsp;vědecky podložených informací (science-based přístupu). Zakládám si na tom, aby doporučení měla oporu v&nbsp;aktuálních poznatcích, nikoliv v&nbsp;módních trendech, neověřených tvrzeních nebo zbytečných výživových mýtech.</p>
+        <p style="margin:0; font-size:16px; line-height:1.65; text-wrap:pretty">Za nejdůležitější považuji udržitelnost. Nejde mi o&nbsp;krátkodobé změny jídelníčku, které fungují jen za cenu velkého úsilí a&nbsp;odříkání. Věřím, že skutečně přínosné změny jsou takové, které dokážeme přirozeně začlenit do každodenního života a&nbsp;dlouhodobě si je udržet. Strava by měla zapadat do našeho životního stylu, možností i&nbsp;osobních preferencí, ne se stát zdrojem stresu.</p>
+        <p style="margin:0; font-size:16px; line-height:1.65; text-wrap:pretty">Pracuji vždy s&nbsp;omezeným počtem klientů současně. Je to podmínka toho, aby program fungoval tak, jak je popsán. Pokud slibuji odpověď do 24&nbsp;hodin, chci ji skutečně dodržet.</p>
+      </div>
+    </div>
+  </section>
+
+  <div style="padding:0 clamp(8px,1.4vw,16px)">
+    <section id="rezervace" aria-labelledby="rezervace-nadpis" style="position:relative; overflow:clip; max-width:1400px; margin:0 auto; background-color:var(--color-accent-2); border-radius:clamp(28px,4vw,48px); padding:clamp(40px,5vw,64px) 0">
+      <img src="/assets/img/logogram-cream.webp" alt="" aria-hidden="true" width="224" height="241" loading="lazy" decoding="async" style="position:absolute; right:-5%; top:-8%; width:clamp(260px,38vw,540px); height:auto; opacity:0.6; pointer-events:none">
+      <div style="position:relative; max-width:1360px; margin:0 auto; padding:0 clamp(20px,4vw,48px); display:flex; flex-wrap:wrap; align-items:flex-start; gap:clamp(24px,3vw,32px)">
+        <div style="flex:1 1 100%; min-width:0; display:flex; flex-direction:column; gap:22px">
+          <div style="display:flex; align-items:center; gap:clamp(16px,2.4vw,28px)">
+            <div style="flex:none; width:clamp(64px,8vw,96px); height:clamp(64px,8vw,96px); border-radius:50%; box-shadow:0 0 0 5px #FDFBF7">
+              <img src="/assets/img/tereza-portret-200.webp" srcset="/assets/img/tereza-portret-200.webp 200w, /assets/img/tereza-portret-480.webp 480w" sizes="96px" width="200" height="200" alt="Tereza Ševčíková" loading="lazy" decoding="async" style="display:block; width:100%; height:100%; max-width:none; object-fit:cover; object-position:center; border-radius:50%">
+            </div>
+            <h2 id="rezervace-nadpis" style="margin:0; flex:1 1 260px; min-width:0; font-size:clamp(27px,4.08vw,44px); line-height:1.08; font-weight:400; letter-spacing:-0.025em; text-wrap:balance">Zvažujete, zda je program vhodný právě pro vás?</h2>
+          </div>
+          <p style="margin:0; font-size:clamp(14.5px,1.27vw,16px); line-height:1.6; text-wrap:pretty">Vyberte si termín nezávazného hovoru. Trvá 30&nbsp;minut, probíhá online a&nbsp;je zdarma. Ujasníme si vaši situaci a&nbsp;řekneme si, zda je program pro vás vhodný. Pokud vhodný nebude, doporučím vám jiné řešení.</p>
+        </div>
+        <div style="flex:1 1 100%; min-width:0; display:flex; flex-direction:column; gap:10px; padding:clamp(14px,1.8vw,18px) clamp(18px,2.2vw,24px); border-radius:var(--radius-lg); background-color:#FDFBF7">
+          <h3 style="margin:0; font-size:17px; line-height:1.3; font-weight:500">Co si z&nbsp;hovoru odnesete</h3>
+          <ul style="list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr)); gap:6px 24px">
+            <li style="display:flex; gap:12px; font-size:15px; line-height:1.5"><span aria-hidden="true" style="flex:none; width:11px; height:11px; margin-top:5px; border-radius:0 100% 0 100%; background-color:#A5BA8F"></span><span style="min-width:0; text-wrap:pretty">Pojmenujeme, co vám v&nbsp;jídle nejvíc komplikuje běžný týden.</span></li>
+            <li style="display:flex; gap:12px; font-size:15px; line-height:1.5"><span aria-hidden="true" style="flex:none; width:11px; height:11px; margin-top:5px; border-radius:0 100% 0 100%; background-color:#A5BA8F"></span><span style="min-width:0; text-wrap:pretty">Řeknu vám, jak by program vypadal právě ve vašem případě.</span></li>
+            <li style="display:flex; gap:12px; font-size:15px; line-height:1.5"><span aria-hidden="true" style="flex:none; width:11px; height:11px; margin-top:5px; border-radius:0 100% 0 100%; background-color:#A5BA8F"></span><span style="min-width:0; text-wrap:pretty">Pokud pro vás program vhodný nebude, doporučím vám jiné řešení.</span></li>
+          </ul>
+          <div style="display: flex; align-items: center; gap: 14px; padding: 8px 16px 8px 8px; border-radius: 999px; background-color: #E1C243; color: var(--color-accent)">
+            <span aria-hidden="true" style="flex:none; width:32px; height:32px; border-radius:50%; background-color:var(--color-accent); display:flex; align-items:center; justify-content:center"><img src="/assets/img/ikony/hvezda.webp" alt="" width="64" height="61" loading="lazy" decoding="async" style="width:20px; height:auto"></span>
+            <span style="min-width:0; font-size:15px; line-height:1.45; text-wrap:pretty"><strong style="font-weight:700">Dárek:</strong> po hovoru vám e‑mailem pošlu písemné shrnutí a&nbsp;první 2&nbsp;až 3&nbsp;kroky přímo pro vás, ať se pro program rozhodnete, nebo ne.</span>
+          </div>
+        </div>
+        <div style="flex:1 1 100%; min-width:0">
+          <div style="background-color:#FDFBF7; border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-lg)">
+            <div data-consent-embed="externi" data-src="%%REZERVACE_URL%%" data-title="Rezervace nezávazného hovoru" data-height="620">
+              <div style="min-height:clamp(460px,56vw,600px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:32px; text-align:center; background:repeating-linear-gradient(135deg, #FDFBF7 0 14px, #EEE8DE 14px 15px); font-size:14px; line-height:1.6; color:#4A655E">
+                <span aria-hidden="true" style="flex:none; width:56px; height:56px; border-radius:50%; background-color:var(--color-accent-2); color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path><path d="m9 16 2 2 4-4"></path></svg></span>
+                <p style="margin:0; font-size:18px; line-height:1.3; font-weight:600; letter-spacing:-0.01em; color:var(--color-accent)">Rezervační kalendář Google</p>
+                <p style="margin:0; max-width:470px; text-wrap:pretty">Kalendář poskytuje společnost Google, která může ukládat cookies a&nbsp;zpracovávat vaši IP adresu, proto se načte až s&nbsp;vaším souhlasem (<a href="/cookies/" style="font-weight:600">více o&nbsp;cookies</a>).</p>
+                <noscript><p style="margin:0; max-width:470px; font-weight:600; text-wrap:pretty">Kalendář se načítá jen se zapnutým JavaScriptem. Použijte prosím odkaz „Otevřít rezervaci v&nbsp;novém okně“ níže.</p></noscript>
+                <button type="button" class="btn btn-primary js-only" data-consent-accept="externi" style="margin-top:4px; min-height:56px; padding:0 32px; font-size:16px; font-weight:600">Souhlasím, načíst kalendář</button>
+                <p style="margin:0; font-size:13px">30&nbsp;minut&nbsp;· Google Meet&nbsp;· jméno, e-mail, telefon</p>
+                <p class="js-only" style="margin:0; max-width:470px; font-size:13px; text-wrap:pretty">Souhlas s&nbsp;externím obsahem si web zapamatuje na 6&nbsp;měsíců. Odvolat ho můžete kdykoli v&nbsp;<button type="button" class="link-button" data-consent-open>nastavení cookies</button>.</p>
+              </div>
+            </div>
+          </div>
+          <p style="margin:14px 0 0; font-size:13px; line-height:1.5">Kalendář se nenačetl? <a href="%%REZERVACE_LINK%%" target="_blank" rel="noopener" style="font-weight:600">Otevřít rezervaci v&nbsp;novém okně</a></p>
+          <div style="margin-top:20px; max-width:620px; display:flex; flex-direction:column; gap:14px">
+            <p style="margin:0; font-size:16px; line-height:1.6">Raději byste nejdřív napsali? <a href="mailto:%%EMAIL%%" style="font-weight:600">%%EMAIL%%</a></p>
+            <p style="margin:0; font-size:13px; line-height:1.6; text-wrap:pretty">Hovor si s&nbsp;vaším souhlasem nahraji, abych vám mohla připravit shrnutí. Pokud si nahrávání nepřejete, připravím ho z&nbsp;poznámek.</p>
+            <p style="margin:0; font-size:13px; line-height:1.6; text-wrap:pretty">Údaje z&nbsp;rezervace použiji jen k&nbsp;domluvě a&nbsp;uskutečnění hovoru, k&nbsp;zaslání písemného shrnutí a&nbsp;k&nbsp;případné domluvě spolupráce. Pokud spolu do 6&nbsp;měsíců od hovoru smlouvu neuzavřeme, smažu je. Bez vašeho souhlasu vám nebudu posílat žádná další sdělení. Více v&nbsp;<a href="/ochrana-osobnich-udaju/">zásadách zpracování osobních údajů</a>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section aria-labelledby="hranice-nadpis" style="max-width:1120px; margin:clamp(40px,5vw,64px) auto 0; padding:0 clamp(20px,5vw,56px)">
+    <div style="margin-top:clamp(28px,3.6vw,40px); padding-top:clamp(18px,2.4vw,24px); border-top:1px solid var(--color-accent-2-300); display:flex; flex-wrap:wrap; gap:6px clamp(24px,4vw,56px)">
+      <h2 id="hranice-nadpis" style="flex:0 1 240px; margin:0; font-size:15px; line-height:1.65; font-weight:700; color:var(--color-accent)">S&nbsp;čím vám pomoci nemohu</h2>
+      <p style="flex:1 1 520px; min-width:0; max-width:780px; margin:0; font-size:14px; line-height:1.65; text-wrap:pretty">Jsem výživová poradkyně, nikoli nutriční terapeutka ani lékařka. <b>Neléčím, nestanovuji diagnózy a&nbsp;nenahrazuji lékařskou péči.</b> Program není vhodný pro osoby: v&nbsp;těhotenství a&nbsp;v&nbsp;období kojení; v&nbsp;hormonální léčbě nebo v&nbsp;léčbě neplodnosti; s&nbsp;poruchou příjmu potravy, a&nbsp;to i&nbsp;v&nbsp;minulosti; s&nbsp;onemocněním, ke kterému patří dieta od lékaře, například s&nbsp;cukrovkou léčenou léky, onemocněním ledvin nebo celiakií; mladší 18&nbsp;let.&nbsp;</p>
+    </div>
+  </section>
+
+  <section id="otazky" aria-labelledby="otazky-nadpis" style="padding:clamp(32px,4vw,48px) 0 clamp(24px,3vw,40px)">
+    <div style="max-width:1120px; margin:0 auto; padding:0 clamp(20px,5vw,56px); display:flex; flex-wrap:wrap; gap:28px clamp(40px,6vw,80px)">
+      <div style="flex:1 1 280px; min-width:0; display:flex; flex-direction:column; gap:clamp(32px,4vw,56px)">
+        <h2 id="otazky-nadpis" style="margin:0; font-size:clamp(27px,4.08vw,44px); line-height:1.08; font-weight:400; letter-spacing:-0.025em">Časté otázky</h2>
+        <div aria-hidden="true" style="position:relative; width:clamp(0px, (100vw - 860px) * 999, 230px); aspect-ratio:1 / 0.9; pointer-events:none">
+          <img src="/assets/img/ikony/asterisk.webp" alt="" width="320" height="307" loading="lazy" decoding="async" style="position:absolute; left:0; bottom:0; width:74%; height:auto; transform:rotate(-8deg)">
+          <img src="/assets/img/ikony/asterisk.webp" alt="" width="320" height="307" loading="lazy" decoding="async" style="position:absolute; right:0; top:0; width:34%; height:auto; transform:rotate(17deg)">
+        </div>
+      </div>
+      <div data-faq style="flex:1.6 1 420px; min-width:0; max-width:700px; display:flex; flex-direction:column; gap:10px">
+<!--FAQ:BEGIN-->
+        <div style="border-radius:var(--radius-lg); background-color:var(--color-surface)">
+          <h3 class="faq-q"><button type="button" class="faq-btn" id="faq-q1" aria-expanded="true" aria-controls="faq-a1" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:20px; padding:16px clamp(18px,2.4vw,26px); background:none; border:0; border-radius:var(--radius-lg); cursor:pointer; text-align:left; font-size:16px; line-height:1.4; font-weight:500; color:var(--color-text)">
+            <span>Jak probíhá úvodní hovor zdarma?</span>
+            <span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); display:flex; align-items:center; justify-content:center"><svg class="ico-plus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg><svg class="ico-minus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path></svg></span>
+          </button></h3>
+          <p id="faq-a1" data-faq-answer style="margin:0; padding:0 clamp(18px,2.4vw,26px) 20px; font-size:15px; line-height:1.65; text-wrap:pretty">Trvá 30&nbsp;minut a&nbsp;probíhá online. Zeptám se vás na váš běžný týden a&nbsp;na to, co vám v&nbsp;jídle nejvíc drhne, a&nbsp;řeknu vám, jak by program vypadal ve vašem případě. Na konci se spolu rozhodneme, zda dává smysl. Nic vám nebudu vnucovat.</p>
+        </div>
+
+        <div style="border-radius:var(--radius-lg); background-color:var(--color-surface)">
+          <h3 class="faq-q"><button type="button" class="faq-btn" id="faq-q9" aria-expanded="false" aria-controls="faq-a9" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:20px; padding:16px clamp(18px,2.4vw,26px); background:none; border:0; border-radius:var(--radius-lg); cursor:pointer; text-align:left; font-size:16px; line-height:1.4; font-weight:500; color:var(--color-text)">
+            <span>Proč doporučujete měření na InBody?</span>
+            <span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); display:flex; align-items:center; justify-content:center"><svg class="ico-plus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg><svg class="ico-minus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path></svg></span>
+          </button></h3>
+          <p id="faq-a9" data-faq-answer hidden style="margin:0; padding:0 clamp(18px,2.4vw,26px) 20px; font-size:15px; line-height:1.65; text-wrap:pretty">Měření složení těla ukáže víc než samotná váha, například poměr svalové hmoty a&nbsp;tuku. Doporučuji ho udělat před naším prvním sezením, protože je důležité pro tvorbu jídelníčku. Měření stojí 300 až 500&nbsp;Kč a&nbsp;zařizujete si ho sami, s&nbsp;hledáním nejbližšího místa vám ráda pomůžu. Po zaslání účtenky vám částku odečtu z&nbsp;ceny programu.</p>
+        </div>
+
+        <div style="border-radius:var(--radius-lg); background-color:var(--color-surface)">
+          <h3 class="faq-q"><button type="button" class="faq-btn" id="faq-q3" aria-expanded="false" aria-controls="faq-a3" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:20px; padding:16px clamp(18px,2.4vw,26px); background:none; border:0; border-radius:var(--radius-lg); cursor:pointer; text-align:left; font-size:16px; line-height:1.4; font-weight:500; color:var(--color-text)">
+            <span>Zvládnu program i&nbsp;při náročném pracovním rozvrhu?</span>
+            <span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); display:flex; align-items:center; justify-content:center"><svg class="ico-plus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg><svg class="ico-minus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path></svg></span>
+          </button></h3>
+          <p id="faq-a3" data-faq-answer hidden style="margin:0; padding:0 clamp(18px,2.4vw,26px) 20px; font-size:15px; line-height:1.65; text-wrap:pretty">Ano. Termíny hovorů přizpůsobujeme vašim možnostem. Program je navržen tak, aby nevyžadoval více času na vaření a&nbsp;plánování, než máte k&nbsp;dispozici dnes.</p>
+        </div>
+
+        <div style="border-radius:var(--radius-lg); background-color:var(--color-surface)">
+          <h3 class="faq-q"><button type="button" class="faq-btn" id="faq-q6" aria-expanded="false" aria-controls="faq-a6" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:20px; padding:16px clamp(18px,2.4vw,26px); background:none; border:0; border-radius:var(--radius-lg); cursor:pointer; text-align:left; font-size:16px; line-height:1.4; font-weight:500; color:var(--color-text)">
+            <span>Pomůže mi program zhubnout?</span>
+            <span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); display:flex; align-items:center; justify-content:center"><svg class="ico-plus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg><svg class="ico-minus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path></svg></span>
+          </button></h3>
+          <p id="faq-a6" data-faq-answer hidden style="margin:0; padding:0 clamp(18px,2.4vw,26px) 20px; font-size:15px; line-height:1.65; text-wrap:pretty">Hubnutí může být jedním z&nbsp;vašich cílů a&nbsp;v&nbsp;programu s&nbsp;ním pracujeme. Konkrétní číslo vám ale slíbit nemohu, hmotnost ovlivňuje i&nbsp;spánek, stres, cyklus nebo léky. Slíbit vám mohu, že budeme tři měsíce společně hledat způsob stravování, který vydrží i&nbsp;v&nbsp;horším týdnu.</p>
+        </div>
+
+        <div style="border-radius:var(--radius-lg); background-color:var(--color-surface)">
+          <h3 class="faq-q"><button type="button" class="faq-btn" id="faq-q8" aria-expanded="false" aria-controls="faq-a8" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:20px; padding:16px clamp(18px,2.4vw,26px); background:none; border:0; border-radius:var(--radius-lg); cursor:pointer; text-align:left; font-size:16px; line-height:1.4; font-weight:500; color:var(--color-text)">
+            <span>Co když mi spolupráce nebude vyhovovat?</span>
+            <span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); display:flex; align-items:center; justify-content:center"><svg class="ico-plus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg><svg class="ico-minus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path></svg></span>
+          </button></h3>
+          <p id="faq-a8" data-faq-answer hidden style="margin:0; padding:0 clamp(18px,2.4vw,26px) 20px; font-size:15px; line-height:1.65; text-wrap:pretty">Dejte mi to prosím vědět. Buď postup upravíme, nebo spolupráci ukončíme. Do 14&nbsp;dnů od uzavření smlouvy můžete od programu odstoupit bez udání důvodu a&nbsp;vrátím vám celou částku. Později vám vrátím poměrnou část ceny za týdny, které ještě nezačaly. Podrobnosti najdete v&nbsp;<a href="/obchodni-podminky/">obchodních podmínkách</a>.</p>
+        </div>
+
+        <div data-faq-extra hidden style="border-radius:var(--radius-lg); background-color:var(--color-surface)">
+          <h3 class="faq-q"><button type="button" class="faq-btn" id="faq-q2" aria-expanded="false" aria-controls="faq-a2" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:20px; padding:16px clamp(18px,2.4vw,26px); background:none; border:0; border-radius:var(--radius-lg); cursor:pointer; text-align:left; font-size:16px; line-height:1.4; font-weight:500; color:var(--color-text)">
+            <span>Kolik změn mě na začátku čeká?</span>
+            <span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); display:flex; align-items:center; justify-content:center"><svg class="ico-plus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg><svg class="ico-minus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path></svg></span>
+          </button></h3>
+          <p id="faq-a2" data-faq-answer hidden style="margin:0; padding:0 clamp(18px,2.4vw,26px) 20px; font-size:15px; line-height:1.65; text-wrap:pretty">Méně, než možná čekáte. Změny zavedené najednou bývají ty, které po několika týdnech skončí. Postupujeme po jednotlivých krocích.</p>
+        </div>
+
+        <div data-faq-extra hidden style="border-radius:var(--radius-lg); background-color:var(--color-surface)">
+          <h3 class="faq-q"><button type="button" class="faq-btn" id="faq-q4" aria-expanded="false" aria-controls="faq-a4" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:20px; padding:16px clamp(18px,2.4vw,26px); background:none; border:0; border-radius:var(--radius-lg); cursor:pointer; text-align:left; font-size:16px; line-height:1.4; font-weight:500; color:var(--color-text)">
+            <span>Nemám čas vařit. Má program v&nbsp;mém případě smysl?</span>
+            <span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); display:flex; align-items:center; justify-content:center"><svg class="ico-plus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg><svg class="ico-minus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path></svg></span>
+          </button></h3>
+          <p id="faq-a4" data-faq-answer hidden style="margin:0; padding:0 clamp(18px,2.4vw,26px) 20px; font-size:15px; line-height:1.65; text-wrap:pretty">Ano. Podklady stavíme na váš skutečný týden, včetně dnů, kdy na vaření čas není. Součástí programu je i&nbsp;sbírka jídel, která připravíte do 30&nbsp;minut.</p>
+        </div>
+
+        <div data-faq-extra hidden style="border-radius:var(--radius-lg); background-color:var(--color-surface)">
+          <h3 class="faq-q"><button type="button" class="faq-btn" id="faq-q5" aria-expanded="false" aria-controls="faq-a5" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:20px; padding:16px clamp(18px,2.4vw,26px); background:none; border:0; border-radius:var(--radius-lg); cursor:pointer; text-align:left; font-size:16px; line-height:1.4; font-weight:500; color:var(--color-text)">
+            <span>Musím vážit jídlo a&nbsp;počítat kalorie?</span>
+            <span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); display:flex; align-items:center; justify-content:center"><svg class="ico-plus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg><svg class="ico-minus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path></svg></span>
+          </button></h3>
+          <p id="faq-a5" data-faq-answer hidden style="margin:0; padding:0 clamp(18px,2.4vw,26px) 20px; font-size:15px; line-height:1.65; text-wrap:pretty">Nemusíte. Na začátku vás požádám o&nbsp;třídenní záznam jídla a&nbsp;ten můžete udělat i&nbsp;fotkami. Pokud vám vážení v&nbsp;minulosti vyhovovalo, můžeme s&nbsp;ním pracovat, program však na něm nestojí.</p>
+        </div>
+
+        <div data-faq-extra hidden style="border-radius:var(--radius-lg); background-color:var(--color-surface)">
+          <h3 class="faq-q"><button type="button" class="faq-btn" id="faq-q7" aria-expanded="false" aria-controls="faq-a7" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:20px; padding:16px clamp(18px,2.4vw,26px); background:none; border:0; border-radius:var(--radius-lg); cursor:pointer; text-align:left; font-size:16px; line-height:1.4; font-weight:500; color:var(--color-text)">
+            <span>Co když v&nbsp;průběhu programu odcestuji nebo onemocním?</span>
+            <span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); display:flex; align-items:center; justify-content:center"><svg class="ico-plus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg><svg class="ico-minus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path></svg></span>
+          </button></h3>
+          <p id="faq-a7" data-faq-answer hidden style="margin:0; padding:0 clamp(18px,2.4vw,26px) 20px; font-size:15px; line-height:1.65; text-wrap:pretty">Termíny hovorů posuneme. Ze závažného důvodu, například kvůli nemoci, lze program jednou přerušit až na čtyři týdny a&nbsp;o&nbsp;tuto dobu se prodlouží.</p>
+        </div>
+<!--FAQ:END-->
+        <button type="button" class="btn btn-secondary" data-faq-more style="align-self:flex-start; margin-top:6px; min-height:48px; padding:0 22px; font-size:15px; font-weight:600">Zobrazit další otázky</button>
+      </div>
+    </div>
+    <div style="max-width:1120px; margin:clamp(36px,4.5vw,56px) auto 0; padding:0 clamp(20px,5vw,56px); display:flex; flex-direction:column; align-items:center; gap:clamp(18px,2.4vw,24px)">
+      <div aria-hidden="true" style="display:flex; align-items:center; gap:12px; width:min(100%,320px)"><span style="flex:1; height:2px; border-radius:2px; background-color:var(--color-accent-2-200)"></span><span style="flex:none; width:14px; height:14px; border-radius:0 100% 0 100%; background-color:#A5BA8F"></span><span style="flex:1; height:2px; border-radius:2px; background-color:var(--color-accent-2-200)"></span></div>
+      <p style="margin:0; font-size:clamp(19px,2vw,24px); line-height:1.3; font-weight:500; letter-spacing:-0.01em; text-align:center; text-wrap:balance">Nenašli jste odpověď? Probereme to na hovoru.</p>
+      <a href="#rezervace" class="btn btn-primary" style="min-height:56px; padding:0 32px; font-size:16px; font-weight:600">Úvodní hovor zdarma</a>
+    </div>
+  </section>
+
+  </main>
+
+  <footer>
+    <div style="max-width:1120px; margin:0 auto; padding:clamp(32px,4vw,48px) clamp(20px,5vw,56px) clamp(32px,4vw,48px); display:flex; flex-direction:column; gap:22px; font-size:13px; line-height:1.65">
+      <div style="display:flex; align-items:center; gap:12px">
+        <img src="/assets/img/logogram.webp" alt="" width="34" height="37" loading="lazy" decoding="async" style="display:block; width:34px; height:auto">
+        <span style="display:flex; flex-direction:column; gap:3px; line-height:1">
+          <span style="font-size:16px; font-weight:500">Nutrivero</span>
+          <span style="font-size:10px; font-weight:500">nutriční poradenství</span>
+        </span>
+      </div>
+      <p style="margin:0; text-wrap:pretty">Nutrivero&nbsp;· %%JMENO%%&nbsp;· IČO&nbsp;%%ICO%%&nbsp;· místo podnikání %%ADRESA%%&nbsp;· zapsaná v&nbsp;živnostenském rejstříku&nbsp;· <a href="mailto:%%EMAIL%%">%%EMAIL%%</a>&nbsp;· <a href="tel:%%TELEFON_HREF%%">%%TELEFON%%</a></p>
+      <div class="footer-links" style="display:flex; flex-wrap:wrap; align-items:center; gap:12px 24px">
+        <a href="/obchodni-podminky/">Obchodní podmínky</a>
+        <a href="/ochrana-osobnich-udaju/">Zásady zpracování osobních údajů</a>
+        <a href="/cookies/">Cookies</a>
+        <button type="button" class="link-button js-only" data-consent-open>Nastavení cookies</button>
+      </div>
+      <p style="margin:0; text-wrap:pretty">Výživové poradenství nenahrazuje lékařskou péči. Se zdravotními potížemi se prosím obraťte na svého lékaře.</p>
+      <p style="margin:0">©&nbsp;2026 Nutrivero</p>
+    </div>
+  </footer>
+
+</div>
+<script src="/assets/js/site.js" defer></script>
+<script src="/assets/js/consent.js" defer></script>
+</body>
+</html>

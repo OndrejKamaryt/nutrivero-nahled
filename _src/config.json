@@ -1,0 +1,37 @@
+{
+  "_poznamka": "Společné hodnoty tokenů platí pro všechny cíle. Hodnoty v targets.<cíl> je doplní nebo přepíšou. Výchozí cíl je TARGET, přepíše ho přepínač --target.",
+  "JMENO": "Bc. Tereza Ševčíková",
+  "ICO": "19061561",
+  "ADRESA": "Hlavní 156/58, 664 48 Moravany",
+  "EMAIL": "[e-mail]",
+  "TELEFON": "[telefon]",
+  "TELEFON_HREF": "+420000000000",
+  "UPDATED": "26. 10. 2026",
+  "_poznamka_lastmod": "HOME_UPDATED_ISO = datum poslední podstatné změny hlavní stránky (RRRR-MM-DD, lastmod v sitemap ostrého webu). Měňte jen při změně obsahu. U právních stránek se lastmod odvozuje z UPDATED.",
+  "HOME_UPDATED_ISO": "2026-10-26",
+  "REZERVACE_URL": "https://calendar.google.com/calendar/appointments/schedules/AcZssZ2syizAiNQbZ8RWnP-amSVqMuBIzxRQGezOz6NF-SrEJ2um5Yu47vOgAD0p4AiumWoi2LV3pYVs?gv=true",
+  "REZERVACE_LINK": "https://calendar.google.com/calendar/appointments/schedules/AcZssZ2syizAiNQbZ8RWnP-amSVqMuBIzxRQGezOz6NF-SrEJ2um5Yu47vOgAD0p4AiumWoi2LV3pYVs",
+  "TARGET": "preview",
+  "targets": {
+    "preview": {
+      "_poznamka": "Náhled na GitHub Pages (repozitář OndrejKamaryt/nutrivero-nahled), běží v podsložce /nutrivero-nahled, noindex.",
+      "SITE_URL": "https://ondrejkamaryt.github.io/nutrivero-nahled",
+      "BASE_PATH": "/nutrivero-nahled",
+      "PREVIEW": true,
+      "HOSTING_NAME": "GitHub, Inc.",
+      "HOSTING_SERVICE": "GitHub Pages",
+      "HOSTING_ADDRESS": "88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA",
+      "HOSTING_PRIVACY_URL": "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
+    },
+    "production": {
+      "_poznamka": "Ostrý web na vlastní doméně v kořeni (Netlify), indexovatelný.",
+      "SITE_URL": "https://nutrivero.cz",
+      "BASE_PATH": "",
+      "PREVIEW": false,
+      "HOSTING_NAME": "Netlify, Inc.",
+      "HOSTING_SERVICE": "Netlify",
+      "HOSTING_ADDRESS": "101 2nd Street, San Francisco, CA 94105, USA",
+      "HOSTING_PRIVACY_URL": "https://www.netlify.com/privacy/"
+    }
+  }
+}

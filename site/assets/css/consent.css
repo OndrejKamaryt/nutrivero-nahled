@@ -1,0 +1,572 @@
+/* Nutrivero – lišta souhlasu, nastavení cookies a místo pro vkládaný obsah.
+   Všechny třídy mají prefix "nvc-". Barvy a písmo přebírá z proměnných v site.css (:root),
+   s pevnými zálohami, kdyby site.css chyběl. Globální .btn ani jiné třídy webu nemění. */
+
+.nvc-banner,
+.nvc-dialog,
+.nvc-placeholder,
+[data-consent-embed] {
+  --nvc-ink: var(--color-text, #254F44);
+  --nvc-ink-600: var(--color-accent-600, #1E453B);
+  --nvc-bg: var(--color-bg, #F7F4EE);
+  --nvc-cream: #FDFBF7;
+  --nvc-surface: var(--color-surface, #EEE8DE);
+  --nvc-sage: var(--color-accent-2, #C3CE94);
+  --nvc-sage-200: var(--color-accent-2-200, #E6EBD0);
+  --nvc-sage-300: var(--color-accent-2-300, #D5DDB3);
+  --nvc-sage-700: var(--color-accent-2-700, #7E8B50);
+  --nvc-yellow: #E1C243;
+  --nvc-muted: #4A655E;
+  --nvc-line: rgba(37, 79, 68, 0.16);
+  --nvc-radius: var(--radius-lg, 28px);
+  --nvc-shadow: var(--shadow-lg, 0 12px 32px rgba(46, 43, 37, 0.22));
+  --nvc-font: var(--font-body, 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif);
+}
+
+/* Dokud je lišta vidět, má stránka dole rezervu, aby lišta nic trvale nezakrývala
+   (i při posunu na prvek získávající fokus). Výšku nastavuje consent.js. */
+html.nvc-has-banner {
+  scroll-padding-bottom: calc(var(--nvc-banner-h, 0px) + 12px);
+}
+html.nvc-has-banner body {
+  padding-bottom: var(--nvc-banner-h, 0px);
+}
+
+/* ------------------------------------------------------------------ */
+/* Tlačítka                                                            */
+/* ------------------------------------------------------------------ */
+
+.nvc-btn {
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 48px;
+  margin: 0;
+  padding: 8px 16px;
+  border: 2px solid var(--nvc-ink);
+  border-radius: 999px;
+  font-family: var(--nvc-font);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-align: center;
+  text-decoration: none;
+  white-space: normal;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+.nvc-btn--primary {
+  background-color: var(--nvc-ink);
+  color: var(--nvc-bg);
+}
+.nvc-btn--primary:hover,
+.nvc-btn--primary:focus-visible {
+  background-color: var(--nvc-ink-600);
+  border-color: var(--nvc-ink-600);
+  color: var(--nvc-yellow);
+}
+.nvc-btn--primary:active {
+  background-color: var(--color-accent-700, #183A31);
+  border-color: var(--color-accent-700, #183A31);
+  color: var(--nvc-yellow);
+}
+.nvc-btn--secondary {
+  background-color: transparent;
+  color: var(--nvc-ink);
+}
+.nvc-btn--secondary:hover,
+.nvc-btn--secondary:focus-visible {
+  background-color: var(--nvc-sage-200);
+}
+.nvc-btn--secondary:active {
+  background-color: var(--nvc-sage-300);
+}
+
+.nvc-btn:focus-visible,
+.nvc-dialog__close:focus-visible,
+.nvc-switch:focus-visible,
+.nvc-banner a:focus-visible,
+.nvc-dialog a:focus-visible,
+.nvc-placeholder :focus-visible {
+  outline: 3px solid var(--nvc-ink);
+  outline-offset: 3px;
+}
+
+.nvc-banner a,
+.nvc-dialog a {
+  color: var(--nvc-ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  border-radius: 4px;
+}
+.nvc-banner a:hover,
+.nvc-dialog a:hover {
+  color: var(--color-accent-700, #183A31);
+  text-decoration-thickness: 2px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Lišta                                                               */
+/* ------------------------------------------------------------------ */
+
+.nvc-banner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9000;
+  box-sizing: border-box;
+  padding: 0 16px 16px;
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
+  pointer-events: none; /* průhledný okraj nepřekáží klikání */
+  font-family: var(--nvc-font);
+  color: var(--nvc-ink);
+}
+.nvc-banner[hidden] {
+  display: none !important;
+}
+.nvc-banner__inner {
+  box-sizing: border-box;
+  max-width: 1120px;
+  max-height: calc(100vh - 24px);
+  max-height: calc(100dvh - 24px);
+  margin: 0 auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 32px;
+  padding: 22px 26px;
+  border: 1px solid var(--nvc-line);
+  border-radius: var(--nvc-radius);
+  background-color: var(--nvc-cream);
+  box-shadow: var(--nvc-shadow);
+  pointer-events: auto;
+}
+.nvc-banner__body {
+  flex: 1 1 420px;
+  min-width: 0;
+}
+.nvc-banner__title {
+  margin: 0 0 6px;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+}
+.nvc-banner__text {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+.nvc-banner__actions {
+  flex: 1 1 460px;
+  max-width: 560px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)); /* tři stejně velká tlačítka */
+  gap: 10px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Dialog s nastavením                                                 */
+/* ------------------------------------------------------------------ */
+
+.nvc-dialog {
+  box-sizing: border-box;
+  width: min(640px, calc(100vw - 24px));
+  max-width: none;
+  max-height: calc(100vh - 24px);
+  max-height: calc(100dvh - 24px);
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--nvc-radius);
+  background-color: var(--nvc-cream);
+  color: var(--nvc-ink);
+  box-shadow: var(--nvc-shadow);
+  font-family: var(--nvc-font);
+  overflow: hidden;
+}
+.nvc-dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+.nvc-dialog::backdrop {
+  background-color: rgba(18, 46, 39, 0.55);
+}
+/* Záloha pro prohlížeče bez nativního <dialog>.showModal() */
+.nvc-dialog--fallback[open] {
+  position: fixed;
+  inset: 0;
+  z-index: 9100;
+  height: fit-content;
+  box-shadow: 0 0 0 100vmax rgba(18, 46, 39, 0.55), var(--nvc-shadow);
+}
+
+.nvc-dialog__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 28px 28px 8px;
+}
+.nvc-dialog__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.nvc-dialog__title {
+  margin: 6px 0 0;
+  font-family: var(--font-heading, var(--nvc-font));
+  font-size: clamp(22px, 3vw, 26px);
+  font-weight: var(--font-heading-weight, 500);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.nvc-dialog__close {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  margin: -4px -6px 0 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background-color: var(--nvc-sage-200);
+  color: var(--nvc-ink);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.nvc-dialog__close:hover {
+  background-color: var(--nvc-sage-300);
+}
+.nvc-dialog__close svg {
+  display: block;
+}
+.nvc-dialog__intro {
+  margin: 12px 0 0;
+  font-size: 15px;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+.nvc-cats {
+  display: grid;
+  gap: 12px;
+  margin: 20px 0 0;
+}
+.nvc-cat {
+  padding: 14px 18px 16px;
+  border-radius: 20px;
+  background-color: var(--nvc-surface);
+}
+.nvc-cat__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+}
+.nvc-cat__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+  cursor: pointer;
+}
+.nvc-cat--required .nvc-cat__label {
+  cursor: default;
+}
+.nvc-cat__state {
+  flex: none;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--nvc-muted);
+  white-space: nowrap;
+}
+.nvc-cat__state--on {
+  color: var(--nvc-ink);
+  font-weight: 600;
+}
+.nvc-cat__desc {
+  margin: 6px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+.nvc-dialog__status {
+  margin: 16px 0 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--nvc-muted);
+}
+.nvc-dialog__more {
+  margin: 6px 0 12px;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.nvc-dialog__footer {
+  flex: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)); /* tři stejně velká tlačítka */
+  gap: 10px;
+  padding: 16px 28px 24px;
+  border-top: 1px solid var(--nvc-line);
+  background-color: var(--nvc-cream);
+}
+
+/* Přepínač (input type=checkbox role=switch) */
+.nvc-switch {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: none;
+  position: relative;
+  box-sizing: border-box;
+  width: 52px;
+  height: 30px;
+  margin: 0;
+  border: 2px solid var(--nvc-ink);
+  border-radius: 999px;
+  background-color: var(--nvc-cream);
+  cursor: pointer;
+  vertical-align: middle;
+}
+.nvc-switch::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--nvc-ink);
+}
+.nvc-switch:checked {
+  background-color: var(--nvc-ink);
+}
+.nvc-switch:checked::before {
+  transform: translateX(22px);
+  background-color: var(--nvc-sage);
+}
+.nvc-switch:disabled {
+  cursor: not-allowed;
+  border-color: var(--nvc-sage-700);
+}
+.nvc-switch:disabled:checked {
+  background-color: var(--nvc-sage-700);
+}
+.nvc-switch:disabled:checked::before {
+  background-color: var(--nvc-cream);
+}
+
+/* ------------------------------------------------------------------ */
+/* Vkládaný obsah (Kalendář Google) a jeho zástupný obsah              */
+/* ------------------------------------------------------------------ */
+
+.nvc-embed-frame {
+  display: block;
+  width: 100%;
+  border: 0;
+  background-color: var(--nvc-cream);
+}
+
+/* Volitelné třídy pro zástupný obsah uvnitř [data-consent-embed] */
+.nvc-placeholder {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: clamp(360px, 50vw, 560px);
+  padding: clamp(24px, 4vw, 40px);
+  text-align: center;
+  background-color: var(--nvc-cream);
+  color: var(--nvc-ink);
+  font-family: var(--nvc-font);
+}
+.nvc-placeholder__title {
+  margin: 0;
+  max-width: 34ch;
+  font-size: clamp(18px, 2vw, 21px);
+  font-weight: 500;
+  line-height: 1.3;
+  text-wrap: balance;
+}
+.nvc-placeholder__text {
+  margin: 0;
+  max-width: 56ch;
+  font-size: 14.5px;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+.nvc-placeholder__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+/* Výchozí vzhled tlačítka pro načtení obsahu, pokud nemá vlastní třídu (nulová specifičnost) */
+:where([data-consent-embed]) :where(button[data-consent-accept]:not([class])) {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 8px 26px;
+  border: 2px solid var(--nvc-ink);
+  border-radius: 999px;
+  background-color: var(--nvc-ink);
+  color: var(--nvc-bg);
+  font-family: var(--nvc-font);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+}
+:where([data-consent-embed]) :where(button[data-consent-accept]:not([class])):hover,
+:where([data-consent-embed]) :where(button[data-consent-accept]:not([class])):focus-visible {
+  color: var(--nvc-yellow);
+}
+
+/* ------------------------------------------------------------------ */
+/* Úzké obrazovky                                                      */
+/* ------------------------------------------------------------------ */
+
+@media (max-width: 520px) {
+  .nvc-banner {
+    padding: 0 8px 8px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+  .nvc-banner__inner {
+    gap: 14px;
+    padding: 18px;
+    border-radius: 24px;
+  }
+  .nvc-banner__title {
+    font-size: 16px;
+  }
+  .nvc-banner__text {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .nvc-banner__actions,
+  .nvc-dialog__footer {
+    grid-template-columns: minmax(0, 1fr); /* pod sebou, na celou šířku */
+    gap: 8px;
+  }
+  .nvc-banner__actions {
+    flex-basis: 100%;
+    max-width: none;
+  }
+  .nvc-btn {
+    min-height: 44px;
+  }
+  .nvc-dialog {
+    width: calc(100vw - 16px);
+    max-height: calc(100vh - 16px);
+    max-height: calc(100dvh - 16px);
+    border-radius: 24px;
+  }
+  .nvc-dialog__body {
+    padding: 20px 18px 6px;
+  }
+  .nvc-dialog__footer {
+    padding: 12px 18px 18px;
+  }
+  .nvc-cat {
+    padding: 12px 14px 14px;
+  }
+}
+
+/* Nízké okno (např. zvětšení 400 %, telefon na šířku): pevná patička s tlačítky by tělu
+   dialogu nechala jen pár řádků – celý dialog proto roluje jako jeden celek (WCAG 1.4.10). */
+@media (max-height: 480px) {
+  .nvc-dialog {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .nvc-dialog[open] {
+    display: block;
+  }
+  .nvc-dialog__body {
+    overflow: visible;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Pohyb, vysoký kontrast, tisk                                        */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .nvc-banner:not([hidden]) .nvc-banner__inner {
+    animation: nvc-rise 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  .nvc-dialog[open] {
+    animation: nvc-fade 0.2s ease-out both;
+  }
+  .nvc-switch::before {
+    transition: transform 0.18s ease, background-color 0.18s ease;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nvc-btn,
+  .nvc-dialog__close {
+    transition: none;
+  }
+}
+@keyframes nvc-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes nvc-fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (forced-colors: active) {
+  .nvc-banner__inner,
+  .nvc-dialog {
+    border: 2px solid CanvasText;
+  }
+  .nvc-switch {
+    border-color: CanvasText;
+    forced-color-adjust: none;
+    background-color: Canvas;
+  }
+  .nvc-switch::before {
+    background-color: CanvasText;
+  }
+  .nvc-switch:checked {
+    background-color: Highlight;
+  }
+  .nvc-switch:checked::before {
+    background-color: HighlightText;
+  }
+}
+
+@media print {
+  .nvc-banner,
+  .nvc-dialog {
+    display: none !important;
+  }
+  html.nvc-has-banner body {
+    padding-bottom: 0 !important;
+  }
+}

@@ -1,0 +1,9 @@
+# Podklady z Claude Design (originální fotky, PDF, zálohy) – necommitovat
+nutrivero-web-hotov/
+# Lokální výstupy sestavení
+_dist/
+__pycache__/
+*.pyc
+Thumbs.db
+desktop.ini
+.DS_Store

@@ -1,0 +1,9 @@
+# Netlify – přesměrování (https://docs.netlify.com/routing/redirects/)
+# Formát: zdrojová cesta, cílová cesta, stavový kód.
+# Neznámé adresy Netlify automaticky obslouží souborem /404.html (žádný catch-all).
+
+/gdpr                           /ochrana-osobnich-udaju/   301
+/zasady-ochrany-osobnich-udaju  /ochrana-osobnich-udaju/   301
+/vop                            /obchodni-podminky/        301
+/podminky                       /obchodni-podminky/        301
+/odstoupeni                     /odstoupeni-od-smlouvy/    301

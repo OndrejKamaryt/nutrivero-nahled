@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>%%SITE_URL%%/</loc>
+    <lastmod>%%HOME_UPDATED_ISO%%</lastmod>
+  </url>
+  <url>
+    <loc>%%SITE_URL%%/ochrana-osobnich-udaju/</loc>
+    <lastmod>%%UPDATED_ISO%%</lastmod>
+  </url>
+  <url>
+    <loc>%%SITE_URL%%/cookies/</loc>
+    <lastmod>%%UPDATED_ISO%%</lastmod>
+  </url>
+  <url>
+    <loc>%%SITE_URL%%/obchodni-podminky/</loc>
+    <lastmod>%%UPDATED_ISO%%</lastmod>
+  </url>
+  <url>
+    <loc>%%SITE_URL%%/odstoupeni-od-smlouvy/</loc>
+    <lastmod>%%UPDATED_ISO%%</lastmod>
+  </url>
+</urlset>
