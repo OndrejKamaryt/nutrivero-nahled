@@ -7,3 +7,5 @@ __pycache__/
 Thumbs.db
 desktop.ini
 .DS_Store
+# Exporty návrhu z Claude Design (velké, s vloženými fotkami) – necommitovat
+/Nutrivero web*.html

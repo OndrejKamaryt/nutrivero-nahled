@@ -109,7 +109,7 @@ button { font: inherit; color: inherit; }
 
 /* Odsazení cílů kotev pod lepivou hlavičkou (stejná matematika jako v site.js) */
 #jak-pracuji { scroll-margin-top: calc(104px - clamp(28px, 3.5vw, 44px)); }
-#program, #cena, #o-mne { scroll-margin-top: 104px; }
+#cena, #o-mne { scroll-margin-top: 104px; }
 #otazky { scroll-margin-top: calc(104px - clamp(32px, 4vw, 48px)); }
 #rezervace { scroll-margin-top: 84px; }
 
@@ -192,6 +192,10 @@ html:not(.js) .js-only { display: none !important; }
 html.nv-menu-open header { z-index: 9200 !important; }
 html.nv-menu-open .menu-backdrop { z-index: 9150 !important; }
 #mobilni-menu { max-height: calc(100vh - 96px); max-height: calc(100dvh - 96px); overflow-y: auto; overscroll-behavior: contain; }
+
+/* ───────── Domovská stránka – dekorace úvodu (v návrhu heroDeco: jen od 1360 px) ───────── */
+.hero-deco { display: none; }
+@media (min-width: 1360px) { .hero-deco { display: block; } }
 
 /* ───────── Domovská stránka – hover stavy z prototypu ───────── */
 .ref-prev:hover, .ref-prev:focus-visible { background-color: var(--color-bg) !important; }
