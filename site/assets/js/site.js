@@ -32,6 +32,7 @@
     toggle.setAttribute('aria-label', open ? 'Zavřít menu' : 'Otevřít menu');
     panel.hidden = !open;
     if (backdrop) backdrop.hidden = !open;
+    if (doc.documentElement.classList) doc.documentElement.classList.toggle('nv-menu-open', open);
     if (!open && returnFocus) toggle.focus();
   }
 

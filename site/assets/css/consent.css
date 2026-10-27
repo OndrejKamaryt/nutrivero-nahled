@@ -463,13 +463,25 @@ html.nvc-has-banner body {
     font-size: 16px;
   }
   .nvc-banner__text {
-    font-size: 14px;
-    line-height: 1.5;
+    font-size: 13.5px;
+    line-height: 1.45;
   }
-  .nvc-banner__actions,
   .nvc-dialog__footer {
     grid-template-columns: minmax(0, 1fr); /* pod sebou, na celou šířku */
     gap: 8px;
+  }
+  /* Přijmout vše | Odmítnout vše vedle sebe ve stejné velikosti, Nastavení na celou šířku pod nimi –
+     lišta tak na telefonu zabere výrazně méně místa. */
+  .nvc-banner__actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .nvc-banner__actions > :last-child {
+    grid-column: 1 / -1;
+  }
+  .nvc-banner__actions .nvc-btn {
+    padding-inline: 10px;
+    font-size: 14.5px;
   }
   .nvc-banner__actions {
     flex-basis: 100%;
@@ -492,6 +504,12 @@ html.nvc-has-banner body {
   }
   .nvc-cat {
     padding: 12px 14px 14px;
+  }
+}
+
+@media (max-width: 339.98px) {
+  .nvc-banner__actions {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

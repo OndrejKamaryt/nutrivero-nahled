@@ -187,6 +187,11 @@ html:not(.js) .js-only { display: none !important; }
 .menu-toggle:hover, .menu-toggle:focus-visible { background-color: var(--color-accent-2-300) !important; }
 .menu-toggle[aria-expanded="true"] .ico-open,
 .menu-toggle[aria-expanded="false"] .ico-close { display: none; }
+/* Otevřené mobilní menu musí být nad cookie lištou (z-index 9000), jinak na menších telefonech
+   lišta zakryje spodní položky. Na nízkých displejích (telefon na šířku) menu roluje. */
+html.nv-menu-open header { z-index: 9200 !important; }
+html.nv-menu-open .menu-backdrop { z-index: 9150 !important; }
+#mobilni-menu { max-height: calc(100vh - 96px); max-height: calc(100dvh - 96px); overflow-y: auto; overscroll-behavior: contain; }
 
 /* ───────── Domovská stránka – hover stavy z prototypu ───────── */
 .ref-prev:hover, .ref-prev:focus-visible { background-color: var(--color-bg) !important; }
