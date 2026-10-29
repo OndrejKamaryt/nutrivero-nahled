@@ -74,6 +74,7 @@ Klíče začínající `_` jsou komentáře.
 | `%%HOME_UPDATED_ISO%%` | společné | datum poslední podstatné změny hlavní stránky, `RRRR-MM-DD` (`lastmod` v sitemap) |
 | `%%REZERVACE_URL%%` | společné | rezervační stránka Google Kalendáře pro vložení (s `?gv=true`) |
 | `%%REZERVACE_LINK%%` | společné | stejná adresa bez `gv` – odkaz „otevřít v novém okně“ |
+| `%%FORM_ID%%` | společné | identifikátor kontaktního formuláře ve službě FormSubmit: e-mail (`info@nutrivero.cz`), po aktivaci lze nahradit náhodným aliasem z aktivačního e-mailu |
 | `%%SITE_URL%%` | cíl | adresa webu bez koncového lomítka, včetně podsložky (kanonické URL, sitemap, OG) |
 | `%%BASE_PATH%%` | cíl | podsložka, ve které web běží: `/nutrivero-nahled` u náhledu, `""` u ostrého webu |
 | `PREVIEW` | cíl | `true` = náhled (noindex), `false` = ostrý web; není to token, řídí `%%ROBOTS%%` |
@@ -88,8 +89,16 @@ Klíče začínající `_` jsou komentáře.
 
 Cesta v `SITE_URL` musí odpovídat `BASE_PATH`, jinak build skončí chybou.
 
-**Před ostrým spuštěním** nahraďte v `config.json` zástupné hodnoty `[e-mail]`, `[telefon]`
-a `TELEFON_HREF` (`+420000000000`) skutečnými údaji – build s `--strict` je jinak odmítne.
+Build s `--strict` odmítne zástupné hodnoty začínající `[` (např. `[e-mail]`); používejte ho před ostrým spuštěním.
+
+### Kontaktní formulář (FormSubmit)
+
+- Formulář v sekci `#kontakt` posílá zprávy přes službu FormSubmit na `https://formsubmit.co/ajax/%%FORM_ID%%`
+  (bez JavaScriptu klasicky na `https://formsubmit.co/%%FORM_ID%%`). Obsluha je v `site/assets/js/site.js`.
+- **Aktivace:** první odeslání pošle na `info@nutrivero.cz` aktivační e-mail od FormSubmit; dokud se v něm
+  neklikne na „Activate Form“, formulář hlásí chybu a nabízí napsat přímo e-mailem.
+- CSP (meta ve všech šablonách i `site/_headers`) proto povoluje `connect-src` a `form-action` na `https://formsubmit.co`.
+- Zásady GDPR popisují FormSubmit v části `#kontaktni-formular` – při změně služby je upravte také.
 
 ## Build
 

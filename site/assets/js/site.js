@@ -1,4 +1,4 @@
-/* Nutrivero – chování stránky (menu, plynulá navigace, FAQ, reference, květinový slider).
+/* Nutrivero – chování stránky (menu, plynulá navigace, FAQ, reference, kontaktní formulář, květinový slider).
    Bez závislostí; bezpečné pro defer i pro podstránky, kde některé prvky chybí. */
 (function () {
   'use strict';
@@ -65,11 +65,11 @@
 
   /* ───────── Plynulá navigace na stránce ─────────
      Stejná matematika jako v prototypu:
-     – #rezervace (goBook): horní hrana sekce − 84 px,
+     – #rezervace (goBook): horní hrana sekce − 72 px,
      – ostatní kotvy (onNav): horní hrana + padding-top − výška hlavičky − 32 px. */
   function scrollTargetTop(el) {
     var top = el.getBoundingClientRect().top + window.pageYOffset;
-    if (el.id === 'rezervace') return top - 84;
+    if (el.id === 'rezervace') return top - 72;
     var head = doc.querySelector('header');
     var pt = parseFloat(window.getComputedStyle(el).paddingTop) || 0;
     return top + pt - (head ? head.offsetHeight : 72) - 32;
@@ -134,6 +134,111 @@
   var refNext = doc.querySelector('[data-ref-next]');
   if (refTrack && refPrev) refPrev.addEventListener('click', function () { refMove(-1); });
   if (refTrack && refNext) refNext.addEventListener('click', function () { refMove(1); });
+
+  /* ───────── Kontaktní formulář (FormSubmit) ─────────
+     Bez JavaScriptu se formulář odešle klasicky (action na formsubmit.co). S JavaScriptem se odešle
+     jako JSON na data-ajax-endpoint a výsledek se ukáže na stránce. Vyplněné skryté pole _honey
+     (spamovací robot) se tváří jako úspěch, ale nic se neodešle. */
+  var kForm = doc.querySelector('[data-kontakt-form]');
+
+  // Tlačítko „Rezervovat konzultaci“ v ceníku: předvybere zájem a případně předvyplní zprávu.
+  // Posun na #kontakt obstará společná obsluha kotev výše (posluchač na dokumentu běží až po tomto).
+  Array.prototype.forEach.call(doc.querySelectorAll('[data-kontakt-zajem]'), function (link) {
+    link.addEventListener('click', function () {
+      if (!kForm) return;
+      var select = kForm.elements['Zájem'];
+      var message = kForm.elements['Zpráva'];
+      var value = link.getAttribute('data-kontakt-zajem');
+      if (select && select.options && value) {
+        for (var i = 0; i < select.options.length; i++) {
+          if (select.options[i].value === value) { select.selectedIndex = i; break; }
+        }
+      }
+      var text = link.getAttribute('data-kontakt-zprava');
+      if (message && text && !message.value.trim()) message.value = text;
+    });
+  });
+
+  if (kForm && window.fetch && window.JSON) {
+    var kButton = kForm.querySelector('[data-kontakt-submit]');
+    var kButtonLabel = kButton ? kButton.textContent : '';
+    var kDone = doc.querySelector('[data-kontakt-hotovo]');
+    var kError = doc.querySelector('[data-kontakt-chyba]');
+    var kSending = false;
+
+    var kValue = function (name) {
+      var f = kForm.elements[name];
+      return f && typeof f.value === 'string' ? f.value.trim() : '';
+    };
+    var kSetSending = function (on) {
+      kSending = on;
+      kForm.setAttribute('aria-busy', on ? 'true' : 'false');
+      if (!kButton) return;
+      kButton.textContent = on ? 'Odesílám…' : kButtonLabel;
+      // aria-disabled místo disabled: tlačítko si během odesílání ponechá fokus.
+      if (on) kButton.setAttribute('aria-disabled', 'true');
+      else kButton.removeAttribute('aria-disabled');
+    };
+    var kShowDone = function () {
+      if (kError) kError.hidden = true;
+      kForm.hidden = true;
+      if (kDone) {
+        kDone.hidden = false;
+        try { kDone.focus(); } catch (err) { /* starší prohlížeče */ }
+      }
+    };
+
+    kForm.addEventListener('submit', function (e) {
+      // Událost submit přichází až po úspěšné nativní kontrole polí (required, type=email).
+      var endpoint = kForm.getAttribute('data-ajax-endpoint');
+      if (!endpoint) return; // bez adresy pro AJAX klasické odeslání
+      e.preventDefault();
+      if (kSending) return;
+      if (kError) kError.hidden = true;
+
+      var honey = kValue('_honey');
+      if (honey) { kForm.reset(); kShowDone(); return; }
+
+      var zajem = kValue('Zájem');
+      var payload = {
+        _subject: 'Web Nutrivero: ' + zajem,
+        _template: 'table',
+        _captcha: 'false',
+        _honey: honey,
+        'Jméno': kValue('Jméno'),
+        email: kValue('email'),
+        'Telefon': kValue('Telefon'),
+        'Zájem': zajem,
+        'Zpráva': kValue('Zpráva')
+      };
+
+      kSetSending(true);
+      var ctrl = window.AbortController ? new window.AbortController() : null;
+      var timer = ctrl ? window.setTimeout(function () { ctrl.abort(); }, 20000) : null;
+      var opts = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload)
+      };
+      if (ctrl) opts.signal = ctrl.signal;
+
+      window.fetch(endpoint, opts)
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (d && (d.success === true || d.success === 'true')) {
+            kForm.reset();
+            kShowDone();
+          } else if (kError) {
+            kError.hidden = false;
+          }
+        })
+        .catch(function () { if (kError) kError.hidden = false; })
+        .then(function () {
+          if (timer) window.clearTimeout(timer);
+          kSetSending(false);
+        });
+    });
+  }
 
   /* ───────── Tabulky v právních textech: posuvný obal na mobilu ───────── */
   Array.prototype.forEach.call(doc.querySelectorAll('.legal table'), function (table) {

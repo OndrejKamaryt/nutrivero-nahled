@@ -2,7 +2,7 @@
 <html lang="cs" data-base="/nutrivero-nahled">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src https://calendar.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src https://calendar.google.com; connect-src 'self' https://formsubmit.co; object-src 'none'; base-uri 'self'; form-action 'self' mailto: https://formsubmit.co; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Zásady zpracování osobních údajů · Nutrivero</title>
@@ -57,6 +57,7 @@
             <li><a href="/nutrivero-nahled/#cena" class="nav-link" style="display:flex; align-items:center; min-height:40px; padding:0 12px; border-radius:999px; font-size:15px; font-weight:500; color:var(--color-text); text-decoration:none; white-space:nowrap; transition:background-color .15s ease">Cena</a></li>
             <li><a href="/nutrivero-nahled/#o-mne" class="nav-link" style="display:flex; align-items:center; min-height:40px; padding:0 12px; border-radius:999px; font-size:15px; font-weight:500; color:var(--color-text); text-decoration:none; white-space:nowrap; transition:background-color .15s ease">O&nbsp;mně</a></li>
             <li><a href="/nutrivero-nahled/#otazky" class="nav-link" style="display:flex; align-items:center; min-height:40px; padding:0 12px; border-radius:999px; font-size:15px; font-weight:500; color:var(--color-text); text-decoration:none; white-space:nowrap; transition:background-color .15s ease">Časté otázky</a></li>
+            <li><a href="/nutrivero-nahled/#kontakt" class="nav-link" style="display:flex; align-items:center; min-height:40px; padding:0 12px; border-radius:999px; font-size:15px; font-weight:500; color:var(--color-text); text-decoration:none; white-space:nowrap; transition:background-color .15s ease">Kontakt</a></li>
           </ul>
         </nav>
         <a href="/nutrivero-nahled/#rezervace" class="btn btn-primary" style="min-height:44px; padding:0 clamp(14px,3.4vw,20px); font-size:15px; font-weight:600; white-space:nowrap">Úvodní hovor zdarma</a>
@@ -72,6 +73,7 @@
         <li><a href="/nutrivero-nahled/#cena" class="nav-link" style="display:flex; align-items:center; min-height:52px; padding:0 18px; border-radius:16px; font-size:17px; font-weight:500; color:var(--color-text); text-decoration:none; transition:background-color .15s ease">Cena</a></li>
         <li><a href="/nutrivero-nahled/#o-mne" class="nav-link" style="display:flex; align-items:center; min-height:52px; padding:0 18px; border-radius:16px; font-size:17px; font-weight:500; color:var(--color-text); text-decoration:none; transition:background-color .15s ease">O&nbsp;mně</a></li>
         <li><a href="/nutrivero-nahled/#otazky" class="nav-link" style="display:flex; align-items:center; min-height:52px; padding:0 18px; border-radius:16px; font-size:17px; font-weight:500; color:var(--color-text); text-decoration:none; transition:background-color .15s ease">Časté otázky</a></li>
+        <li><a href="/nutrivero-nahled/#kontakt" class="nav-link" style="display:flex; align-items:center; min-height:52px; padding:0 18px; border-radius:16px; font-size:17px; font-weight:500; color:var(--color-text); text-decoration:none; transition:background-color .15s ease">Kontakt</a></li>
       </ul>
     </nav>
   </header>
@@ -96,15 +98,16 @@
 
     <div style="max-width:1120px; margin:0 auto; padding:clamp(32px,4.5vw,56px) clamp(20px,5vw,56px) clamp(8px,1.5vw,16px)">
       <div class="legal">
-<p>Vaše osobní údaje zpracovávám s&nbsp;respektem a&nbsp;jen v&nbsp;rozsahu, který opravdu potřebuji. Tady vám vysvětlím, jak s&nbsp;nimi zacházím, když navštívíte web Nutrivero, rezervujete si úvodní hovor nebo se mnou spolupracujete. Řídím se nařízením Evropského parlamentu a&nbsp;Rady (EU) 2016/679, obecným nařízením o&nbsp;ochraně osobních údajů („GDPR“), zákonem č.&nbsp;110/2019&nbsp;Sb., o&nbsp;zpracování osobních údajů, a&nbsp;zákonem č.&nbsp;127/2005&nbsp;Sb., o&nbsp;elektronických komunikacích.</p>
+<p>Vaše osobní údaje zpracovávám s&nbsp;respektem a&nbsp;jen v&nbsp;rozsahu, který opravdu potřebuji. Tady vám vysvětlím, jak s&nbsp;nimi zacházím, když navštívíte web Nutrivero, napíšete mi, rezervujete si úvodní hovor nebo se mnou spolupracujete. Řídím se nařízením Evropského parlamentu a&nbsp;Rady (EU) 2016/679, obecným nařízením o&nbsp;ochraně osobních údajů („GDPR“), zákonem č.&nbsp;110/2019&nbsp;Sb., o&nbsp;zpracování osobních údajů, a&nbsp;zákonem č.&nbsp;127/2005&nbsp;Sb., o&nbsp;elektronických komunikacích.</p>
 
 <div class="note">
   <p><strong>V&nbsp;kostce</strong></p>
   <ul>
-    <li>Údaje zpracovávám jen k&nbsp;domluvě a&nbsp;poskytnutí svých služeb a&nbsp;ke splnění zákonných povinností.</li>
+    <li>Údaje zpracovávám jen k&nbsp;odpovědím na vaše dotazy, k&nbsp;domluvě a&nbsp;poskytnutí svých služeb, k&nbsp;zajištění provozu webu a&nbsp;ke splnění zákonných povinností.</li>
     <li>Údaje o&nbsp;zdraví zpracovávám jen s&nbsp;vaším výslovným souhlasem, který můžete kdykoli odvolat.</li>
     <li>Na webu nepoužívám analytické ani reklamní nástroje, neposílám newsletter a&nbsp;vaše údaje nikomu neprodávám.</li>
     <li>Rezervační kalendář Google se na webu načte až s&nbsp;vaším souhlasem.</li>
+    <li>Zprávy z&nbsp;kontaktního formuláře mi doručuje externí služba FormSubmit, která ve svých zásadách neuvádí, kdo ji provozuje ani kde údaje zpracovává, a&nbsp;údaje se tak mohou dostat i&nbsp;mimo EU. Údaje o&nbsp;zdraví do formuláře proto nepište. Místo formuláře mi můžete napsat e-mail nebo zavolat (<a href="#kontaktni-formular">více o&nbsp;kontaktním formuláři</a>).</li>
   </ul>
 </div>
 
@@ -116,7 +119,7 @@
     <li><a href="#uvodni-hovor">Rezervace a&nbsp;úvodní hovor zdarma</a></li>
     <li><a href="#spoluprace">Konzultace a&nbsp;program</a></li>
     <li><a href="#zdravotni-udaje">Údaje o&nbsp;zdraví</a></li>
-    <li><a href="#web">Web, cookies a&nbsp;externí obsah</a></li>
+    <li><a href="#web">Web, kontaktní formulář, cookies a&nbsp;externí obsah</a></li>
     <li><a href="#opravnene-zajmy">Oprávněné zájmy</a></li>
     <li><a href="#zdroje">Odkud údaje mám</a></li>
     <li><a href="#prijemci">Komu údaje svěřuji</a></li>
@@ -133,11 +136,11 @@
 <h2 id="spravce">1.&nbsp;Správce osobních údajů</h2>
 <p>Správcem vašich osobních údajů jsem já:</p>
 <ul>
-  <li><strong>Bc. Tereza Ševčíková</strong>, výživová poradkyně podnikající pod značkou Nutrivero, zapsaná v&nbsp;živnostenském rejstříku</li>
+  <li><strong>Tereza Ševčíková</strong>, výživová poradkyně podnikající pod značkou Nutrivero, zapsaná v&nbsp;živnostenském rejstříku</li>
   <li>IČO: 19061561</li>
   <li>místo podnikání: Hlavní 156/58, 664 48 Moravany</li>
   <li>e-mail: <a href="mailto:info@nutrivero.cz">info@nutrivero.cz</a></li>
-  <li>telefon: <a href="tel:+420000000000">[telefon]</a></li>
+  <li>telefon: <a href="tel:+420734575195">734 575 195</a></li>
 </ul>
 <p>Pověřence pro ochranu osobních údajů jsem nejmenovala, protože mi tato povinnost podle čl.&nbsp;37 GDPR nevzniká. S&nbsp;jakoukoli otázkou nebo žádostí se proto obracejte přímo na mě, nejlépe e-mailem.</p>
 
@@ -172,6 +175,12 @@
         <td>jméno, kontaktní údaje, obsah dotazu a&nbsp;naší komunikace</td>
         <td>kroky před uzavřením smlouvy nebo plnění smlouvy (čl.&nbsp;6 odst.&nbsp;1 písm.&nbsp;b) GDPR); u&nbsp;ostatních dotazů oprávněný zájem (čl.&nbsp;6 odst.&nbsp;1 písm.&nbsp;f) GDPR)</td>
         <td>12&nbsp;měsíců od vyřízení dotazu; komunikace ke smlouvě jako u&nbsp;konzultace a&nbsp;programu</td>
+      </tr>
+      <tr>
+        <th scope="row">Odpověď na zprávu z&nbsp;kontaktního formuláře na webu a&nbsp;domluva spolupráce, o&nbsp;kterou máte zájem</th>
+        <td>jméno a&nbsp;příjmení, e-mail, telefon (nepovinný), služba, o&nbsp;kterou máte zájem, text zprávy; technické údaje o&nbsp;odeslání (zejména IP adresa), které získá služba FormSubmit</td>
+        <td>kroky před uzavřením smlouvy na vaši žádost (čl.&nbsp;6 odst.&nbsp;1 písm.&nbsp;b) GDPR); u&nbsp;ostatních dotazů oprávněný zájem (čl.&nbsp;6 odst.&nbsp;1 písm.&nbsp;f) GDPR)</td>
+        <td>12&nbsp;měsíců od vyřízení zprávy; zprávu s&nbsp;údaji o&nbsp;zdraví, které mi do formuláře sami napíšete, nejdéle 6&nbsp;měsíců od vyřízení; pokud spolu uzavřeme smlouvu, jako u&nbsp;konzultace a&nbsp;programu; služba FormSubmit dobu uchování neuvádí (viz <a href="#kontaktni-formular">Kontaktní formulář</a>)</td>
       </tr>
       <tr>
         <th scope="row">Poskytnutí jednorázové konzultace nebo tříměsíčního programu</th>
@@ -243,11 +252,25 @@
 <p>Po skončení spolupráce údaje o&nbsp;zdraví smažu nejpozději do 3&nbsp;měsíců. Déle si ponechám jen písemná shrnutí, jídelníček a&nbsp;vaše vyjádření k&nbsp;tomu, zda se vás týkají okolnosti, pro které program není vhodný, a&nbsp;to jen po dobu uvedenou u&nbsp;ochrany právních nároků.</p>
 <p>Nejsem poskytovatelkou zdravotních služeb a&nbsp;nevedu zdravotnickou dokumentaci. Neléčím, nestanovuji diagnózy a&nbsp;nenahrazuji lékařskou péči.</p>
 
-<h2 id="web">6.&nbsp;Web, cookies a&nbsp;externí obsah</h2>
+<h2 id="web">6.&nbsp;Web, kontaktní formulář, cookies a&nbsp;externí obsah</h2>
 <p>Web běží na hostingu GitHub Pages společnosti GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA. Při každé návštěvě server automaticky zaznamenává technické údaje, které odesílá váš prohlížeč: IP adresu, datum a&nbsp;čas, navštívenou adresu, typ prohlížeče a&nbsp;zařízení a&nbsp;odkazující stránku. Slouží to ke spolehlivému a&nbsp;bezpečnému provozu webu, například k&nbsp;odhalení útoků. Jak dlouho tyto záznamy uchovává, určuje GitHub, Inc. podle svých <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">zásad ochrany soukromí</a>. Nepoužívám je k&nbsp;analýze návštěvnosti a&nbsp;nespojuji je s&nbsp;dalšími údaji.</p>
 <p>Na webu nepoužívám analytické ani reklamní nástroje. Písmo i&nbsp;obrázky se načítají přímo z&nbsp;mého webu, nikoli od třetích stran.</p>
 <p>Ve vašem prohlížeči se ukládá jen vaše volba cookies (které kategorie jste povolili a&nbsp;kdy), aby se vás web nemusel ptát znovu. Tato informace zůstává ve vašem zařízení a&nbsp;mně se neodesílá.</p>
 <p>Rezervační kalendář pochází od společnosti Google a&nbsp;načte se až poté, co to povolíte (kategorie „Externí obsah“). Google přitom získá vaši IP adresu a&nbsp;údaje o&nbsp;prohlížeči a&nbsp;může ukládat cookies, zejména pokud jste přihlášeni ke svému účtu Google. Za samotné vložení kalendáře do webu, tedy za to, že se při jeho načtení vaše IP adresa a&nbsp;údaje o&nbsp;prohlížeči předají Googlu, odpovídám spolu s&nbsp;Googlem. Další zpracování těchto údajů už provádí Google jako samostatný správce podle svých <a href="https://policies.google.com/privacy?hl=cs" rel="noopener">zásad ochrany soukromí</a>. Souhlas můžete kdykoli odvolat v&nbsp;<button type="button" class="link-button" data-consent-open>nastavení cookies</button>. Podrobnosti najdete v&nbsp;<a href="/nutrivero-nahled/cookies/">zásadách používání cookies</a>.</p>
+
+<h3 id="kontaktni-formular">Kontaktní formulář</h3>
+<p>Na hlavní stránce mi můžete napsat přes kontaktní formulář. Vyplníte v&nbsp;něm jméno a&nbsp;příjmení a&nbsp;e-mail, případně telefon (není povinný), vyberete, o&nbsp;co máte zájem (jednorázová konzultace, program LIGHT, program FULL nebo jiný dotaz), a&nbsp;napíšete zprávu. Tyto údaje použiji jen k&nbsp;tomu, abych vám na zprávu odpověděla a&nbsp;případně s&nbsp;vámi domluvila spolupráci, o&nbsp;kterou máte zájem. Bez vašeho souhlasu vám nebudu posílat žádná další sdělení.</p>
+<ul>
+  <li><strong>Právní základ:</strong> pokud se zpráva týká mých služeb, jde o&nbsp;kroky před uzavřením smlouvy na vaši žádost (čl.&nbsp;6 odst.&nbsp;1 písm.&nbsp;b) GDPR); u&nbsp;ostatních dotazů o&nbsp;můj oprávněný zájem vám odpovědět (čl.&nbsp;6 odst.&nbsp;1 písm.&nbsp;f) GDPR).</li>
+  <li><strong>Doba uchování:</strong> zprávu a&nbsp;naši navazující komunikaci uchovávám stejně jako ostatní dotazy 12&nbsp;měsíců od vyřízení. Pokud si přes formulář domluvíme úvodní hovor, řídí se uchování pravidly pro <a href="#uvodni-hovor">úvodní hovor</a>, a&nbsp;pokud spolu uzavřeme smlouvu, pravidly pro <a href="#spoluprace">konzultaci a&nbsp;program</a>.</li>
+</ul>
+<p><strong>Kdo zprávu doručuje:</strong> po stisknutí tlačítka „Odeslat zprávu“ se formulář odešle přímo z&nbsp;vašeho prohlížeče službě <strong>FormSubmit</strong> (<a href="https://formsubmit.co/" rel="noopener">formsubmit.co</a>), která mi jeho obsah doručí e-mailem na adresu info@nutrivero.cz. FormSubmit přitom získá vše, co do formuláře vyplníte, a&nbsp;technické údaje o&nbsp;odeslání, zejména vaši IP adresu a&nbsp;údaje o&nbsp;prohlížeči. Dokud formulář neodešlete, službě FormSubmit se nic nepředává. Doručenou zprávu pak mám ve své e-mailové schránce a&nbsp;zacházím s&nbsp;ní stejně jako s&nbsp;ostatními e-maily (viz <a href="#prijemci">kapitola&nbsp;9</a>).</p>
+<p>Podle svých <a href="https://formsubmit.co/privacy.pdf" rel="noopener">zásad ochrany soukromí</a> (účinných od 17.&nbsp;1.&nbsp;2019) FormSubmit zpracovává údaje jen ke správě služby a&nbsp;k&nbsp;vyřízení požadavků svých uživatelů, k&nbsp;jiným účelům je bez výslovného svolení uživatele služby (tedy mě) nepoužije a&nbsp;třetím osobám je zpřístupňuje, jen pokud je to nutné k&nbsp;poskytnutí služby nebo to vyžaduje zákon. Takové svolení nedávám. Za údaje odeslané formulářem podle těchto zásad odpovídá provozovatel formuláře, tedy já. Ve svých zásadách ale FormSubmit neuvádí, kdo službu provozuje, kde údaje zpracovává ani jak dlouho je uchovává, a&nbsp;smlouvu o&nbsp;zpracování osobních údajů podle čl.&nbsp;28 GDPR nenabízí. Nemohu proto zaručit, že údaje z&nbsp;formuláře zůstanou v&nbsp;EU a&nbsp;že pro ně bude platit stejná úroveň ochrany jako u&nbsp;mých ostatních nástrojů (viz <a href="#predavani-mimo-eu">kapitola&nbsp;10</a>).</p>
+<!-- K POTVRZENÍ MAJITELKOU: smazání zprávy s údaji o zdraví, které klient do formuláře napíše sám, nejpozději do 6 měsíců, pokud nedojde k uzavření smlouvy (obdobně jako u údajů o zdraví z úvodního hovoru). -->
+<div class="note">
+  <p><strong>Údaje o&nbsp;zdraví do formuláře prosím nepište</strong>, například diagnózy, užívané léky, těhotenství, kojení nebo poruchu příjmu potravy. K&nbsp;odpovědi ani k&nbsp;domluvě úvodního hovoru je nepotřebuji a&nbsp;formulář prochází službou FormSubmit, u&nbsp;které nemohu zaručit stejnou ochranu jako u&nbsp;svých ostatních nástrojů. Pokud budou informace o&nbsp;zdraví pro naši spolupráci potřeba, zeptám se na ně až později a&nbsp;zpracuji je jen s&nbsp;vaším výslovným souhlasem (viz <a href="#zdravotni-udaje">kapitola&nbsp;5</a>). Pokud mi je do formuláře přesto napíšete, nebudu s&nbsp;nimi pracovat víc, než je nutné k&nbsp;odpovědi na vaši zprávu. Pokud je budu potřebovat pro naši spolupráci, požádám vás v&nbsp;odpovědi o&nbsp;výslovný souhlas. Pokud spolu do 6&nbsp;měsíců od vyřízení zprávy neuzavřeme smlouvu, zprávu smažu.</p>
+</div>
+<p><strong>Nechcete formulář použít?</strong> Napište mi přímo na <a href="mailto:info@nutrivero.cz">info@nutrivero.cz</a> nebo zavolejte na <a href="tel:+420734575195">734 575 195</a>. Vaše zpráva pak službou FormSubmit vůbec neprojde.</p>
 
 <h2 id="opravnene-zajmy">7.&nbsp;Oprávněné zájmy</h2>
 <p>Tam, kde údaje zpracovávám na základě oprávněného zájmu (čl.&nbsp;6 odst.&nbsp;1 písm.&nbsp;f) GDPR), jde o&nbsp;tyto zájmy:</p>
@@ -261,7 +284,7 @@
 <p>Proti zpracování na základě oprávněného zájmu můžete kdykoli vznést <a href="#namitka">námitku</a>.</p>
 
 <h2 id="zdroje">8.&nbsp;Odkud údaje mám</h2>
-<p>Všechny údaje získávám přímo od vás: z&nbsp;rezervace, z&nbsp;našich hovorů, ze zpráv, které mi pošlete, a&nbsp;z&nbsp;podkladů, které mi předáte, například z&nbsp;výsledků měření InBody nebo záznamu jídla. Rezervace se mi uloží do Kalendáře Google; pokud jste přihlášeni ke svému účtu Google, může vám Google jméno a&nbsp;e-mail ve formuláři předvyplnit. Z&nbsp;jiných zdrojů, například z&nbsp;veřejných rejstříků, sociálních sítí nebo od obchodních partnerů, o&nbsp;vás údaje nezískávám.</p>
+<p>Všechny údaje získávám přímo od vás: z&nbsp;rezervace, z&nbsp;kontaktního formuláře, z&nbsp;našich hovorů, ze zpráv, které mi pošlete, a&nbsp;z&nbsp;podkladů, které mi předáte, například z&nbsp;výsledků měření InBody nebo záznamu jídla. Rezervace se mi uloží do Kalendáře Google; pokud jste přihlášeni ke svému účtu Google, může vám Google jméno a&nbsp;e-mail ve formuláři předvyplnit. Z&nbsp;jiných zdrojů, například z&nbsp;veřejných rejstříků, sociálních sítí nebo od obchodních partnerů, o&nbsp;vás údaje nezískávám.</p>
 
 <h2 id="prijemci">9.&nbsp;Komu údaje svěřuji</h2>
 <p>Vaše údaje neprodávám a&nbsp;nikomu je nepředávám k&nbsp;marketingovým účelům. Některé služby, které při práci využívám, zpracovávají údaje mým jménem a&nbsp;podle mých pokynů (zpracovatelé). Jiné, například poskytovatel hostingu webu nebo komunikační aplikace, je zpracovávají i&nbsp;pro vlastní účely jako samostatní správci. Údaje se mohou dostat k&nbsp;těmto příjemcům:</p>
@@ -269,6 +292,7 @@
   <!-- K POTVRZENÍ MAJITELKOU: text předpokládá placený účet Google Workspace s přijatým dodatkem o zpracování údajů (Cloud Data Processing Addendum); smluvní stranou je pak pro ČR Google Cloud EMEA Limited. U bezplatného osobního účtu Google je Google samostatný správce a pro údaje o zdraví je nutné před spuštěním přejít na Workspace. Dále potvrdit, že podklady i nahrávky hovorů ukládá na Disk Google; pokud nahrává nebo ukládá jiným nástrojem, doplnit jeho provozovatele sem a do kap. 10. -->
   <li><strong>Google Cloud EMEA Limited</strong>, 70 Sir John Rogerson’s Quay, Dublin&nbsp;2, Irsko&nbsp;– služby Google Workspace: Kalendář Google pro rezervace, Google Meet pro online hovory, Gmail pro e-mailovou komunikaci a&nbsp;Disk Google pro ukládání podkladů a&nbsp;případných nahrávek hovorů. Zpracování se řídí smlouvou o&nbsp;zpracování údajů se společností Google. Na zpracování se může podílet i&nbsp;Google LLC (USA).</li>
   <li><strong>GitHub, Inc.</strong>, 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA&nbsp;– hosting webu (služba GitHub Pages) a&nbsp;s&nbsp;ním spojené technické záznamy včetně IP adres návštěvníků, které poskytovatel zpracovává k&nbsp;doručení stránek a&nbsp;zajištění bezpečnosti své služby. Více v&nbsp;<a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">zásadách ochrany soukromí poskytovatele hostingu</a>.</li>
+  <li><strong>FormSubmit</strong> (<a href="https://formsubmit.co/" rel="noopener">formsubmit.co</a>)&nbsp;– služba, která mi doručuje zprávy z&nbsp;kontaktního formuláře na webu. Dostane jen to, co do formuláře vyplníte a&nbsp;odešlete, a&nbsp;technické údaje o&nbsp;odeslání, zejména IP adresu. Ve svých zásadách neuvádí, kdo ji provozuje ani kde údaje zpracovává, a&nbsp;smlouvu o&nbsp;zpracování osobních údajů nenabízí. Podrobnosti najdete v&nbsp;části <a href="#kontaktni-formular">Kontaktní formulář</a>.</li>
   <li><strong>Provozovatel komunikační aplikace nebo jiné služby pro videohovory</strong>, na které se spolu případně domluvíme pro podporu ve zprávách nebo místo Google Meet&nbsp;– obsah zpráv, které si v&nbsp;ní vyměníme, a&nbsp;hovorů, které v&nbsp;ní proběhnou. Údaje o&nbsp;používání aplikace nebo služby zpracovává její provozovatel podle vlastních pravidel, se kterými se seznamujete při jejím používání.</li>
   <li><strong>Účetní nebo daňový poradce a&nbsp;poskytovatel fakturačního programu</strong>, pokud jejich služby využívám&nbsp;– jen údaje z&nbsp;dokladů.</li>
   <li><strong>Banka</strong>, přes kterou přijímám platby a&nbsp;vracím peníze&nbsp;– údaje o&nbsp;platbě.</li>
@@ -279,6 +303,7 @@
 <h2 id="predavani-mimo-eu">10.&nbsp;Předávání údajů mimo EU</h2>
 <p>GitHub, Inc. a&nbsp;Google LLC sídlí v&nbsp;USA, a&nbsp;vaše údaje se proto mohou dostat i&nbsp;tam. Obě společnosti jsou zapojeny do rámce EU–US Data Privacy Framework, o&nbsp;kterém Evropská komise rozhodnutím ze dne 10.&nbsp;7.&nbsp;2023&nbsp;uznala, že zajišťuje odpovídající úroveň ochrany osobních údajů (čl.&nbsp;45 GDPR). Jejich účast si můžete ověřit na <a href="https://www.dataprivacyframework.gov/" rel="noopener">www.dataprivacyframework.gov</a>. Tam, kde se rámec neuplatní, se předání řídí standardními smluvními doložkami schválenými Evropskou komisí (čl.&nbsp;46 odst.&nbsp;2 písm.&nbsp;c) GDPR), na které tyto společnosti odkazují ve svých podmínkách. Znění doložek je zveřejněno na webu Evropské komise a&nbsp;na požádání vám ho pošlu.</p>
 <p>Pokud by domluvená komunikační aplikace nebo služba pro videohovory předávala údaje mimo EU, děje se tak na základě záruk, které poskytuje její provozovatel, zpravidla rovněž rámce EU–US Data Privacy Framework nebo standardních smluvních doložek.</p>
+<p>U&nbsp;služby FormSubmit, přes kterou se odesílá kontaktní formulář, nevím, kde údaje zpracovává, protože to ve svých zásadách neuvádí. Nelze proto vyloučit, že se údaje z&nbsp;formuláře dostanou mimo EU, a&nbsp;to bez záruk popsaných výše: FormSubmit ve svých zásadách neuvádí rámec EU–US Data Privacy Framework, standardní smluvní doložky ani jiný mechanismus pro předávání údajů. Týká se to jen údajů, které do formuláře sami vyplníte a&nbsp;odešlete, a&nbsp;technických údajů o&nbsp;odeslání, zejména IP adresy. Pokud si to nepřejete, napište mi prosím přímo e-mailem na <a href="mailto:info@nutrivero.cz">info@nutrivero.cz</a> nebo zavolejte na <a href="tel:+420734575195">734 575 195</a>; vaše zpráva pak službou FormSubmit vůbec neprojde.</p>
 
 <h2 id="zabezpeceni">11.&nbsp;Jak údaje chráním</h2>
 <ul>
@@ -316,6 +341,7 @@
 <h2 id="povinnost-poskytnuti">13.&nbsp;Musíte mi údaje poskytnout?</h2>
 <ul>
   <li><strong>Kontaktní údaje pro rezervaci a&nbsp;uzavření smlouvy</strong> (jméno, e-mail, telefon) jsou smluvním požadavkem. Bez nich vám nemohu potvrdit termín, uskutečnit hovor ani poskytnout konzultaci nebo program.</li>
+  <li><strong>Kontaktní formulář</strong> používat nemusíte. Pokud ho použijete, vyplňte jméno a&nbsp;e-mail, abych vám mohla odpovědět; telefon je nepovinný. Místo formuláře mi můžete napsat e-mail nebo zavolat.</li>
   <li><strong>Údaje pro vystavení dokladu a&nbsp;evidenci platby</strong> vyžadují daňové a&nbsp;účetní předpisy. Bez nich nemohu službu vyúčtovat.</li>
   <li><strong>Údaje o&nbsp;zdraví</strong> mi poskytujete dobrovolně, na základě svého souhlasu. Bez nich ale nemohu ověřit, zda je pro vás konzultace nebo program vhodný, ani je bezpečně přizpůsobit, a&nbsp;spolupráci proto zpravidla nelze zahájit nebo v&nbsp;ní pokračovat.</li>
   <li><strong>Nahrávání hovorů</strong> a&nbsp;<strong>načtení rezervačního kalendáře na webu</strong> jsou zcela dobrovolné. Pokud nesouhlasíte, připravím shrnutí z&nbsp;poznámek a&nbsp;termín si můžete domluvit e-mailem nebo telefonem.</li>
@@ -329,7 +355,7 @@
 
 <h2 id="zmeny">16.&nbsp;Změny těchto zásad</h2>
 <p>Zásady mohu aktualizovat, například když začnu využívat nový nástroj nebo se změní právní předpisy. Aktuální znění vždy najdete na této stránce. O&nbsp;podstatných změnách, které se vás týkají, budu klienty s&nbsp;probíhající spoluprací informovat e-mailem.</p>
-<p><strong>Účinné od 26. 10. 2026</strong></p>
+<p><strong>Účinné od 29. 10. 2026</strong></p>
       </div>
       <div aria-hidden="true" style="display:flex; align-items:center; gap:12px; width:min(100%,320px); margin-top:clamp(36px,4.5vw,56px)"><span style="flex:none; width:14px; height:14px; border-radius:0 100% 0 100%; background-color:#A5BA8F"></span><span style="flex:1; height:2px; border-radius:2px; background-color:var(--color-accent-2-200)"></span></div>
     </div>
@@ -344,7 +370,7 @@
           <span style="font-size:10px; font-weight:500">nutriční poradenství</span>
         </span>
       </div>
-      <p style="margin:0; text-wrap:pretty">Nutrivero&nbsp;· Bc. Tereza Ševčíková&nbsp;· IČO&nbsp;19061561&nbsp;· zapsaná v&nbsp;živnostenském rejstříku&nbsp;· <a href="mailto:info@nutrivero.cz">info@nutrivero.cz</a>&nbsp;· <a href="tel:+420000000000">[telefon]</a></p>
+      <p style="margin:0; text-wrap:pretty">Nutrivero&nbsp;· Tereza Ševčíková&nbsp;· IČO&nbsp;19061561&nbsp;· zapsaná v&nbsp;živnostenském rejstříku&nbsp;· <a href="mailto:info@nutrivero.cz">info@nutrivero.cz</a>&nbsp;· <a href="tel:+420734575195">734 575 195</a></p>
       <div class="footer-links" style="display:flex; flex-wrap:wrap; align-items:center; gap:12px 24px">
         <a href="/nutrivero-nahled/obchodni-podminky/">Obchodní podmínky</a>
         <a href="/nutrivero-nahled/ochrana-osobnich-udaju/">Zásady zpracování osobních údajů</a>
