@@ -1,4 +1,4 @@
-name: Nasazení náhledu na GitHub Pages
+name: Přesměrování starého náhledu (GitHub Pages → Netlify)
 
 on:
   push:
@@ -19,15 +19,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Sestavit náhled (noindex, podsložka /nutrivero-nahled)
-        run: python _src/build.py --target preview --out _dist
+      # Náhled se přesunul na Netlify (https://nutrivero-nahled.netlify.app) kvůli Netlify Forms.
+      # GitHub Pages už web nestaví, jen přesměrovává staré odkazy se zachováním cesty.
+      # Původní sestavení pro GitHub Pages: python _src/build.py --target preview --out _dist
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: _dist
+          path: .github/pages-redirect
 
   deploy:
     needs: build

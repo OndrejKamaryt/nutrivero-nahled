@@ -135,10 +135,13 @@
   if (refTrack && refPrev) refPrev.addEventListener('click', function () { refMove(-1); });
   if (refTrack && refNext) refNext.addEventListener('click', function () { refMove(1); });
 
-  /* ───────── Kontaktní formulář (FormSubmit) ─────────
-     Bez JavaScriptu se formulář odešle klasicky (action na formsubmit.co). S JavaScriptem se odešle
-     jako JSON na data-ajax-endpoint a výsledek se ukáže na stránce. Vyplněné skryté pole _honey
-     (spamovací robot) se tváří jako úspěch, ale nic se neodešle. */
+  /* ───────── Kontaktní formulář (Netlify Forms) ─────────
+     Bez JavaScriptu (nebo bez fetch/FormData/URLSearchParams) se formulář odešle klasicky: POST na action
+     (/dekujeme/), Netlify zprávu uloží a zobrazí stránku s poděkováním. S JavaScriptem se odešle AJAXem
+     na kořen webu (data-base + "/") jako application/x-www-form-urlencoded (JSON Netlify nepřijímá)
+     a výsledek se ukáže přímo na stránce; úspěch = odpověď 2xx. Odesílají se všechna pole formuláře
+     včetně skrytých form-name a subject i pasti na roboty bot-field (Netlify podle ní spam zahodí).
+     Vyplněnou past se tváříme jako úspěch, ale nic se neodešle. */
   var kForm = doc.querySelector('[data-kontakt-form]');
 
   // Tlačítko „Rezervovat konzultaci“ v ceníku: předvybere zájem a případně předvyplní zprávu.
@@ -146,8 +149,8 @@
   Array.prototype.forEach.call(doc.querySelectorAll('[data-kontakt-zajem]'), function (link) {
     link.addEventListener('click', function () {
       if (!kForm) return;
-      var select = kForm.elements['Zájem'];
-      var message = kForm.elements['Zpráva'];
+      var select = kForm.elements.zajem;
+      var message = kForm.elements.zprava;
       var value = link.getAttribute('data-kontakt-zajem');
       if (select && select.options && value) {
         for (var i = 0; i < select.options.length; i++) {
@@ -159,12 +162,14 @@
     });
   });
 
-  if (kForm && window.fetch && window.JSON) {
+  if (kForm && window.fetch && window.FormData && window.URLSearchParams) {
     var kButton = kForm.querySelector('[data-kontakt-submit]');
     var kButtonLabel = kButton ? kButton.textContent : '';
     var kDone = doc.querySelector('[data-kontakt-hotovo]');
     var kError = doc.querySelector('[data-kontakt-chyba]');
     var kSending = false;
+    // Statický web na Netlify: formulář se posílá na kořen webu (v podsložce s BASE_PATH z data-base).
+    var kEndpoint = (doc.documentElement.getAttribute('data-base') || '') + '/';
 
     var kValue = function (name) {
       var f = kForm.elements[name];
@@ -187,52 +192,44 @@
         try { kDone.focus(); } catch (err) { /* starší prohlížeče */ }
       }
     };
+    var kShowError = function () {
+      if (kError) kError.hidden = false;
+    };
 
     kForm.addEventListener('submit', function (e) {
       // Událost submit přichází až po úspěšné nativní kontrole polí (required, type=email).
-      var endpoint = kForm.getAttribute('data-ajax-endpoint');
-      if (!endpoint) return; // bez adresy pro AJAX klasické odeslání
+      var body = '';
+      try {
+        body = new window.URLSearchParams(new window.FormData(kForm)).toString();
+      } catch (err) { body = ''; }
+      // Prohlížeč, který neumí převést FormData na URLSearchParams: nechat klasické odeslání (action).
+      if (body.indexOf('form-name=') === -1) return;
       e.preventDefault();
       if (kSending) return;
       if (kError) kError.hidden = true;
 
-      var honey = kValue('_honey');
-      if (honey) { kForm.reset(); kShowDone(); return; }
-
-      var zajem = kValue('Zájem');
-      var payload = {
-        _subject: 'Web Nutrivero: ' + zajem,
-        _template: 'table',
-        _captcha: 'false',
-        _honey: honey,
-        'Jméno': kValue('Jméno'),
-        email: kValue('email'),
-        'Telefon': kValue('Telefon'),
-        'Zájem': zajem,
-        'Zpráva': kValue('Zpráva')
-      };
+      if (kValue('bot-field')) { kForm.reset(); kShowDone(); return; }
 
       kSetSending(true);
       var ctrl = window.AbortController ? new window.AbortController() : null;
       var timer = ctrl ? window.setTimeout(function () { ctrl.abort(); }, 20000) : null;
       var opts = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(payload)
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body
       };
       if (ctrl) opts.signal = ctrl.signal;
 
-      window.fetch(endpoint, opts)
-        .then(function (r) { return r.json(); })
-        .then(function (d) {
-          if (d && (d.success === true || d.success === 'true')) {
+      window.fetch(kEndpoint, opts)
+        .then(function (r) {
+          if (r.ok) {
             kForm.reset();
             kShowDone();
-          } else if (kError) {
-            kError.hidden = false;
+          } else {
+            kShowError();
           }
         })
-        .catch(function () { if (kError) kError.hidden = false; })
+        .catch(kShowError)
         .then(function () {
           if (timer) window.clearTimeout(timer);
           kSetSending(false);

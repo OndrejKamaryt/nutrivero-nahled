@@ -1,6 +1,7 @@
-# Nutrivero – robots.txt pro NÁHLED (GitHub Pages, https://ondrejkamaryt.github.io/nutrivero-nahled/)
-# Náhled se nemá procházet ani indexovat. Vyhledávače čtou robots.txt jen z kořene domény,
-# u webu v podsložce proto indexaci blokuje hlavně <meta name="robots" content="noindex,nofollow">
-# na každé stránce. Ostrý web používá _src/robots.txt (build --target production).
+# Nutrivero – robots.txt pro NÁHLED (Netlify, https://nutrivero-nahled.netlify.app/)
+# Náhled se nemá procházet ani indexovat. Každá stránka má navíc <meta name="robots" content="noindex,nofollow">;
+# náhled na Netlify posílá i hlavičku X-Robots-Tag: noindex, nofollow. Na GitHub Pages (web v podsložce)
+# čtou vyhledávače robots.txt jen z kořene domény, tam proto indexaci blokuje hlavně meta značka.
+# Ostrý web používá _src/robots.txt (build --target production).
 User-agent: *
 Disallow: /

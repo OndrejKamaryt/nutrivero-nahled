@@ -12,29 +12,47 @@
   "HOME_UPDATED_ISO": "2026-10-29",
   "REZERVACE_URL": "https://calendar.google.com/calendar/appointments/schedules/AcZssZ184ZqiSgOzjD5QXCZ1QP874Atri4Vy8Hoh7TzJnww-TjB95qRIxQk1Cfc8cOlZwfdk7UG57-i4?gv=true",
   "REZERVACE_LINK": "https://calendar.app.google/SrVPgZXT7hp6RAMHA",
-  "_poznamka_formular": "FORM_ID = adresát kontaktního formuláře ve službě FormSubmit (formsubmit.co/<FORM_ID>): e-mail, nebo po aktivaci jeho náhodný alias z FormSubmit, aby e-mail nebyl v kódu formuláře. První odeslaná zpráva pošle na e-mail aktivační odkaz – do potvrzení se zprávy nedoručují.",
-  "FORM_ID": "info@nutrivero.cz",
-  "TARGET": "preview",
+  "_poznamka_cile": "PREVIEW = true: náhled (noindex, robots.txt Disallow, bez sitemap). NETLIFY = true: web běží na Netlify – build do výstupu zkopíruje _headers a _redirects (u náhledu navíc přidá hlavičku X-Robots-Tag: noindex) a funguje kontaktní formulář (Netlify Forms).",
+  "TARGET": "netlify-nahled",
   "targets": {
+    "netlify-nahled": {
+      "_poznamka": "Náhled na Netlify (web nutrivero-nahled, ID 0e049152-4ae2-4324-a1bf-d60fa1261180) v kořeni domény, noindex. Kontaktní formulář přes Netlify Forms.",
+      "SITE_URL": "https://nutrivero-nahled.netlify.app",
+      "BASE_PATH": "",
+      "PREVIEW": true,
+      "NETLIFY": true,
+      "HOSTING_NAME": "Netlify, Inc.",
+      "HOSTING_SERVICE": "Netlify",
+      "HOSTING_ADDRESS": "101 2nd Street, San Francisco, CA 94105, USA",
+      "HOSTING_PRIVACY_URL": "https://www.netlify.com/privacy/",
+      "HOSTING_ROLE": "jako zpracovatel, tedy jen pro provoz a zabezpečení webu, na základě smlouvy o zpracování osobních údajů (čl. 28 GDPR), která je součástí jeho smluvních podmínek",
+      "HOSTING_RETENCE": "po dobu nezbytnou k doručení stránek a ochraně webu před zneužitím, podle provozních pravidel služby Netlify"
+    },
     "preview": {
-      "_poznamka": "Náhled na GitHub Pages (repozitář OndrejKamaryt/nutrivero-nahled), běží v podsložce /nutrivero-nahled, noindex.",
+      "_poznamka": "Náhled na GitHub Pages (repozitář OndrejKamaryt/nutrivero-nahled), běží v podsložce /nutrivero-nahled, noindex. GitHub Pages neumí zpracovat kontaktní formulář (Netlify Forms) – odeslání skončí chybovou hláškou s e-mailem.",
       "SITE_URL": "https://ondrejkamaryt.github.io/nutrivero-nahled",
       "BASE_PATH": "/nutrivero-nahled",
       "PREVIEW": true,
+      "NETLIFY": false,
       "HOSTING_NAME": "GitHub, Inc.",
       "HOSTING_SERVICE": "GitHub Pages",
       "HOSTING_ADDRESS": "88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA",
-      "HOSTING_PRIVACY_URL": "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
+      "HOSTING_PRIVACY_URL": "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement",
+      "HOSTING_ROLE": "jako samostatný správce podle svých zásad ochrany soukromí",
+      "HOSTING_RETENCE": "po dobu, kterou určuje GitHub, Inc. podle svých zásad ochrany soukromí"
     },
     "production": {
       "_poznamka": "Ostrý web na vlastní doméně v kořeni (Netlify), indexovatelný.",
       "SITE_URL": "https://nutrivero.cz",
       "BASE_PATH": "",
       "PREVIEW": false,
+      "NETLIFY": true,
       "HOSTING_NAME": "Netlify, Inc.",
       "HOSTING_SERVICE": "Netlify",
       "HOSTING_ADDRESS": "101 2nd Street, San Francisco, CA 94105, USA",
-      "HOSTING_PRIVACY_URL": "https://www.netlify.com/privacy/"
+      "HOSTING_PRIVACY_URL": "https://www.netlify.com/privacy/",
+      "HOSTING_ROLE": "jako zpracovatel, tedy jen pro provoz a zabezpečení webu, na základě smlouvy o zpracování osobních údajů (čl. 28 GDPR), která je součástí jeho smluvních podmínek",
+      "HOSTING_RETENCE": "po dobu nezbytnou k doručení stránek a ochraně webu před zneužitím, podle provozních pravidel služby Netlify"
     }
   }
 }

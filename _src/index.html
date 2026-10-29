@@ -2,7 +2,7 @@
 <html lang="cs" data-base="%%BASE_PATH%%">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src https://calendar.google.com; connect-src 'self' https://formsubmit.co; object-src 'none'; base-uri 'self'; form-action 'self' mailto: https://formsubmit.co; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src https://calendar.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Výživová poradkyně online a jídelníček na míru · Nutrivero</title>
@@ -670,15 +670,18 @@
             <p style="margin:0; font-size:20px; line-height:1.3; font-weight:500">Děkuji, zpráva je odeslaná.</p>
             <p style="margin:0; font-size:16px; line-height:1.6">Ozvu se vám e-mailem do dvou pracovních dnů.</p>
           </div>
-          <!-- Odeslání: bez JavaScriptu klasický POST na FormSubmit (action), s JavaScriptem AJAX na data-ajax-endpoint (site.js).
-               FORM_ID v config.json = e-mail nebo alias formuláře FormSubmit. Jména polí jsou popisky v e-mailu; „email“ slouží jako adresa pro odpověď. -->
-          <form id="kontakt-formular" class="kontakt-form" method="post" action="https://formsubmit.co/%%FORM_ID%%" accept-charset="UTF-8" data-kontakt-form data-ajax-endpoint="https://formsubmit.co/ajax/%%FORM_ID%%">
-            <input type="hidden" name="_subject" value="Web Nutrivero – zpráva z webu">
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_captcha" value="false">
+          <!-- Kontaktní formulář přes Netlify Forms: Netlify ho najde při nasazení (atributy data-netlify a name „kontakt“)
+               a zprávy ukládá v administraci webu (Forms → kontakt). S JavaScriptem se odešle AJAXem na "/" (site.js),
+               bez JavaScriptu klasickým POST na /dekujeme/ (stránka s poděkováním, _src/legal/dekujeme.html).
+               Jména polí jsou klíče v Netlify – neměňte je (jmeno, email, telefon, zajem, zprava). „jmeno“ musí být první
+               textové pole (titulek zprávy v Netlify), „email“ nastaví Reply-To notifikace, „subject“ je její předmět
+               a „bot-field“ je past na roboty (netlify-honeypot). Na GitHub Pages (cíl preview) formulář nefunguje. -->
+          <form id="kontakt-formular" class="kontakt-form" name="kontakt" method="POST" action="/dekujeme/" accept-charset="UTF-8" data-netlify="true" netlify-honeypot="bot-field" data-kontakt-form>
+            <input type="hidden" name="form-name" value="kontakt">
+            <input type="hidden" name="subject" value="Web Nutrivero – zpráva z formuláře (%{submissionId})">
             <div class="form-field">
               <label class="form-label" for="kontakt-jmeno">Jméno a příjmení</label>
-              <input class="form-control" id="kontakt-jmeno" name="Jméno" type="text" autocomplete="name" required>
+              <input class="form-control" id="kontakt-jmeno" name="jmeno" type="text" autocomplete="name" required>
             </div>
             <div class="form-field">
               <label class="form-label" for="kontakt-email">E-mail</label>
@@ -686,11 +689,11 @@
             </div>
             <div class="form-field">
               <label class="form-label" for="kontakt-telefon">Telefon (nepovinné)</label>
-              <input class="form-control" id="kontakt-telefon" name="Telefon" type="tel" autocomplete="tel">
+              <input class="form-control" id="kontakt-telefon" name="telefon" type="tel" autocomplete="tel">
             </div>
             <div class="form-field">
               <label class="form-label" for="kontakt-zajem">Mám zájem o</label>
-              <select class="form-control" id="kontakt-zajem" name="Zájem">
+              <select class="form-control" id="kontakt-zajem" name="zajem">
                 <option value="Jednorázová konzultace s jídelníčkem" selected>Jednorázovou konzultaci</option>
                 <option value="Program LIGHT">Program LIGHT</option>
                 <option value="Program FULL">Program FULL</option>
@@ -699,15 +702,13 @@
             </div>
             <div class="form-field form-wide">
               <label class="form-label" for="kontakt-zprava">Zpráva</label>
-              <textarea class="form-control" id="kontakt-zprava" name="Zpráva" rows="4"></textarea>
+              <textarea class="form-control" id="kontakt-zprava" name="zprava" rows="4"></textarea>
             </div>
-            <div class="visually-hidden" aria-hidden="true">
-              <label for="kontakt-honey">Toto pole nevyplňujte</label>
-              <input type="text" id="kontakt-honey" name="_honey" tabindex="-1" autocomplete="off">
-            </div>
+            <!-- Past na roboty až za skutečnými poli: titulkem zprávy v Netlify je první viditelné textové pole (jmeno). -->
+            <p class="visually-hidden" aria-hidden="true"><label>Nevyplňujte: <input type="text" name="bot-field" tabindex="-1" autocomplete="off"></label></p>
             <div class="form-wide" style="display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px">
               <button type="submit" class="btn btn-primary" data-kontakt-submit style="min-height:56px; padding:0 32px; font-size:16px; font-weight:600">Odeslat zprávu</button>
-              <p style="flex:1 1 260px; min-width:0; margin:0; font-size:13px; line-height:1.5; text-wrap:pretty">Údaje použiji jen k&nbsp;odpovědi na vaši zprávu a&nbsp;k&nbsp;případné domluvě spolupráce. Zprávu doručuje externí služba FormSubmit, u&nbsp;které nemohu zaručit, že údaje zůstanou v&nbsp;EU. Údaje o&nbsp;zdraví proto do formuláře nepište. Více v&nbsp;<a href="/ochrana-osobnich-udaju/#kontaktni-formular">zásadách zpracování osobních údajů</a>.</p>
+              <p style="flex:1 1 260px; min-width:0; margin:0; font-size:13px; line-height:1.5; text-wrap:pretty">Údaje použiji jen k&nbsp;odpovědi na vaši zprávu a&nbsp;k&nbsp;případné domluvě spolupráce. Zprávu uloží a&nbsp;doručí mi služba Netlify Forms (Netlify, Inc., USA), která ji kvůli ochraně před spamem nechá automaticky zkontrolovat službou Akismet. Údaje o&nbsp;zdraví prosím do formuláře nepište. Více v&nbsp;<a href="/ochrana-osobnich-udaju/#kontaktni-formular">zásadách zpracování osobních údajů</a>.</p>
             </div>
           </form>
           <div role="status" aria-live="polite">

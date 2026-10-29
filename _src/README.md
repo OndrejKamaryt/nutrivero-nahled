@@ -1,33 +1,36 @@
 # Nutrivero – web (poznámky pro správu)
 
 Statický web bez frameworku. Všechny texty se upravují v `_src/` a hotové stránky vygeneruje skript
-`_src/build.py`. Web má dva cíle nasazení:
+`_src/build.py`. Web má tři cíle nasazení:
 
-| Cíl | Kde běží | Adresa | Indexace |
-|---|---|---|---|
-| `preview` (výchozí) | GitHub Pages, veřejný repozitář `OndrejKamaryt/nutrivero-nahled` | https://ondrejkamaryt.github.io/nutrivero-nahled/ (podsložka `/nutrivero-nahled`) | **ne** – `noindex,nofollow` |
-| `production` | vlastní doména v kořeni (Netlify nebo jiný hosting) | https://nutrivero.cz/ | ano – `index,follow` |
+| Cíl | Kde běží | Adresa | Indexace | Kontaktní formulář |
+|---|---|---|---|---|
+| `netlify-nahled` (výchozí) | Netlify, web `nutrivero-nahled` (ID `0e049152-4ae2-4324-a1bf-d60fa1261180`), v kořeni | https://nutrivero-nahled.netlify.app/ | **ne** – `noindex,nofollow` | ano (Netlify Forms) |
+| `preview` | GitHub Pages, veřejný repozitář `OndrejKamaryt/nutrivero-nahled` | https://ondrejkamaryt.github.io/nutrivero-nahled/ (podsložka `/nutrivero-nahled`) | **ne** – `noindex,nofollow` | **ne** – odeslání skončí chybou s odkazem na e-mail |
+| `production` | Netlify, vlastní doména v kořeni (zatím nenasazeno) | https://nutrivero.cz/ | ano – `index,follow` | ano (Netlify Forms) |
 
 Přepnutí mezi náhledem a ostrým webem je jen otázka buildu s jiným `--target` – zdrojové soubory
-se nemění.
+se nemění. Náhled na GitHub Pages zatím zůstává (nasazuje ho GitHub Actions), ale kontaktní formulář
+na něm nefunguje – GitHub Pages neumí přijímat odeslané formuláře.
 
 ## Struktura složek
 
 ```
 _src/                    zdroje – TADY se edituje
-  config.json            hodnoty tokenů: společné + "targets" (preview / production)
+  config.json            hodnoty tokenů: společné + "targets" (netlify-nahled / preview / production)
   build.py               sestaví HTML, robots.txt a sitemap.xml (sitemap jen u ostrého webu)
-  index.html             hlavní stránka
+  index.html             hlavní stránka (včetně kontaktního formuláře)
   page-template.html     společná šablona podstránek (hlavička, patička, <head>)
   404.html               stránka „nenalezeno“
-  legal/*.html           obsah právních stránek (GDPR, cookies, obchodní podmínky, odstoupení)
+  legal/*.html           obsah podstránek: právní texty (GDPR, cookies, obchodní podmínky, odstoupení)
+                         a dekujeme.html (poděkování po odeslání formuláře bez JavaScriptu, noindex)
   robots.txt             robots.txt ostrého webu (povoleno + odkaz na sitemap)
   robots-preview.txt     robots.txt náhledu (Disallow: /)
   sitemap.xml            šablona sitemap s tokeny (jen ostrý web; náhled sitemap nemá)
 site/                    statické soubory + výchozí výstup buildu (HTML v site/ needitujte, build ho přepíše)
-  .nojekyll              GitHub Pages: nezpracovávat web Jekyllem
-  _headers               HTTP hlavičky pro Netlify (CSP, HSTS, cache …) – jen ostrý web
-  _redirects             301 přesměrování starých/krátkých adres (/gdpr, /vop …) – jen Netlify
+  .nojekyll              GitHub Pages: nezpracovávat web Jekyllem (kopíruje se jen do cíle preview)
+  _headers               HTTP hlavičky pro Netlify (CSP, HSTS, cache …) – jen cíle s NETLIFY true
+  _redirects             301 přesměrování starých/krátkých adres (/gdpr, /vop …) – jen cíle s NETLIFY true
   site.webmanifest, favicon.ico, apple-touch-icon.png
   assets/css/            fonts.css (DM Sans, hostováno lokálně), site.css, consent.css
   assets/js/             site.js, consent.js (cookie lišta a nastavení)
@@ -40,8 +43,16 @@ nutrivero-web-hotov/     původní návrh (prototyp) – jen pro referenci, nena
 ## Úprava textů
 
 - Hlavní stránka a podstránky: upravte příslušný soubor v `_src/` (nikoli v `site/`).
-- Právní texty: `_src/legal/<adresa>.html`. První řádek je komentář `<!--meta {...} -->` s titulkem,
-  popisem pro vyhledávače, nadpisem H1 a úvodní větou – při změně zachovejte platný JSON.
+- Právní texty a další podstránky: `_src/legal/<adresa>.html`. První řádek je komentář `<!--meta {...} -->`
+  s titulkem, popisem pro vyhledávače, nadpisem H1 a úvodní větou – při změně zachovejte platný JSON.
+  Volitelně:
+  - `"robots": "noindex,nofollow"` – vlastní robots stránky (jinak platí `%%ROBOTS%%` cíle). Uplatní se jen
+    u ostrého webu; náhledy mají vždy `noindex,nofollow`.
+  - `"sitemap": false` – stránka nemá být v sitemap ostrého webu (např. `dekujeme.html`).
+
+  Seznam adres v `_src/sitemap.xml` je psaný ručně. Build ho u ostrého webu porovná se stránkami:
+  stránka se `"sitemap": false` nebo s `noindex` v sitemap = **chyba**, indexovatelná stránka, která
+  v sitemap chybí, = upozornění. Novou indexovatelnou podstránku proto doplňte i do `_src/sitemap.xml`.
 - Při podstatné změně právních textů změňte v `config.json` datum `UPDATED` (formát `30. 10. 2026`).
   Při podstatné změně obsahu hlavní stránky změňte `HOME_UPDATED_ISO` (formát `2026-10-30`).
   Obě data jsou `lastmod` v sitemap – měňte je jen při skutečné změně obsahu, ne při každém buildu.
@@ -58,9 +69,9 @@ nutrivero-web-hotov/     původní návrh (prototyp) – jen pro referenci, nena
 ## Tokeny a config.json
 
 V textech se píšou tokeny `%%NAZEV%%`, build je nahradí hodnotami z `_src/config.json`.
-Kořen `config.json` obsahuje **společné** hodnoty, `targets.preview` a `targets.production` hodnoty
-**cíle**, které společné doplní nebo přepíšou. `TARGET` určuje výchozí cíl (`"preview"`).
-Klíče začínající `_` jsou komentáře.
+Kořen `config.json` obsahuje **společné** hodnoty, `targets.netlify-nahled`, `targets.preview`
+a `targets.production` hodnoty **cíle**, které společné doplní nebo přepíšou. `TARGET` určuje výchozí
+cíl (`"netlify-nahled"`). Klíče začínající `_` jsou komentáře.
 
 | Token | Kde | Význam |
 |---|---|---|
@@ -74,15 +85,15 @@ Klíče začínající `_` jsou komentáře.
 | `%%HOME_UPDATED_ISO%%` | společné | datum poslední podstatné změny hlavní stránky, `RRRR-MM-DD` (`lastmod` v sitemap) |
 | `%%REZERVACE_URL%%` | společné | rezervační stránka Google Kalendáře pro vložení (s `?gv=true`) |
 | `%%REZERVACE_LINK%%` | společné | stejná adresa bez `gv` – odkaz „otevřít v novém okně“ |
-| `%%FORM_ID%%` | společné | identifikátor kontaktního formuláře ve službě FormSubmit: e-mail (`info@nutrivero.cz`), po aktivaci lze nahradit náhodným aliasem z aktivačního e-mailu |
 | `%%SITE_URL%%` | cíl | adresa webu bez koncového lomítka, včetně podsložky (kanonické URL, sitemap, OG) |
-| `%%BASE_PATH%%` | cíl | podsložka, ve které web běží: `/nutrivero-nahled` u náhledu, `""` u ostrého webu |
-| `PREVIEW` | cíl | `true` = náhled (noindex), `false` = ostrý web; není to token, řídí `%%ROBOTS%%` |
-| `%%HOSTING_NAME%%` | cíl | provozovatel hostingu (`GitHub, Inc.` / `Netlify, Inc.`) |
-| `%%HOSTING_SERVICE%%` | cíl | název služby (`GitHub Pages` / `Netlify`) |
+| `%%BASE_PATH%%` | cíl | podsložka, ve které web běží: `/nutrivero-nahled` u náhledu na GitHub Pages, `""` na Netlify (náhled i ostrý web) |
+| `PREVIEW` | cíl | `true` = náhled (noindex, `robots.txt` s `Disallow: /`, bez sitemap), `false` = ostrý web; není to token, řídí `%%ROBOTS%%` |
+| `NETLIFY` | cíl | `true` = web běží na Netlify: build do výstupu zkopíruje `_headers` a `_redirects` (u náhledu do `_headers` připíše `X-Robots-Tag: noindex, nofollow`) a funguje kontaktní formulář; `false` = GitHub Pages (kopíruje se `.nojekyll`). Není to token |
+| `%%HOSTING_NAME%%` | cíl | provozovatel hostingu (`Netlify, Inc.` / `GitHub, Inc.`) |
+| `%%HOSTING_SERVICE%%` | cíl | název služby (`Netlify` / `GitHub Pages`) |
 | `%%HOSTING_ADDRESS%%` | cíl | adresa provozovatele hostingu |
 | `%%HOSTING_PRIVACY_URL%%` | cíl | odkaz na jeho zásady ochrany osobních údajů |
-| `%%ROBOTS%%` | build | `noindex,nofollow` (náhled) / `index,follow` (ostrý web) |
+| `%%ROBOTS%%` | build | `noindex,nofollow` (náhled) / `index,follow` (ostrý web); u podstránky ho může přepsat `"robots"` v meta |
 | `%%ROBOTS_404%%` | build | robots stránky 404: `noindex,nofollow` (náhled) / `noindex,follow` (ostrý web) |
 | `%%UPDATED_ISO%%` | build | `UPDATED` ve tvaru `RRRR-MM-DD` (`lastmod` právních stránek v sitemap) |
 | `%%BUILD_DATE%%` | build | datum buildu (`RRRR-MM-DD`); do sitemap se nepoužívá |
@@ -91,52 +102,118 @@ Cesta v `SITE_URL` musí odpovídat `BASE_PATH`, jinak build skončí chybou.
 
 Build s `--strict` odmítne zástupné hodnoty začínající `[` (např. `[e-mail]`); používejte ho před ostrým spuštěním.
 
-### Kontaktní formulář (FormSubmit)
+### Kontaktní formulář (Netlify Forms)
 
-- Formulář v sekci `#kontakt` posílá zprávy přes službu FormSubmit na `https://formsubmit.co/ajax/%%FORM_ID%%`
-  (bez JavaScriptu klasicky na `https://formsubmit.co/%%FORM_ID%%`). Obsluha je v `site/assets/js/site.js`.
-- **Aktivace:** první odeslání pošle na `info@nutrivero.cz` aktivační e-mail od FormSubmit; dokud se v něm
-  neklikne na „Activate Form“, formulář hlásí chybu a nabízí napsat přímo e-mailem.
-- CSP (meta ve všech šablonách i `site/_headers`) proto povoluje `connect-src` a `form-action` na `https://formsubmit.co`.
-- Zásady GDPR popisují FormSubmit v části `#kontaktni-formular` – při změně služby je upravte také.
+- Formulář v sekci `#kontakt` (`_src/index.html`) zpracovává **Netlify Forms**: Netlify ho při každém
+  nasazení najde v hotovém HTML (atributy `data-netlify="true"` a `name="kontakt"`), zprávy ukládá
+  a posílá upozornění e-mailem. Žádná další služba ani klíč v `config.json` není potřeba.
+- S JavaScriptem odešle `site/assets/js/site.js` formulář AJAXem (`POST /`, `application/x-www-form-urlencoded`)
+  a poděkování se ukáže přímo na stránce; při chybě nebo po 20 s bez odpovědi se zobrazí výzva napsat
+  na e-mail. Bez JavaScriptu se formulář odešle klasicky na `/dekujeme/` (stránka `_src/legal/dekujeme.html`,
+  `noindex`, není v sitemap).
+- Názvy polí jsou klíče v Netlify – **neměňte je**: `jmeno` (titulek zprávy v Netlify, musí být první
+  textové pole), `email` (nastaví Reply-To upozornění, takže stačí odpovědět), `telefon`, `zajem`,
+  `zprava` (text zprávy). Skrytá pole: `form-name` (název formuláře, nutné pro AJAX), `subject`
+  (předmět upozornění, `%{submissionId}` doplní Netlify) a `bot-field` (past na roboty, `netlify-honeypot`).
+  Tlačítka „Rezervovat konzultaci“ v ceníku předvyplní `zajem` a `zprava` (atributy `data-kontakt-zajem`,
+  `data-kontakt-zprava`).
+- Spam filtruje Netlify (past `bot-field` a služba Akismet). Zprávy označené jako spam jsou v administraci
+  zvlášť (Forms → kontakt, přepínač spamu) – občas je zkontrolujte.
+- CSP (meta ve všech šablonách i `site/_headers`) povoluje jen vlastní web: `connect-src 'self'`
+  a `form-action 'self' mailto:`.
+- Lokálně ani na GitHub Pages (cíl `preview`) formulář nefunguje – odeslání skončí chybovou hláškou
+  s e-mailem. Vyzkoušejte ho na https://nutrivero-nahled.netlify.app/.
+- Zásady GDPR popisují formulář v části `#kontaktni-formular` (`_src/legal/ochrana-osobnich-udaju.html`),
+  krátké upozornění je i pod tlačítkem „Odeslat zprávu“ – při změně služby upravte obě místa.
+- Odeslané zprávy zůstávají v Netlify, dokud je nesmažete. Mažte je podle lhůt uvedených v zásadách
+  (v detailu zprávy v Forms → kontakt), případně je předtím exportujte do CSV.
+
+**Jednorázové nastavení v Netlify** (u každého webu zvlášť – `nutrivero-nahled` i budoucí ostrý web):
+
+1. Netlify → web → **Forms** → **Enable form detection**. Detekce probíhá při nasazení, takže po zapnutí
+   web **znovu nasaďte** (viz níže); pak se v Forms objeví formulář `kontakt`.
+2. Forms → **Form notifications** → **Add notification** → **Email notification** → formulář `kontakt`,
+   adresa `info@nutrivero.cz`.
+3. Odešlete zkušební zprávu a ověřte, že je v Netlify (Forms → kontakt) a že dorazil e-mail
+   (zkontrolujte i složku se spamem ve schránce).
+
+Odeslané zprávy najdete v administraci Netlify: web → **Forms** → **kontakt** (export do CSV tamtéž).
 
 ## Build
 
 Spouštějte z kořenové složky projektu:
 
 ```
-python _src/build.py --target preview                    # náhled (výchozí cíl) → site/
+python _src/build.py --target netlify-nahled --out _dist # náhled na Netlify (výchozí cíl) → _dist/
+python _src/build.py --target preview                    # náhled na GitHub Pages → site/
 python _src/build.py --target production --strict        # ostrý web → site/; zástupné hodnoty = chyba
 python _src/build.py --target preview --out ../nutrivero-nahled
                                                           # kompletní web do jiné složky
 ```
 
-- `--target preview|production` – cíl (výchozí podle `TARGET` v `config.json`).
+- `--target netlify-nahled|preview|production` – cíl (výchozí podle `TARGET` v `config.json`,
+  tj. `netlify-nahled`).
 - `--out SLOŽKA` – výstup jinam než do `site/`. Do takové složky build zkopíruje i statické soubory
-  ze `site/` (`assets/`, `favicon.ico`, `apple-touch-icon.png`, `site.webmanifest`, `.nojekyll`;
-  u ostrého webu navíc `_headers` a `_redirects`), takže vznikne kompletní web k nahrání.
+  ze `site/` (`assets/`, `favicon.ico`, `apple-touch-icon.png`, `site.webmanifest`; u cílů s `NETLIFY`
+  `_headers` a `_redirects`, u GitHub Pages `.nojekyll`), takže vznikne kompletní web k nahrání.
+  U náhledu na Netlify build do zkopírovaného `_headers` připíše pravidlo `/*` s `X-Robots-Tag: noindex, nofollow`
+  – proto náhled na Netlify vždy buildujte s `--out` (zdrojový `site/_headers` se nemění; při buildu
+  do `site/` build upozorní). `_dist/` je v `.gitignore`.
 - `--strict` – zástupné hodnoty v `config.json` jsou chyba (vždy před ostrým nasazením).
 
 Build selže a nic nezapíše, pokud ve výstupu zůstane `%%…%%` nebo `{{…}}`, JSON-LD není platný JSON,
-náhled nemá `noindex`, `SITE_URL` neodpovídá `BASE_PATH` nebo `UPDATED` / `HOME_UPDATED_ISO`
-nejsou platná data.
+náhled nemá `noindex`, `SITE_URL` neodpovídá `BASE_PATH`, `UPDATED` / `HOME_UPDATED_ISO` nejsou
+platná data, v meta podstránky je neplatné `robots` / `sitemap`, stránka se `"sitemap": false` (nebo
+`noindex`) je v `_src/sitemap.xml`, nebo formulář Netlify Forms nemá `name`, `method="POST"`, skryté
+pole `form-name`, pole pasti z `netlify-honeypot` či stránku, na kterou míří jeho `action`.
 
 Pozor: `site/` je zároveň zdroj statických souborů i výchozí výstup. HTML v `site/` odpovídá
-poslednímu buildu – po buildu náhledu má cesty s `/nutrivero-nahled/…`, po buildu ostrého webu
-cesty od kořene.
+poslednímu buildu – po buildu náhledu na GitHub Pages má cesty s `/nutrivero-nahled/…`, po buildu
+pro Netlify (náhled i ostrý web) cesty od kořene.
 
 ### Lokální náhled
 
-- Ostrý web: `python _src/build.py --target production --out <dočasná složka>` a pak
-  `python -m http.server 8080 --directory <dočasná složka>` → http://localhost:8080/
-- Náhled (běží v podsložce): `python _src/build.py --target preview --out <dočasná složka>/nutrivero-nahled`,
+- Náhled na Netlify / ostrý web (běží v kořeni): `python _src/build.py --target netlify-nahled --out <dočasná složka>`
+  (nebo `--target production`) a pak `python -m http.server 8080 --directory <dočasná složka>`
+  → http://localhost:8080/ (kontaktní formulář lokálně skončí chybou – zprávy přijímá jen Netlify).
+- Náhled na GitHub Pages (běží v podsložce): `python _src/build.py --target preview --out <dočasná složka>/nutrivero-nahled`,
   pak `python -m http.server 8080 --directory <dočasná složka>` → http://localhost:8080/nutrivero-nahled/
 
 Hlavičky z `_headers` a přesměrování z `_redirects` lokálně ani na GitHub Pages nefungují
 (jen na Netlify, případně přes `netlify dev`). Základní CSP je proto zapsaná i přímo v `<head>`
 každé stránky (`<meta http-equiv="Content-Security-Policy">`) spolu s `<meta name="referrer">`.
 
+## Náhled na Netlify (cíl netlify-nahled, výchozí)
+
+Web `nutrivero-nahled` na Netlify (https://nutrivero-nahled.netlify.app/, ID
+`0e049152-4ae2-4324-a1bf-d60fa1261180`) běží v kořeni domény, je `noindex` a kontaktní formulář
+na něm funguje přes Netlify Forms. Nasazuje se ručně z počítače přes Netlify CLI.
+
+Jednorázově: `npm install -g netlify-cli` a `netlify login`. Dále v administraci Netlify zapněte
+detekci formulářů a upozornění e-mailem (viz [Kontaktní formulář](#kontaktní-formulář-netlify-forms)).
+
+Každá aktualizace náhledu (z kořenové složky projektu):
+
+```
+python _src/build.py --target netlify-nahled --out _dist
+netlify deploy --prod --dir _dist --site 0e049152-4ae2-4324-a1bf-d60fa1261180
+```
+
+- `--prod` zveřejní nasazení na adrese https://nutrivero-nahled.netlify.app/. **Každé produkční nasazení
+  stojí 15 kreditů** z limitu účtu Netlify – nenasazujte kvůli každé drobnosti, změny sdružte
+  a předem je zkontrolujte lokálně (viz Lokální náhled).
+- Nasazuje se celá složka `_dist` včetně `_headers` a `_redirects`. CLI si stav ukládá do složky
+  `.netlify/` (je v `.gitignore`).
+- Náhled se neindexuje: `<meta name="robots" content="noindex,nofollow">` na každé stránce, hlavička
+  `X-Robots-Tag: noindex, nofollow` (build ji připíše do `_dist/_headers`) a `robots.txt` s `Disallow: /`.
+  Sitemap náhled nemá.
+- Po nasazení ověřte formulář zkušební zprávou (Forms → kontakt).
+
 ## Náhled na GitHub Pages (repozitář nutrivero-nahled)
+
+Původní náhled; zatím zůstává v provozu (o vypnutí GitHub Pages se rozhodne později).
+**Kontaktní formulář na něm nefunguje** – GitHub Pages neumí přijímat odeslané formuláře (Netlify Forms
+běží jen na Netlify), návštěvník po odeslání uvidí chybovou hlášku s odkazem na e-mail.
 
 Celý projekt (`_src/`, `site/`) je ve veřejném repozitáři `OndrejKamaryt/nutrivero-nahled`.
 GitHub Pages je nastavené na zdroj **GitHub Actions**: workflow `.github/workflows/pages.yml`
@@ -160,12 +237,12 @@ Po pár minutách je náhled na https://ondrejkamaryt.github.io/nutrivero-nahled
 - `.nojekyll` vypíná zpracování Jekyllem (web se zveřejní přesně tak, jak je).
 - Neznámé adresy GitHub Pages obslouží souborem `404.html` (se stavem 404); stránka 404 používá
   absolutní cesty s `/nutrivero-nahled/`, takže se zobrazí správně i v hlubší cestě.
-- Do náhledu se **nekopírují** `_headers` ani `_redirects` (GitHub Pages je nepoužívá). Pokud ve
-  složce zůstaly z dřívějška, build upozorní – smažte je. Na GitHub Pages proto nefungují HSTS,
-  `frame-ancestors`/`X-Frame-Options`, `Permissions-Policy` ani přesměrování `/gdpr`, `/vop` …
-  Pro náhled to nevadí; ostrý web je má z `_headers` na Netlify.
+- Do náhledu se **nekopírují** `_headers` ani `_redirects` (GitHub Pages je nepoužívá; řídí to
+  `"NETLIFY": false` cíle `preview`). Pokud ve složce zůstaly z dřívějška, build upozorní – smažte je.
+  Na GitHub Pages proto nefungují HSTS, `frame-ancestors`/`X-Frame-Options`, `Permissions-Policy`
+  ani přesměrování `/gdpr`, `/vop` … Pro náhled to nevadí; Netlify je má z `_headers`.
 
-### Náhled se neindexuje
+### Náhled na GitHub Pages se neindexuje
 
 - Každá stránka náhledu má `<meta name="robots" content="noindex,nofollow">` (build to kontroluje).
 - `robots.txt` náhledu obsahuje `Disallow: /` a neodkazuje na sitemap. Vyhledávače ale čtou
@@ -179,13 +256,18 @@ Po pár minutách je náhled na https://ondrejkamaryt.github.io/nutrivero-nahled
 
 ## Ostrý web na Netlify (cíl production)
 
-Jednorázově: `npm install -g netlify-cli`, pak `netlify login` a `netlify link` (nebo při prvním
-`netlify deploy` zvolte „Create & configure a new site“).
+Ostrý web zatím nasazený není (rozhodne se později). Pokud poběží jako samostatný web na Netlify:
+jednorázově `npm install -g netlify-cli`, pak `netlify login` a při prvním `netlify deploy` zvolte
+„Create & configure a new site“ (nebo web založte v administraci a jeho ID předávejte přes `--site`).
+U nového webu znovu zapněte detekci formulářů a upozornění e-mailem
+(viz [Kontaktní formulář](#kontaktní-formulář-netlify-forms)) – nastavení se mezi weby nepřenáší.
+Pokud se místo toho vlastní doména připojí k webu `nutrivero-nahled`, nasazujte na něj build
+`--target production` (ne `netlify-nahled`, ten je `noindex`).
 
 ```
 python _src/build.py --target production --strict --out ../nutrivero-produkce
-netlify deploy --dir ../nutrivero-produkce          # náhledová verze (draft URL) ke kontrole
-netlify deploy --prod --dir ../nutrivero-produkce   # ostrá verze
+netlify deploy --dir ../nutrivero-produkce --site <ID ostrého webu>          # náhledová verze (draft URL) ke kontrole
+netlify deploy --prod --dir ../nutrivero-produkce --site <ID ostrého webu>   # ostrá verze (15 kreditů)
 ```
 
 (Lze buildovat i přímo do `site/` – `python _src/build.py --target production --strict` – a nasadit
