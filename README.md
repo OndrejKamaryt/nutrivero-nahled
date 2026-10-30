@@ -8,6 +8,11 @@ Statický web Nutrivero (nutriční poradenství, Tereza Ševčíková).
 - **DNS:** u Webglobe (administrace Terezy). Web: A `@` → `75.2.60.5`, CNAME `www` → `nutrivero-nahled.netlify.app.`;
   e-mail běží přes Google Workspace (MX `smtp.google.com`) – MX a ostatní záznamy neměnit.
   Původní A `@` před spuštěním: `62.109.151.80` (hosting Webglobe).
+- **E-mail (30. 10. 2026):** SPF `v=spf1 include:_spf.google.com include:_spf.webglobe.cz ~all`
+  (původně `v=spf1 a mx include:_spf.webglobe.cz -all`), DKIM `google._domainkey` (2048 bitů, vygenerováno
+  a zapnuté v Google Admin → Gmail → Ověřit e-mail), DMARC `p=none`.
+- **Google Search Console:** vlastnost typu Doména `nutrivero.cz` (účet info@nutrivero.cz), ověřená
+  záznamem `google-site-verification` v DNS – ten nemazat; odeslaná sitemapa `https://nutrivero.cz/sitemap.xml`.
 - **Starý náhled na GitHub Pages:** https://ondrejkamaryt.github.io/nutrivero-nahled/ jen přesměrovává na
   https://nutrivero.cz/ (workflow `.github/workflows/pages.yml` publikuje `.github/pages-redirect/`).
 - **Zdroje:** `_src/` (šablony, právní texty, `config.json`, `build.py`) – podrobný návod je v [`_src/README.md`](_src/README.md)
