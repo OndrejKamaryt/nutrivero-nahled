@@ -1,7 +1,5 @@
-# Nutrivero – robots.txt pro NÁHLED (Netlify, https://nutrivero-nahled.netlify.app/)
-# Náhled se nemá procházet ani indexovat. Každá stránka má navíc <meta name="robots" content="noindex,nofollow">;
-# náhled na Netlify posílá i hlavičku X-Robots-Tag: noindex, nofollow. Na GitHub Pages (web v podsložce)
-# čtou vyhledávače robots.txt jen z kořene domény, tam proto indexaci blokuje hlavně meta značka.
-# Ostrý web používá _src/robots.txt (build --target production).
+# Nutrivero – robots.txt
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://nutrivero.cz/sitemap.xml
