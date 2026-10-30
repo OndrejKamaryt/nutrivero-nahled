@@ -140,7 +140,15 @@ def read(path: Path) -> str:
     return path.read_text(encoding="utf-8-sig")
 
 
+# HTML komentáře (interní poznámky typu „K POTVRZENÍ MAJITELKOU“) nepatří do veřejného zdrojového kódu:
+# celé řádky s komentářem se vypustí, komentáře uprostřed řádku se odstraní bez okolních mezer.
+HTML_COMMENT_LINE_RE = re.compile(r"^[ \t]*<!--(?!\[if).*?-->[ \t]*\n", re.S | re.M)
+HTML_COMMENT_RE = re.compile(r"<!--(?!\[if).*?-->", re.S)
+
+
 def write(path: Path, text: str) -> None:
+    if path.suffix == ".html":
+        text = HTML_COMMENT_RE.sub("", HTML_COMMENT_LINE_RE.sub("", text))
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w", encoding="utf-8", newline="\n") as fh:
         fh.write(text)

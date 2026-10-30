@@ -257,7 +257,10 @@
     }
   });
 
-  /* ───────── Květinový slider (jen ≥ 1100 px) ───────── */
+  /* ───────── Květinový slider (všechny šířky) ─────────
+     Stejná logika jako v prototypu: postup p podle polohy řádku ve viewportu (0 → 1 na 70 % výšky okna).
+     ≥ 760 px tlačítko jede s postupem zleva doprava, pod 760 px stojí vpravo (translateX = celý rozsah)
+     a květiny i tak rostou s postupem. Omezený pohyb (prefers-reduced-motion) = rovnou konečný stav. */
   var track = doc.querySelector('[data-kvetiny-track]');
   var flowersBox = track ? track.querySelector('[data-kvetiny]') : null;
   var slideBtn = track ? track.querySelector('[data-kvetiny-btn]') : null;
@@ -309,29 +312,35 @@
 
   if (track && flowersBox && slideBtn) {
     buildFlowers();
-    var flowers = flowersBox.querySelectorAll('[data-nv-flower]');
-    var wideQuery = window.matchMedia ? window.matchMedia(WIDE_MQ) : null;
+    // Prvky květin si připravit jednou, ne při každém snímku.
+    var flowers = Array.prototype.map.call(flowersBox.querySelectorAll('[data-nv-flower]'), function (fl) {
+      return {
+        f: parseFloat(fl.getAttribute('data-nv-flower')),
+        stem: fl.querySelector('[data-nv-stem]'),
+        bloom: fl.querySelector('[data-nv-bloom]')
+      };
+    });
     var raf = null;
+    var lastState = '';
     var slide = function () {
       raf = null;
-      // Pod 1100 px je slider skrytý (CSS) – nic nepočítat, ať se zbytečně nevynucuje layout.
-      if (wideQuery && !wideQuery.matches) return;
       var r = track.getBoundingClientRect();
       var vh = window.innerHeight;
       var p = reducedMotion() ? 1 : (vh - r.top) / (vh * 0.7);
       p = Math.max(0, Math.min(1, p));
       var range = Math.max(0, r.width - slideBtn.offsetWidth);
       var mobile = window.innerWidth < 760;
+      // Mimo viewport je p trvale 0 nebo 1 – stejný stav znovu nezapisovat.
+      var state = p + '|' + r.width + '|' + range + '|' + mobile;
+      if (state === lastState) return;
+      lastState = state;
       var x = p * range;
       slideBtn.style.transform = 'translateX(' + (mobile ? range : x) + 'px)';
       for (var i = 0; i < flowers.length; i++) {
-        var fl = flowers[i];
-        var fx = parseFloat(fl.getAttribute('data-nv-flower')) * r.width;
+        var fx = flowers[i].f * r.width;
         var g = Math.max(0, Math.min(1, (x - fx + 4) / 70));
-        var st = fl.querySelector('[data-nv-stem]');
-        var bl = fl.querySelector('[data-nv-bloom]');
-        if (st) st.style.transform = 'scaleY(' + g + ')';
-        if (bl) bl.style.transform = 'scale(' + (g > 0.85 ? 1 : 0) + ')';
+        if (flowers[i].stem) flowers[i].stem.style.transform = 'scaleY(' + g + ')';
+        if (flowers[i].bloom) flowers[i].bloom.style.transform = 'scale(' + (g > 0.85 ? 1 : 0) + ')';
       }
     };
     var onSlideScroll = function () { if (!raf) raf = window.requestAnimationFrame(slide); };
@@ -339,8 +348,9 @@
     window.addEventListener('resize', onSlideScroll);
     if (window.matchMedia) {
       onMqChange(window.matchMedia('(prefers-reduced-motion: reduce)'), onSlideScroll);
-      onMqChange(wideQuery, onSlideScroll);
     }
+    // Šířka tlačítka se změní po načtení písma (DM Sans) – přepočítat rozsah.
+    if (doc.fonts && doc.fonts.ready && doc.fonts.ready.then) doc.fonts.ready.then(onSlideScroll);
     window.setTimeout(onSlideScroll, 50);
   }
 })();

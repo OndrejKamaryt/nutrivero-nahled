@@ -3,11 +3,16 @@
 Statický web bez frameworku. Všechny texty se upravují v `_src/` a hotové stránky vygeneruje skript
 `_src/build.py`. Web má tři cíle nasazení:
 
+> **Stav od 30. 10. 2026:** ostrý web běží na https://nutrivero.cz/ (cíl `production`, v `config.json`
+> nastavený jako výchozí `TARGET`; Netlify, web `nutrivero-nahled` s připojenou doménou). Aktuální stav
+> nasazení, DNS, e-mailu a Search Console popisuje `README.md` v kořeni projektu – má přednost před
+> staršími poznámkami o náhledech níže.
+
 | Cíl | Kde běží | Adresa | Indexace | Kontaktní formulář |
 |---|---|---|---|---|
-| `netlify-nahled` (výchozí) | Netlify, web `nutrivero-nahled` (ID `0e049152-4ae2-4324-a1bf-d60fa1261180`), v kořeni | https://nutrivero-nahled.netlify.app/ | **ne** – `noindex,nofollow` | ano (Netlify Forms) |
+| `netlify-nahled` | Netlify, web `nutrivero-nahled` (ID `0e049152-4ae2-4324-a1bf-d60fa1261180`), v kořeni | https://nutrivero-nahled.netlify.app/ | **ne** – `noindex,nofollow` | ano (Netlify Forms) |
 | `preview` | GitHub Pages, veřejný repozitář `OndrejKamaryt/nutrivero-nahled` | https://ondrejkamaryt.github.io/nutrivero-nahled/ (podsložka `/nutrivero-nahled`) | **ne** – `noindex,nofollow` | **ne** – odeslání skončí chybou s odkazem na e-mail |
-| `production` | Netlify, vlastní doména v kořeni (zatím nenasazeno) | https://nutrivero.cz/ | ano – `index,follow` | ano (Netlify Forms) |
+| `production` (výchozí) | Netlify, web `nutrivero-nahled` s vlastní doménou, v kořeni (ostrý od 30. 10. 2026) | https://nutrivero.cz/ | ano – `index,follow` | ano (Netlify Forms) |
 
 Přepnutí mezi náhledem a ostrým webem je jen otázka buildu s jiným `--target` – zdrojové soubory
 se nemění. Náhled na GitHub Pages zatím zůstává (nasazuje ho GitHub Actions), ale kontaktní formulář
@@ -35,8 +40,8 @@ site/                    statické soubory + výchozí výstup buildu (HTML v si
   assets/css/            fonts.css (DM Sans, hostováno lokálně), site.css, consent.css
   assets/js/             site.js, consent.js (cookie lišta a nastavení)
   assets/fonts/          DM Sans (woff2) + licence OFL
-  assets/img/            fotky (webp/jpg), ikony, icons/, og-image-2.jpg (náhled pro sociální sítě,
-                         1200×630; starší og-image.jpg smažte, až na něj nebude nic odkazovat)
+  assets/img/            fotky (webp/jpg), ikony, icons/, og-image-3.jpg (náhled pro sociální sítě,
+                         1200×630; starší og-image-2.jpg a og-image.jpg smažte, až na ně nebude nic odkazovat)
 nutrivero-web-hotov/     původní návrh (prototyp) – jen pro referenci, nenasazuje se
 ```
 
@@ -63,7 +68,7 @@ nutrivero-web-hotov/     původní návrh (prototyp) – jen pro referenci, nena
   `data-src`). Inline `style="…url(/…)"` nepoužívejte – v podsložce by nefungoval (build ho odmítne).
   V CSS používejte cesty relativní k CSS souboru (`url(../fonts/…)`).
 - Česká typografie: za jednopísmennými předložkami a spojkami (k, s, v, z, o, u, i, a) a mezi číslem
-  a jednotkou (2 900&nbsp;Kč, 30&nbsp;minut) používejte nezlomitelnou mezeru `&nbsp;`.
+  a jednotkou (3 900&nbsp;Kč, 30&nbsp;minut) používejte nezlomitelnou mezeru `&nbsp;`.
 - Po každé změně spusťte build (viz níže) a zkontrolujte výsledek.
 
 ## Tokeny a config.json
@@ -71,7 +76,7 @@ nutrivero-web-hotov/     původní návrh (prototyp) – jen pro referenci, nena
 V textech se píšou tokeny `%%NAZEV%%`, build je nahradí hodnotami z `_src/config.json`.
 Kořen `config.json` obsahuje **společné** hodnoty, `targets.netlify-nahled`, `targets.preview`
 a `targets.production` hodnoty **cíle**, které společné doplní nebo přepíšou. `TARGET` určuje výchozí
-cíl (`"netlify-nahled"`). Klíče začínající `_` jsou komentáře.
+cíl (`"production"`). Klíče začínající `_` jsou komentáře.
 
 | Token | Kde | Význam |
 |---|---|---|
@@ -152,7 +157,7 @@ python _src/build.py --target preview --out ../nutrivero-nahled
 ```
 
 - `--target netlify-nahled|preview|production` – cíl (výchozí podle `TARGET` v `config.json`,
-  tj. `netlify-nahled`).
+  tj. `production`).
 - `--out SLOŽKA` – výstup jinam než do `site/`. Do takové složky build zkopíruje i statické soubory
   ze `site/` (`assets/`, `favicon.ico`, `apple-touch-icon.png`, `site.webmanifest`; u cílů s `NETLIFY`
   `_headers` a `_redirects`, u GitHub Pages `.nojekyll`), takže vznikne kompletní web k nahrání.
@@ -278,7 +283,7 @@ Pokud ostrý web poběží jinde než na Netlify, upravte v `config.json` → `t
 `HOSTING_*` (promítnou se do právních textů) a nastavte hlavičky z `site/_headers` u nového hostingu.
 
 Cache: obrázky a fonty mají cache na 1 rok (`immutable`). Když obrázek měníte, **uložte ho pod novým
-názvem** (např. `og-image-3.jpg`) a upravte odkazy, jinak se návštěvníkům může zobrazovat starý.
+názvem** (např. `og-image-4.jpg`) a upravte odkazy, jinak se návštěvníkům může zobrazovat starý.
 CSS a JS mají cache 1 hodinu.
 
 ## Vlastní doména u Webglobe
