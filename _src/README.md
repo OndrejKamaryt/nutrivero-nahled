@@ -40,7 +40,7 @@ site/                    statické soubory + výchozí výstup buildu (HTML v si
   assets/css/            fonts.css (DM Sans, hostováno lokálně), site.css, consent.css
   assets/js/             site.js, consent.js (cookie lišta a nastavení)
   assets/fonts/          DM Sans (woff2) + licence OFL
-  assets/img/            fotky (webp/jpg), ikony, icons/, og-image-3.jpg (náhled pro sociální sítě,
+  assets/img/            fotky (webp/jpg), ikony, icons/, og-image-4.jpg (náhled pro sociální sítě,
                          1200×630; starší og-image-2.jpg a og-image.jpg smažte, až na ně nebude nic odkazovat)
 nutrivero-web-hotov/     původní návrh (prototyp) – jen pro referenci, nenasazuje se
 ```

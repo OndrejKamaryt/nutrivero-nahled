@@ -1,6 +1,6 @@
 # Nutrivero – web
 
-Statický web Nutrivero (nutriční poradenství, Tereza Ševčíková).
+Statický web Nutrivero (výživové poradenství, Tereza Ševčíková).
 
 - **Ostrý web:** https://nutrivero.cz/ (cíl `production`, indexovatelný; hosting Netlify, web `nutrivero-nahled`,
   nasazuje se ručně přes Netlify CLI; kontaktní formulář přes Netlify Forms). `www.nutrivero.cz` a
