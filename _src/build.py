@@ -24,6 +24,10 @@ Co dělá:
   * načte _src/config.json, doplní vypočtené tokeny %%BUILD_DATE%% (dnešní datum, ISO),
     %%UPDATED_ISO%% (UPDATED „26. 10. 2026“ jako 2026-10-26, lastmod právních stránek),
     %%ROBOTS%% (index,follow / noindex,nofollow podle PREVIEW) a %%ROBOTS_404%% (vždy noindex),
+  * měření se souhlasem: GA_ID (Google Analytics 4, „G-…“) a META_PIXEL_ID (Meta pixel, číslice) smí být
+    prázdné = nástroj je vypnutý (consent.js pak jeho kategorii v liště nezobrazí); build ověří jejich tvar,
+    že je stránky předávají v <html data-ga-id / data-meta-pixel-id> a že CSP stránek i site/_headers
+    povoluje domény zapnutých nástrojů; upozorní i na rozdíl CSP v <meta> a v site/_headers,
   * _src/index.html  -> <výstup>/index.html
   * _src/legal/<slug>.html (první řádek <!--meta {...} -->) + _src/page-template.html
                      -> <výstup>/<slug>/index.html; volitelné klíče meta: "robots" (např. "noindex,nofollow",
@@ -120,6 +124,22 @@ REQUIRED_TOKENS = [
 # Hodnoty, které končí v URL (href/src/mailto/tel) – nesmí obsahovat mezery.
 URL_TOKENS = ["EMAIL", "TELEFON_HREF", "SITE_URL", "BASE_PATH", "REZERVACE_URL", "REZERVACE_LINK",
               "HOSTING_PRIVACY_URL"]
+# Měření se souhlasem: hodnoty smí být prázdné (= nástroj vypnutý). Chybějící klíč = "" + upozornění.
+OPTIONAL_TOKENS = ["GA_ID", "META_PIXEL_ID"]
+GA_ID_RE = re.compile(r"G-[A-Z0-9]+")
+META_PIXEL_ID_RE = re.compile(r"[0-9]+")
+# Zdroje, které musí CSP povolit, když je nástroj zapnutý: (token, direktiva, zdroj).
+TRACKING_CSP = [
+    ("GA_ID", "script-src", "https://www.googletagmanager.com"),
+    ("GA_ID", "connect-src", "https://*.google-analytics.com"),
+    ("GA_ID", "connect-src", "https://*.analytics.google.com"),
+    ("GA_ID", "img-src", "https://*.google-analytics.com"),
+    ("META_PIXEL_ID", "script-src", "https://connect.facebook.net"),
+    ("META_PIXEL_ID", "connect-src", "https://www.facebook.com"),
+    ("META_PIXEL_ID", "img-src", "https://www.facebook.com"),
+]
+CSP_META_RE = re.compile(r"<meta\s+http-equiv=\"Content-Security-Policy\"\s+content=\"([^\"]*)\"", re.I)
+HTML_TAG_RE = re.compile(r"<html\b[^>]*>", re.I)
 # Tokeny, které počítá build – v config.json se nezadávají.
 COMPUTED_TOKENS = ["BUILD_DATE", "UPDATED_ISO", "ROBOTS", "ROBOTS_404"]
 TEMPLATE_KEYS = ["TITLE", "DESCRIPTION", "PATH", "H1", "LEAD", "CONTENT", "ROBOTS"]
@@ -373,6 +393,19 @@ def load_config(strict: bool, target_arg: str | None) -> tuple[dict[str, str], s
     if ico and not ico.startswith("[") and not re.fullmatch(r"\d{8}", ico):
         warnings.append(f"config.json: ICO nemá 8 číslic ({ico!r})")
 
+    # --- měření se souhlasem: prázdná hodnota = nástroj vypnutý (bez upozornění, není to zástupná hodnota)
+    for key in OPTIONAL_TOKENS:
+        if key not in cfg:
+            cfg[key] = ""
+            warnings.append(f"config.json: chybí {key} – nástroj je vypnutý (vypnutí zapište jako \"{key}\": \"\")")
+    ga_id = cfg["GA_ID"]
+    if ga_id and not GA_ID_RE.fullmatch(ga_id):
+        errors.append(f"config.json: GA_ID musí být prázdné, nebo Measurement ID služby Google Analytics 4 "
+                      f"ve tvaru G-XXXXXXXXXX (velká písmena a číslice) ({ga_id!r})")
+    pixel_id = cfg["META_PIXEL_ID"]
+    if pixel_id and not META_PIXEL_ID_RE.fullmatch(pixel_id):
+        errors.append(f"config.json: META_PIXEL_ID musí být prázdné, nebo jen číslice ({pixel_id!r})")
+
     # --- zástupné hodnoty
     placeholders = []
     for key, val in cfg.items():
@@ -538,6 +571,57 @@ def fill_template(template: str, values: dict[str, str]) -> str:
     def repl(m: re.Match) -> str:
         return values.get(m.group(1), m.group(0))
     return TEMPLATE_KEY_RE.sub(repl, template)
+
+
+def parse_csp(policy: str) -> dict[str, list[str]]:
+    """CSP jako {direktiva: [zdroje]} (názvy direktiv malými písmeny)."""
+    out: dict[str, list[str]] = {}
+    for part in policy.split(";"):
+        words = part.split()
+        if words:
+            out.setdefault(words[0].lower(), words[1:])
+    return out
+
+
+def headers_csp() -> str | None:
+    """CSP z pravidla "/*" v site/_headers, nebo None."""
+    path = SITE / "_headers"
+    if not path.is_file():
+        return None
+    in_all = False
+    for line in read(path).split("\n"):
+        if line[:1] not in ("", " ", "\t", "#"):
+            in_all = line.strip() == "/*"
+            continue
+        key, sep, value = line.strip().partition(":")
+        if in_all and sep and key.strip().lower() == "content-security-policy":
+            return value.strip()
+    return None
+
+
+def check_tracking(result: str, label: str, cfg: dict[str, str], header_csp: str | None) -> None:
+    """Zapnutý nástroj měření musí mít v <html> své ID a v CSP své domény – jinak se tiše nenačte."""
+    html_tag = HTML_TAG_RE.search(result)
+    attrs = tag_attrs(html_tag.group(0)) if html_tag else {}
+    for key, attr in (("GA_ID", "data-ga-id"), ("META_PIXEL_ID", "data-meta-pixel-id")):
+        if cfg.get(key) and attrs.get(attr) != cfg[key]:
+            warnings.append(f"{label}: {key} je vyplněné, ale <html> nemá {attr}=\"%%{key}%%\" "
+                            "– consent.js nástroj nenačte")
+    m = CSP_META_RE.search(result)
+    sources = [("<meta> CSP", parse_csp(m.group(1)))] if m else []
+    if header_csp is not None:
+        sources.append(("site/_headers CSP", parse_csp(header_csp)))
+    for where, csp in sources:
+        for key, directive, source in TRACKING_CSP:
+            if cfg.get(key) and source not in csp.get(directive, csp.get("default-src", [])):
+                warnings.append(f"{label}: {key} je vyplněné, ale {where} nepovoluje {source} v {directive} "
+                                "– prohlížeč nástroj zablokuje")
+    if m and header_csp is not None:
+        meta = {k: sorted(v) for k, v in parse_csp(m.group(1)).items()}
+        head = {k: sorted(v) for k, v in parse_csp(header_csp).items() if k != "frame-ancestors"}
+        if meta != head:
+            diff = sorted(k for k in set(meta) | set(head) if meta.get(k) != head.get(k))
+            warnings.append(f"{label}: CSP v <meta> se liší od site/_headers (kromě frame-ancestors): {', '.join(diff)}")
 
 
 def check_page(result: str, label: str, preview: bool, base: str) -> None:
@@ -716,6 +800,9 @@ def build(strict: bool, target_arg: str | None, out_arg: str | None) -> int:
 
     rendered: list[tuple[Path, str]] = []
     prefixed = 0
+    header_csp = headers_csp() if netlify else None
+    if netlify and header_csp is None:
+        warnings.append("site/_headers: chybí pravidlo \"/*\" s Content-Security-Policy")
     forms: list[str] = []
     for out_path, text, kind in jobs:
         label = rel(out_path)
@@ -724,6 +811,7 @@ def build(strict: bool, target_arg: str | None, out_arg: str | None) -> int:
             result, n = apply_base_path(result, base)
             prefixed += n
             check_page(result, label, preview, base)
+            check_tracking(result, label, cfg, header_csp)
             forms += check_netlify_forms(result, label, base, set(pages))
         elif out_path.name == "sitemap.xml":
             check_sitemap(result, label, cfg["SITE_URL"], pages)
@@ -765,6 +853,8 @@ def build(strict: bool, target_arg: str | None, out_arg: str | None) -> int:
         print(f"  zapsáno  {name:40s} {len(result.encode('utf-8')):>8,d} B".replace(",", " "))
     for name in removed:
         print(f"  smazáno  {name} (náhled je noindex, sitemap nemá)")
+    print(f"  měření se souhlasem: Google Analytics {cfg['GA_ID'] or 'vypnuto (GA_ID prázdné)'}, "
+          f"Meta pixel {cfg['META_PIXEL_ID'] or 'vypnuto (META_PIXEL_ID prázdné)'}")
     if base:
         print(f"  doplněno {base} do {prefixed} kořenových adres v HTML")
     if copied:

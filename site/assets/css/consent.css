@@ -309,6 +309,20 @@ html.nvc-has-banner body {
   line-height: 1.55;
   text-wrap: pretty;
 }
+/* Poskytovatel a cookies kategorie (Externí obsah, Analytické, Marketingové) – drobný řádek pod popisem */
+.nvc-cat__meta {
+  margin: 8px 0 0;
+  padding-top: 8px;
+  border-top: 1px solid var(--nvc-line);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--nvc-muted);
+  overflow-wrap: anywhere; /* názvy cookies jako _ga_* se na úzkém displeji nesmí vylít ven */
+}
+/* Zapnutá volitelná kategorie: jemné zvýraznění celé karty, aby bylo na první pohled vidět, co je povolené */
+.nvc-cat:not(.nvc-cat--required):has(.nvc-switch:checked) {
+  box-shadow: inset 0 0 0 2px var(--nvc-sage-300);
+}
 .nvc-dialog__status {
   margin: 16px 0 0;
   font-size: 13.5px;
@@ -507,7 +521,7 @@ html.nvc-has-banner body {
   }
 }
 
-@media (max-width: 339.98px) {
+@media (max-width: 279.98px) {
   .nvc-banner__actions {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -576,6 +590,9 @@ html.nvc-has-banner body {
   }
   .nvc-switch:checked::before {
     background-color: HighlightText;
+  }
+  .nvc-cat__meta {
+    border-top-color: CanvasText;
   }
 }
 

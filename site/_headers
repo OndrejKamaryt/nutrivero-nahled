@@ -8,9 +8,14 @@
 # a 404.html (meta neumí frame-ancestors) – při změně upravte obě místa.
 # Kontaktní formulář (Netlify Forms) odesílá na vlastní web: AJAX POST na "/" (connect-src 'self'),
 # bez JavaScriptu POST na /dekujeme/ (form-action 'self'). Žádná externí služba není potřeba.
+# Měření se souhlasem (načítá ho jen /assets/js/consent.js, žádné inline skripty):
+#   Google Analytics 4 – script www.googletagmanager.com, odesílání na *.google-analytics.com
+#     a *.analytics.google.com (fetch/beacon, záložně obrázek); platí jen při vyplněném GA_ID v config.json,
+#   Meta pixel – script connect.facebook.net (fbevents.js + konfigurace pixelu), odesílání na www.facebook.com/tr
+#     (obrázek nebo fetch/beacon). Domény jsou v CSP i při prázdném GA_ID, aby stačilo ID doplnit.
 
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src https://calendar.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; frame-ancestors 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://www.googletagmanager.com https://connect.facebook.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.facebook.com https://*.google-analytics.com https://*.googletagmanager.com; font-src 'self'; frame-src https://calendar.google.com https://www.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://www.facebook.com https://connect.facebook.net; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; frame-ancestors 'none'; upgrade-insecure-requests
   # Bez includeSubDomains: subdomény jako webmail.nutrivero.cz vedou na Webglobe a HTTPS mít nemusí.
   Strict-Transport-Security: max-age=31536000
   X-Content-Type-Options: nosniff

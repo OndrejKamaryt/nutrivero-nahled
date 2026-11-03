@@ -9,6 +9,24 @@
   // JavaScript běží: zobrazit prvky .js-only (bez JS je skrývá site.css).
   if (doc.documentElement.classList) doc.documentElement.classList.add('js');
 
+  /* Signály konverzí pro consent.js: document → CustomEvent "nv:lead" (zpráva z kontaktního formuláře
+     odeslána) a "nv:booking" (klik na „Souhlasím, načíst kalendář“ nebo na „Otevřít rezervaci v novém okně“).
+     consent.js je předá Google Analytics / Meta pixelu jen se souhlasem. V detailu je jen zdroj události,
+     nikdy obsah formuláře ani jiné osobní údaje. */
+  function signal(name, source) {
+    var detail = { source: source };
+    var ev;
+    try {
+      ev = new CustomEvent(name, { detail: detail });
+    } catch (err) {
+      try {
+        ev = doc.createEvent('CustomEvent');
+        ev.initCustomEvent(name, false, false, detail);
+      } catch (err2) { return; }
+    }
+    doc.dispatchEvent(ev);
+  }
+
   function reducedMotion() {
     return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   }
@@ -225,6 +243,7 @@
           if (r.ok) {
             kForm.reset();
             kShowDone();
+            signal('nv:lead', 'kontaktni-formular');
           } else {
             kShowError();
           }
@@ -236,6 +255,23 @@
         });
     });
   }
+
+  /* ───────── Rezervace: signál nv:booking ─────────
+     Signál se pošle jen při vědomém kroku návštěvníka: klik na „Souhlasím, načíst kalendář“ v bloku
+     rezervace nebo na odkaz „Otevřít rezervaci v novém okně“ (data-booking-link). Samotné načtení
+     kalendáře se nepočítá – kdo už souhlas dal, tomu se kalendář načte sám při posunu stránky.
+     Dokončenou rezervaci uvnitř kalendáře Googlu web zjistit nemůže.
+     Posluchač běží ve fázi zachycení, tedy dřív, než consent.js tlačítko nahradí kalendářem. */
+  function onBookingIntent(e) {
+    if (e.type === 'auxclick' && e.button !== 1) return;
+    if (e.type === 'click' && e.button !== 0) return; // starší Firefox posílal click i pro prostřední tlačítko
+    var t = e.target;
+    if (!t || typeof t.closest !== 'function') return;
+    if (t.closest('a[data-booking-link]')) signal('nv:booking', 'odkaz');
+    else if (e.type === 'click' && t.closest('[data-consent-embed] [data-consent-accept]')) signal('nv:booking', 'kalendar');
+  }
+  doc.addEventListener('click', onBookingIntent, true);
+  doc.addEventListener('auxclick', onBookingIntent, true);
 
   /* ───────── Tabulky v právních textech: posuvný obal na mobilu ───────── */
   Array.prototype.forEach.call(doc.querySelectorAll('.legal table'), function (table) {

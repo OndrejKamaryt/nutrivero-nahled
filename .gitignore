@@ -11,3 +11,5 @@ desktop.ini
 /Nutrivero web*.html
 # Netlify CLI (netlify link / deploy) – lokální stav
 .netlify/
+# Právní podklady ve Wordu (pracovní verze) – necommitovat
+*.docx

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="cs" data-base="%%BASE_PATH%%">
+<html lang="cs" data-base="%%BASE_PATH%%" data-ga-id="%%GA_ID%%" data-meta-pixel-id="%%META_PIXEL_ID%%">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src https://calendar.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com https://connect.facebook.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.facebook.com https://*.google-analytics.com https://*.googletagmanager.com; font-src 'self'; frame-src https://calendar.google.com https://www.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://www.facebook.com https://connect.facebook.net; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Výživová poradkyně online a jídelníček na míru · Nutrivero</title>
@@ -172,7 +172,7 @@
           "name": "Co když mi spolupráce nebude vyhovovat?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Dejte mi to prosím vědět. Buď postup upravíme, nebo spolupráci ukončíme. Do 14\u00a0dnů od uzavření smlouvy můžete od programu odstoupit bez udání důvodu a\u00a0vrátím vám celou částku. Později vám vrátím poměrnou část ceny za týdny, které ještě nezačaly. Podrobnosti najdete v\u00a0obchodních podmínkách."
+            "text": "Dejte mi to prosím vědět. Buď postup upravíme, nebo spolupráci ukončíme. Do 14\u00a0dnů od uzavření smlouvy můžete od programu odstoupit bez udání důvodu. Pokud jsme ještě nezačali, vrátím vám celou částku. Pokud jsme na vaši žádost už začali, zaplatíte jen poměrnou část ceny za dny, kdy program běžel, a\u00a0zbytek vám vrátím. Po uplynutí 14\u00a0dnů se zaplacená cena programu nevrací. Ze závažného důvodu, například kvůli nemoci, ale program můžete přerušit. Podrobnosti najdete v\u00a0obchodních podmínkách."
           }
         },
         {
@@ -294,31 +294,37 @@
 
   <section id="jak-pracuji" aria-labelledby="jak-pracuji-nadpis" style="padding:clamp(28px,3.5vw,44px) 0 clamp(24px,3vw,36px)">
     <div style="max-width:1120px; margin:0 auto; padding:0 clamp(20px,5vw,56px); display:flex; flex-direction:column; gap:clamp(28px,3.5vw,44px)">
-      <div style="display:flex; flex-wrap:wrap; align-items:flex-start; gap:24px clamp(32px,5vw,64px); width:100%">
-        <div style="flex:1.5 1 420px; min-width:0; display:flex; flex-direction:column; gap:22px">
-          <h2 id="jak-pracuji-nadpis" style="margin:0; font-size:clamp(27px,4.08vw,44px); line-height:1.08; font-weight:400; letter-spacing:-0.025em; text-wrap:balance">Pro koho je program určen</h2>
-          <ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:16px; line-height:1.55">
-            <li style="display:flex; align-items:flex-start; gap:12px; text-wrap:pretty"><img src="/assets/img/ikony/asterisk.webp" alt="" aria-hidden="true" width="320" height="307" loading="lazy" decoding="async" style="flex:none; width:18px; height:auto; margin-top:3px; transform:rotate(30deg)"><span><strong style="font-weight:700">Chcete se cítit lépe</strong>&nbsp;– méně únavy, stabilnější energie</span></li>
-            <li style="display:flex; align-items:flex-start; gap:12px; text-wrap:pretty"><img src="/assets/img/ikony/asterisk.webp" alt="" aria-hidden="true" width="320" height="307" loading="lazy" decoding="async" style="flex:none; width:18px; height:auto; margin-top:3px; transform:rotate(0deg)"><span><strong style="font-weight:700">Chcete zhubnout</strong>&nbsp;– bez drastických diet a&nbsp;v&nbsp;tempu, které udržíte</span></li>
-            <li style="display:flex; align-items:flex-start; gap:12px; text-wrap:pretty"><img src="/assets/img/ikony/asterisk.webp" alt="" aria-hidden="true" width="320" height="307" loading="lazy" decoding="async" style="flex:none; width:18px; height:auto; margin-top:3px; transform:rotate(18deg)"><span><strong style="font-weight:700">Chcete přibrat</strong>&nbsp;– zdravě nabrat na váze</span></li>
-            <li style="display:flex; align-items:flex-start; gap:12px; text-wrap:pretty"><img src="/assets/img/ikony/asterisk.webp" alt="" aria-hidden="true" width="320" height="307" loading="lazy" decoding="async" style="flex:none; width:18px; height:auto; margin-top:3px; transform:rotate(-12deg)"><span><strong style="font-weight:700">Sportujete</strong>&nbsp;– zpevnit postavu, nabrat svaly a&nbsp;zlepšit výkon a&nbsp;regeneraci</span></li>
-          </ul>
-          <div style="display:flex; align-items:flex-start; gap:18px; padding:clamp(24px,3vw,34px); border-radius:var(--radius-lg); background-color:var(--color-accent-2-200)">
-            <span aria-hidden="true" style="flex:none; width:22px; height:22px; margin-top:6px; border-radius:0 100% 0 100%; background-color:#035144"></span>
-            <p style="margin:0; font-size:clamp(17px,1.7vw,20.5px); line-height:1.42; font-weight:500; letter-spacing:-0.01em; text-wrap:pretty">Program je určen těm, kteří chtějí víc než jídelníček na papíře. Chtějí způsob stravování, který obstojí i&nbsp;ve chvíli, kdy na sebe nemají čas.</p>
-          </div>
+      <!-- Rozvržení podle šířky (v návrhu pk*: hranice 820 a 600 px) je v site.css: .pk-grid, .pk-box, .pk-foto. -->
+      <div class="pk-grid">
+        <div class="pk-h"><h2 id="jak-pracuji-nadpis" style="margin:0; font-size:clamp(27px,4.08vw,44px); line-height:1.08; font-weight:400; letter-spacing:-0.025em; text-wrap:balance">Pro koho je program určen</h2></div>
+        <div class="pk-l"><ul style="margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font-size:16px; line-height:1.55">
+            <li style="display:flex; align-items:flex-start; gap:12px; text-wrap:pretty"><img src="/assets/img/ikony/asterisk.webp" alt="" aria-hidden="true" width="320" height="307" loading="lazy" decoding="async" style="flex:none; width:18px; height:auto; margin-top:3px; transform:rotate(30deg)"><span><strong style="font-weight:700">Chcete se cítit lépe</strong>&nbsp;– trápí vás únava, výkyvy energie nebo nepohoda po&nbsp;jídle</span></li>
+            <li style="display:flex; align-items:flex-start; gap:12px; text-wrap:pretty"><img src="/assets/img/ikony/asterisk.webp" alt="" aria-hidden="true" width="320" height="307" loading="lazy" decoding="async" style="flex:none; width:18px; height:auto; margin-top:3px; transform:rotate(0deg)"><span><strong style="font-weight:700">Chcete zhubnout</strong>&nbsp;– bez hladovění a&nbsp;drastických diet, v&nbsp;tempu, které udržíte</span></li>
+            <li style="display:flex; align-items:flex-start; gap:12px; text-wrap:pretty"><img src="/assets/img/ikony/asterisk.webp" alt="" aria-hidden="true" width="320" height="307" loading="lazy" decoding="async" style="flex:none; width:18px; height:auto; margin-top:3px; transform:rotate(18deg)"><span><strong style="font-weight:700">Chcete přibrat</strong>&nbsp;– zdravě a&nbsp;bez přejídání nabrat na váze, i&nbsp;když jídlo nejde samo</span></li>
+            <li style="display:flex; align-items:flex-start; gap:12px; text-wrap:pretty"><img src="/assets/img/ikony/asterisk.webp" alt="" aria-hidden="true" width="320" height="307" loading="lazy" decoding="async" style="flex:none; width:18px; height:auto; margin-top:3px; transform:rotate(-12deg)"><span><strong style="font-weight:700">Sportujete</strong>&nbsp;– chcete zpevnit postavu, nabrat svaly nebo zlepšit výkon</span></li>
+          </ul></div>
+        <div class="pk-box">
+          <span class="pk-leaf" aria-hidden="true"></span>
+          <p class="pk-box-text">Program je určen těm, kteří chtějí víc než jídelníček na papíře. Chtějí způsob stravování, který obstojí i&nbsp;ve chvíli, kdy na sebe nemají čas.</p>
         </div>
-        <div style="flex:0 1 280px; min-width:0; max-width:280px; aspect-ratio:4 / 5">
-          <img src="/assets/img/den-planner-750.webp" srcset="/assets/img/den-planner-480.webp 718w, /assets/img/den-planner-750.webp 1122w" sizes="524px" width="1122" height="750" alt="Rozpracovaný stůl s hrnkem kávy a otevřeným diářem s týdenním plánem" loading="lazy" decoding="async" style="display:block; width:100%; height:100%; max-width:none; object-fit:cover; object-position:center; border-radius:28px">
+        <div class="pk-foto">
+          <img src="/assets/img/zena-u-kuchynske-linky-720.webp" srcset="/assets/img/zena-u-kuchynske-linky-480.webp 480w, /assets/img/zena-u-kuchynske-linky-720.webp 720w, /assets/img/zena-u-kuchynske-linky-960.webp 960w" sizes="(min-width: 820px) 280px, 45vw" width="960" height="1440" alt="Žena v bílém tričku stojí zády u dřevěné kuchyňské linky v útulné kuchyni s policemi, pokojovými rostlinami a měděnou lampou" loading="lazy" decoding="async" style="display:block; width:100%; height:100%; max-width:none; object-fit:cover; border-radius:28px">
         </div>
+      </div>
+      <div aria-hidden="true" style="display:flex; align-items:center; gap:16px; margin:0 calc(-1 * clamp(0px,3vw,56px))">
+        <span style="flex:1; height:2px; border-radius:2px; background-color:var(--color-accent-2)"></span>
+        <span style="display:flex; align-items:center; gap:8px"><span style="width:12px; height:12px; border-radius:0 100% 0 100%; background-color:#A5BA8F; transform:rotate(-20deg)"></span><span style="width:16px; height:16px; border-radius:0 100% 0 100%; background-color:#035144; transform:rotate(10deg)"></span><span style="width:10px; height:10px; border-radius:50%; background-color:#E1C243"></span><span style="width:16px; height:16px; border-radius:0 100% 0 100%; background-color:#035144; transform:rotate(80deg)"></span><span style="width:12px; height:12px; border-radius:0 100% 0 100%; background-color:#A5BA8F; transform:rotate(110deg)"></span></span>
+        <span style="flex:1; height:2px; border-radius:2px; background-color:var(--color-accent-2)"></span>
       </div>
       <div style="display:flex; flex-direction:column; gap:clamp(18px,2.4vw,24px)">
         <h3 style="margin:0; font-size:clamp(25.5px,3.23vw,35.5px); line-height:1.2; font-weight:400; letter-spacing:-0.015em">Proč změny stravy často nevydrží a&nbsp;jak pracuji</h3>
-        <ol style="list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); gap:clamp(20px,2.6vw,28px) 16px">
+        <!-- Čtyři sloupce od šířky seznamu 928 px, dva od 456 px, jinak jeden (jako v návrhu). Velikost nadpisů karet
+             (v návrhu procHead) počítá site.css z šířky seznamu: .proc-list (container) a .proc-title. -->
+        <ol class="proc-list">
           <li style="min-width:0; display:grid; grid-template-rows:subgrid; grid-row:span 2; gap:14px">
-            <div style="display:flex; align-items:baseline; gap:14px; padding:clamp(20px,2.4vw,26px); border-radius:var(--radius-lg); background-color:var(--color-surface)">
-              <span aria-hidden="true" style="flex:none; font-size:clamp(27px,2.89vw,34px); line-height:1; font-weight:300; letter-spacing:-0.03em; color:var(--color-accent-2-700)">01</span>
-              <p style="margin:0; font-size:clamp(16px,1.53vw,18px); line-height:1.35; font-weight:500; letter-spacing:-0.01em; text-wrap:pretty">Počítáte s&nbsp;ideálním týdnem, nikoliv s&nbsp;tím reálným.</p>
+            <div class="proc-head">
+              <span aria-hidden="true" class="proc-num">01</span>
+              <p class="proc-title">Počítáte s&nbsp;ideálním týdnem</p>
             </div>
             <div style="flex:1; padding:0 clamp(8px,1vw,12px); display:flex; flex-direction:column; gap:10px">
               <div aria-hidden="true" style="display:flex; align-items:center; gap:10px; margin:2px 0 6px"><span style="flex:none; width:14px; height:14px; border-radius:0 100% 0 100%; background-color:#A5BA8F"></span><span style="flex:1; height:2px; border-radius:2px; background-color:var(--color-accent-2)"></span></div>
@@ -330,23 +336,24 @@
             </div>
           </li>
           <li style="min-width:0; display:grid; grid-template-rows:subgrid; grid-row:span 2; gap:14px">
-            <div style="display:flex; align-items:baseline; gap:14px; padding:clamp(20px,2.4vw,26px); border-radius:var(--radius-lg); background-color:var(--color-surface)">
-              <span aria-hidden="true" style="flex:none; font-size:clamp(27px,2.89vw,34px); line-height:1; font-weight:300; letter-spacing:-0.03em; color:var(--color-accent-2-700)">02</span>
-              <p style="margin:0; font-size:clamp(16px,1.53vw,18px); line-height:1.35; font-weight:500; letter-spacing:-0.01em; text-wrap:pretty">Bez podpory je snadné to po prvním zaváhání vzdát.</p>
+            <div class="proc-head">
+              <span aria-hidden="true" class="proc-num">02</span>
+              <p class="proc-title">Věříte nepodloženým radám</p>
             </div>
             <div style="flex:1; padding:0 clamp(8px,1vw,12px); display:flex; flex-direction:column; gap:10px">
               <div aria-hidden="true" style="display:flex; align-items:center; gap:10px; margin:2px 0 6px"><span style="flex:none; width:14px; height:14px; border-radius:0 100% 0 100%; background-color:#A5BA8F"></span><span style="flex:1; height:2px; border-radius:2px; background-color:var(--color-accent-2)"></span></div>
               <div style="display:flex; align-items:center; gap:12px">
-                <span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"></line><line x1="10" x2="3" y1="4" y2="4"></line><line x1="21" x2="12" y1="12" y2="12"></line><line x1="8" x2="3" y1="12" y2="12"></line><line x1="21" x2="16" y1="20" y2="20"></line><line x1="12" x2="3" y1="20" y2="20"></line><line x1="14" x2="14" y1="2" y2="6"></line><line x1="8" x2="8" y1="10" y2="14"></line><line x1="16" x2="16" y1="18" y2="22"></line></svg></span>
-                <h4 style="margin:0; font-size:15px; line-height:1.35; font-weight:600; letter-spacing:-0.015em; text-wrap:balance">Jsem s&nbsp;vámi i&nbsp;mezi hovory.</h4>
+                <span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
+                <h4 style="margin:0; font-size:15px; line-height:1.35; font-weight:600; letter-spacing:-0.015em; text-wrap:balance">Vycházíme z&nbsp;ověřených doporučení.</h4>
               </div>
-              <p style="margin:0; font-size:15px; line-height:1.6; text-wrap:pretty">Když něco nevyjde nebo si nebudete vědět rady, napíšete mi a&nbsp;společně prodiskutujeme, jak se s&nbsp;tím poprat.</p>
+              <!-- K POTVRZENÍ MAJITELKOU: věta je v návrhu tautologická („udržitelném stravování, které je dlouhodobě udržitelné“), ponecháno beze změny. -->
+              <p style="margin:0; font-size:15px; line-height:1.6; text-wrap:pretty">Místo rychlých řešení od „odborníků“ z&nbsp;internetu stavíme na udržitelném stravování, které je dlouhodobě udržitelné.</p>
             </div>
           </li>
           <li style="min-width:0; display:grid; grid-template-rows:subgrid; grid-row:span 2; gap:14px">
-            <div style="display:flex; align-items:baseline; gap:14px; padding:clamp(20px,2.4vw,26px); border-radius:var(--radius-lg); background-color:var(--color-surface)">
-              <span aria-hidden="true" style="flex:none; font-size:clamp(27px,2.89vw,34px); line-height:1; font-weight:300; letter-spacing:-0.03em; color:var(--color-accent-2-700)">03</span>
-              <p style="margin:0; font-size:clamp(16px,1.53vw,18px); line-height:1.35; font-weight:500; letter-spacing:-0.01em; text-wrap:pretty">Když se sleduje jen váha, snadno se ztratí motivace.</p>
+            <div class="proc-head">
+              <span aria-hidden="true" class="proc-num">03</span>
+              <p class="proc-title">Sledujete<br>jen číslo na váze</p>
             </div>
             <div style="flex:1; padding:0 clamp(8px,1vw,12px); display:flex; flex-direction:column; gap:10px">
               <div aria-hidden="true" style="display:flex; align-items:center; gap:10px; margin:2px 0 6px"><span style="flex:none; width:14px; height:14px; border-radius:0 100% 0 100%; background-color:#A5BA8F"></span><span style="flex:1; height:2px; border-radius:2px; background-color:var(--color-accent-2)"></span></div>
@@ -355,6 +362,20 @@
                 <h4 style="margin:0; font-size:15px; line-height:1.35; font-weight:600; letter-spacing:-0.015em; text-wrap:balance">Sledujeme víc než hmotnost.</h4>
               </div>
               <p style="margin:0; font-size:15px; line-height:1.6; text-wrap:pretty">Váha často kolísá z&nbsp;důvodů, které se stravováním nesouvisejí. Proto porovnáváme i&nbsp;energii, chutě a&nbsp;vztah k&nbsp;jídlu.</p>
+            </div>
+          </li>
+          <li style="min-width:0; display:grid; grid-template-rows:subgrid; grid-row:span 2; gap:14px">
+            <div class="proc-head">
+              <span aria-hidden="true" class="proc-num">04</span>
+              <p class="proc-title">Chybí<br>vám podpora</p>
+            </div>
+            <div style="flex:1; padding:0 clamp(8px,1vw,12px); display:flex; flex-direction:column; gap:10px">
+              <div aria-hidden="true" style="display:flex; align-items:center; gap:10px; margin:2px 0 6px"><span style="flex:none; width:14px; height:14px; border-radius:0 100% 0 100%; background-color:#A5BA8F"></span><span style="flex:1; height:2px; border-radius:2px; background-color:var(--color-accent-2)"></span></div>
+              <div style="display:flex; align-items:center; gap:12px">
+                <span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"></line><line x1="10" x2="3" y1="4" y2="4"></line><line x1="21" x2="12" y1="12" y2="12"></line><line x1="8" x2="3" y1="12" y2="12"></line><line x1="21" x2="16" y1="20" y2="20"></line><line x1="12" x2="3" y1="20" y2="20"></line><line x1="14" x2="14" y1="2" y2="6"></line><line x1="8" x2="8" y1="10" y2="14"></line><line x1="16" x2="16" y1="18" y2="22"></line></svg></span>
+                <h4 style="margin:0; font-size:15px; line-height:1.35; font-weight:600; letter-spacing:-0.015em; text-wrap:balance">Jsem s&nbsp;vámi i&nbsp;mezi hovory.</h4>
+              </div>
+              <p style="margin:0; font-size:15px; line-height:1.6; text-wrap:pretty">Když něco nevyjde nebo si nebudete vědět rady, napíšete mi a&nbsp;společně prodiskutujeme, jak se s&nbsp;tím poprat.</p>
             </div>
           </li>
         </ol>
@@ -382,7 +403,7 @@
           <figure style="margin:0; flex:0 0 clamp(250px,40%,400px); scroll-snap-align:start; min-width:0; display:grid; grid-template-columns:32px minmax(0,1fr); column-gap:12px; row-gap:8px; align-content:start">
             <span aria-hidden="true" style="position:relative; width:32px; height:32px; grid-row:span 2"><span style="position:absolute; inset:0; border-radius:50%; background-color:#E1C243; opacity:0.35"></span><span style="position:absolute; left:8px; top:2px; font-size:38px; line-height:1; font-weight:500; color:var(--color-accent)">“</span></span>
             <blockquote style="margin:0; font-size:15.5px; line-height:1.5; letter-spacing:-0.005em; color:var(--color-accent); text-wrap:pretty">Konečně jsem našla způsob stravování, který mi vyhovuje a&nbsp;nemusím se kvůli němu vzdávat všeho, co mám ráda. <b>Cítím se lépe a&nbsp;změny zvládám bez stresu.</b></blockquote>
-            <figcaption style="display:flex; align-items:flex-start; gap:8px; font-size:14px; font-weight:600; color:var(--color-accent); opacity:1"><span aria-hidden="true" style="flex: 0 0 auto; width: 20px; height: 2px; margin-top: 8px; border-radius: 2px; background-color: rgb(225, 194, 67);"></span><span style="display:flex; flex-direction:column; gap:2px">Sabina Š.<span style="font-weight:400; font-size:14px; line-height:1.45; text-wrap:pretty">Manažerka se synem a&nbsp;nabitým kalendářem</span></span></figcaption>
+            <figcaption style="display:flex; align-items:flex-start; gap:8px; font-size:14px; font-weight:600; color:var(--color-accent); opacity:1"><span aria-hidden="true" style="flex: 0 0 auto; width: 20px; height: 2px; margin-top: 8px; border-radius: 2px; background-color: rgb(225, 194, 67);"></span><span style="display:flex; flex-direction:column; gap:2px">Sabina Š.<span style="font-weight:400; font-size:14px; line-height:1.45; text-wrap:pretty">Manažerka</span></span></figcaption>
           </figure>
           <figure style="margin:0; flex:0 0 clamp(250px,40%,400px); scroll-snap-align:start; min-width:0; display:grid; grid-template-columns:32px minmax(0,1fr); column-gap:12px; row-gap:8px; align-content:start">
             <span aria-hidden="true" style="position:relative; width:32px; height:32px; grid-row:span 2"><span style="position:absolute; inset:0; border-radius:50%; background-color:#FDFBF7; opacity:0.8"></span><span style="position:absolute; left:8px; top:2px; font-size:38px; line-height:1; font-weight:500; color:var(--color-accent)">“</span></span>
@@ -392,7 +413,7 @@
           <figure style="margin:0; flex:0 0 clamp(250px,40%,400px); scroll-snap-align:start; min-width:0; display:grid; grid-template-columns:32px minmax(0,1fr); column-gap:12px; row-gap:8px; align-content:start">
             <span aria-hidden="true" style="position:relative; width:32px; height:32px; grid-row:span 2"><span style="position:absolute; inset:0; border-radius:50%; background-color:var(--color-accent); opacity:0.35"></span><span style="position:absolute; left:8px; top:2px; font-size:38px; line-height:1; font-weight:500; color:var(--color-accent)">“</span></span>
             <blockquote style="margin:0; font-size:15.5px; line-height:1.5; letter-spacing:-0.005em; color:var(--color-accent); text-wrap:pretty">Na výživovém poradenství oceňuji především <b>praktický přístup a&nbsp;rady, které dávají smysl v&nbsp;běžném životě</b>. Žádné zbytečné zákazy ani drastické diety, ale udržitelné změny podle mých potřeb. Celá spolupráce pro mě byla velkým přínosem.</blockquote>
-            <figcaption style="display:flex; align-items:flex-start; gap:8px; font-size:14px; font-weight:600; color:var(--color-accent); opacity:1"><span aria-hidden="true" style="margin-top:8px; flex: 0 0 auto; width: 20px; height: 2px; border-radius: 2px; background-color: var(--color-accent);"></span><span style="display:flex; flex-direction:column; gap:2px">Anna Š.<span style="font-weight:400; font-size:14px; line-height:1.45; text-wrap:pretty">Staví s&nbsp;manželem dům s&nbsp;prací na plný úvazek</span></span></figcaption>
+            <figcaption style="display:flex; align-items:flex-start; gap:8px; font-size:14px; font-weight:600; color:var(--color-accent); opacity:1"><span aria-hidden="true" style="margin-top:8px; flex: 0 0 auto; width: 20px; height: 2px; border-radius: 2px; background-color: var(--color-accent);"></span><span style="display:flex; flex-direction:column; gap:2px">Anna Š.<span style="font-weight:400; font-size:14px; line-height:1.45; text-wrap:pretty">Manažerka</span></span></figcaption>
           </figure>
         </div>
         <!-- K POTVRZENÍ MAJITELKOU: věta musí být pravdivá (§ 5a odst. 5 zák. č. 634/1992 Sb.). Každá reference je od skutečného klienta, zveřejněná s jeho souhlasem. Pokud má některý z autorů k majitelce osobní nebo pracovní vztah, je nutné to u reference uvést, nebo ji odstranit. -->
@@ -548,7 +569,7 @@
             </div>
           </div>
           <div style="margin-top:14px; display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 28px">
-            <p style="margin:0; font-size:13px; line-height:1.5">Kalendář se nenačetl? <a href="%%REZERVACE_LINK%%" target="_blank" rel="noopener" style="font-weight:600">Otevřít rezervaci v&nbsp;novém okně</a></p>
+            <p style="margin:0; font-size:13px; line-height:1.5">Kalendář se nenačetl? <a href="%%REZERVACE_LINK%%" target="_blank" rel="noopener" data-booking-link style="font-weight:600">Otevřít rezervaci v&nbsp;novém okně</a></p>
             <p style="margin:0; font-size:15px; line-height:1.5">Raději byste nejdřív napsali? <a href="mailto:%%EMAIL%%" style="font-weight:600">%%EMAIL%%</a></p>
           </div>
           <div style="margin-top:12px; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap:8px 28px">
@@ -615,7 +636,7 @@
             <span>Co když mi spolupráce nebude vyhovovat?</span>
             <span aria-hidden="true" style="flex:none; width:36px; height:36px; border-radius:50%; background-color:var(--color-accent-2); display:flex; align-items:center; justify-content:center"><svg class="ico-plus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg><svg class="ico-minus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path></svg></span>
           </button></h3>
-          <p id="faq-a8" data-faq-answer hidden style="margin:0; padding:0 clamp(18px,2.4vw,26px) 20px; font-size:15px; line-height:1.65; text-wrap:pretty">Dejte mi to prosím vědět. Buď postup upravíme, nebo spolupráci ukončíme. Do 14&nbsp;dnů od uzavření smlouvy můžete od programu odstoupit bez udání důvodu a&nbsp;vrátím vám celou částku. Později vám vrátím poměrnou část ceny za týdny, které ještě nezačaly. Podrobnosti najdete v&nbsp;<a href="/obchodni-podminky/">obchodních podmínkách</a>.</p>
+          <p id="faq-a8" data-faq-answer hidden style="margin:0; padding:0 clamp(18px,2.4vw,26px) 20px; font-size:15px; line-height:1.65; text-wrap:pretty">Dejte mi to prosím vědět. Buď postup upravíme, nebo spolupráci ukončíme. Do 14&nbsp;dnů od uzavření smlouvy můžete od programu odstoupit bez udání důvodu. Pokud jsme ještě nezačali, vrátím vám celou částku. Pokud jsme na vaši žádost už začali, zaplatíte jen poměrnou část ceny za dny, kdy program běžel, a&nbsp;zbytek vám vrátím. Po uplynutí 14&nbsp;dnů se zaplacená cena programu nevrací. Ze závažného důvodu, například kvůli nemoci, ale program můžete přerušit. Podrobnosti najdete v&nbsp;<a href="/obchodni-podminky/#odstoupeni">obchodních podmínkách</a>.</p>
         </div>
 
         <div data-faq-extra hidden style="border-radius:var(--radius-lg); background-color:var(--color-surface)">
@@ -714,7 +735,7 @@
             <p class="visually-hidden" aria-hidden="true"><label>Nevyplňujte: <input type="text" name="bot-field" tabindex="-1" autocomplete="off"></label></p>
             <div class="form-wide" style="display:flex; flex-wrap:wrap; align-items:center; gap:12px 20px">
               <button type="submit" class="btn btn-primary" data-kontakt-submit style="min-height:56px; padding:0 32px; font-size:16px; font-weight:600">Odeslat zprávu</button>
-              <p style="flex:1 1 260px; min-width:0; margin:0; font-size:13px; line-height:1.5; text-wrap:pretty">Údaje použiji jen k&nbsp;odpovědi na vaši zprávu a&nbsp;k&nbsp;případné domluvě spolupráce. Zprávu uloží a&nbsp;doručí mi služba Netlify Forms (Netlify, Inc., USA), která ji kvůli ochraně před spamem nechá automaticky zkontrolovat službou Akismet. Údaje o&nbsp;zdraví prosím do formuláře nepište. Více v&nbsp;<a href="/ochrana-osobnich-udaju/#kontaktni-formular">zásadách zpracování osobních údajů</a>.</p>
+              <p style="flex:1 1 260px; min-width:0; margin:0; font-size:13px; line-height:1.5; text-wrap:pretty">Údaje použiji jen k&nbsp;odpovědi na vaši zprávu a&nbsp;k&nbsp;případné domluvě spolupráce. Údaje o&nbsp;zdraví prosím do formuláře nepište. Více v&nbsp;<a href="/ochrana-osobnich-udaju/">zásadách zpracování osobních údajů</a>.</p>
             </div>
           </form>
           <div role="status" aria-live="polite">

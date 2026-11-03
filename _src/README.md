@@ -38,7 +38,7 @@ site/                    statické soubory + výchozí výstup buildu (HTML v si
   _redirects             301 přesměrování starých/krátkých adres (/gdpr, /vop …) – jen cíle s NETLIFY true
   site.webmanifest, favicon.ico, apple-touch-icon.png
   assets/css/            fonts.css (DM Sans, hostováno lokálně), site.css, consent.css
-  assets/js/             site.js, consent.js (cookie lišta a nastavení)
+  assets/js/             site.js, consent.js (cookie lišta, nastavení, Google Analytics a Meta pixel po souhlasu)
   assets/fonts/          DM Sans (woff2) + licence OFL
   assets/img/            fotky (webp/jpg), ikony, icons/, og-image-4.jpg (náhled pro sociální sítě,
                          1200×630; starší og-image-2.jpg a og-image.jpg smažte, až na ně nebude nic odkazovat)
@@ -90,6 +90,8 @@ cíl (`"production"`). Klíče začínající `_` jsou komentáře.
 | `%%HOME_UPDATED_ISO%%` | společné | datum poslední podstatné změny hlavní stránky, `RRRR-MM-DD` (`lastmod` v sitemap) |
 | `%%REZERVACE_URL%%` | společné | rezervační stránka Google Kalendáře pro vložení (s `?gv=true`) |
 | `%%REZERVACE_LINK%%` | společné | stejná adresa bez `gv` – odkaz „otevřít v novém okně“ |
+| `%%GA_ID%%` | společné | Measurement ID služby Google Analytics 4 (`G-XXXXXXXXXX`); **prázdné = Google Analytics vypnuté** (kategorie Analytické se v liště nezobrazí). Viz [Měření se souhlasem](#měření-se-souhlasem-google-analytics-a-meta-pixel) |
+| `%%META_PIXEL_ID%%` | společné | ID pixelu (datové sady) Meta, jen číslice (`2179144532809624`); prázdné = Meta pixel vypnutý |
 | `%%SITE_URL%%` | cíl | adresa webu bez koncového lomítka, včetně podsložky (kanonické URL, sitemap, OG) |
 | `%%BASE_PATH%%` | cíl | podsložka, ve které web běží: `/nutrivero-nahled` u náhledu na GitHub Pages, `""` na Netlify (náhled i ostrý web) |
 | `PREVIEW` | cíl | `true` = náhled (noindex, `robots.txt` s `Disallow: /`, bez sitemap), `false` = ostrý web; není to token, řídí `%%ROBOTS%%` |
@@ -124,12 +126,15 @@ Build s `--strict` odmítne zástupné hodnoty začínající `[` (např. `[e-ma
   `data-kontakt-zprava`).
 - Spam filtruje Netlify (past `bot-field` a služba Akismet). Zprávy označené jako spam jsou v administraci
   zvlášť (Forms → kontakt, přepínač spamu) – občas je zkontrolujte.
-- CSP (meta ve všech šablonách i `site/_headers`) povoluje jen vlastní web: `connect-src 'self'`
+- CSP (meta ve všech šablonách i `site/_headers`) povoluje pro odeslání formuláře jen vlastní web (`connect-src 'self'`;
+  domény Googlu a Mety v CSP slouží jen měření se souhlasem)
   a `form-action 'self' mailto:`.
 - Lokálně ani na GitHub Pages (cíl `preview`) formulář nefunguje – odeslání skončí chybovou hláškou
   s e-mailem. Vyzkoušejte ho na https://nutrivero-nahled.netlify.app/.
-- Zásady GDPR popisují formulář v části `#kontaktni-formular` (`_src/legal/ochrana-osobnich-udaju.html`),
-  krátké upozornění je i pod tlačítkem „Odeslat zprávu“ – při změně služby upravte obě místa.
+- Zásady GDPR popisují formulář v tabulce účelů (`#ucely`, řádek „Odpovědi na dotazy“) a mezi příjemci
+  (`#prijemci`, „poskytovatel hostingu webu a kontaktního formuláře“) v `_src/legal/ochrana-osobnich-udaju.html`,
+  službu Netlify Forms jmenovitě uvádějí zásady cookies (`_src/legal/cookies.html`); krátké upozornění
+  je i pod tlačítkem „Odeslat zprávu“ – při změně služby upravte všechna tato místa.
 - Odeslané zprávy zůstávají v Netlify, dokud je nesmažete. Mažte je podle lhůt uvedených v zásadách
   (v detailu zprávy v Forms → kontakt), případně je předtím exportujte do CSV.
 
@@ -312,38 +317,80 @@ CSS a JS mají cache 1 hodinu.
 Pozn.: hlavička HSTS v `_headers` obsahuje `includeSubDomains` – všechny subdomény `nutrivero.cz`
 pak musí fungovat přes HTTPS.
 
-## Přidání analytiky později (cookie lišta)
+## Měření se souhlasem (Google Analytics a Meta pixel)
 
-Web dnes žádnou analytiku ani marketingové nástroje nepoužívá, proto má lišta jen kategorie
-„nezbytné“ a „externí obsah“ (Google Kalendář). Při přidání analytiky:
+Od 3. 11. 2026 web se souhlasem měří návštěvnost (Google Analytics 4) a výsledky reklam (Meta pixel).
+Vše řídí `site/assets/js/consent.js` – žádné inline skripty, žádný `<noscript>` pixel, bez souhlasu se
+k Googlu ani Metě nic neodešle.
 
-1. **Zvažte nástroj bez cookies** (serverová statistika Netlify Analytics nebo cookieless měření) –
-   pak není potřeba nová kategorie souhlasu, stačí doplnit informace do zásad.
-2. Jinak v `site/assets/js/consent.js` přidejte kategorii, např. `analyticke` (název, popis, výchozí
-   hodnota `false`), aby se zobrazila v nastavení i v liště.
-3. Zvyšte verzi uloženého souhlasu `v` (např. z `1` na `2`) a staré záznamy s nižší verzí považujte za
-   neplatné – návštěvníci tak budou znovu požádáni o souhlas s novým účelem.
-4. Skript analytiky načítejte až po souhlasu, a to ze samostatného souboru (inline skripty CSP zakazuje),
-   např. `site/assets/js/analytics.js` vložený na stránky za `consent.js`:
+**Nastavení v `config.json`** (společné hodnoty, build je zapíše do `<html data-ga-id="…" data-meta-pixel-id="…">`):
 
-   ```js
-   (function () {
-     var loaded = false;
-     function load() {
-       if (loaded) return; loaded = true;
-       var s = document.createElement('script');
-       s.src = 'https://analytika.example/script.js'; s.defer = true;
-       document.head.appendChild(s);
-     }
-     if (window.nvConsent && window.nvConsent.has('analyticke')) load();
-     document.addEventListener('nv:consent', function (e) {
-       if (e.detail && e.detail.analyticke) load();
-     });
-   })();
-   ```
-   (Při odvolání souhlasu nástroj vypněte / smažte jeho cookies, nejjednodušeji reloadem stránky.)
-5. Rozšiřte CSP o domény nástroje (`script-src`, `connect-src`, případně `img-src`) **na obou místech**:
-   v `site/_headers` i v `<meta http-equiv="Content-Security-Policy">` v `_src/index.html`,
-   `_src/page-template.html` a `_src/404.html` (platí obě, prohlížeč použije přísnější).
-6. Aktualizujte `_src/legal/cookies.html` (tabulka cookies) a `_src/legal/ochrana-osobnich-udaju.html`
-   (účel, příjemci, předávání mimo EU), změňte `UPDATED` v `config.json`, spusťte build a nasaďte.
+| Klíč | Hodnota | Když je prázdný |
+|---|---|---|
+| `GA_ID` | Measurement ID GA4, např. `G-ABC123XYZ9` (GA → Správce → Datové proudy → web) | Google Analytics se nikdy nenačte a kategorie **Analytické** se v liště ani v nastavení nezobrazí |
+| `META_PIXEL_ID` | ID pixelu, jen číslice – teď `2179144532809624` | Meta pixel se nenačte, kategorie **Marketingové** se nezobrazí |
+
+Build kontroluje tvar (`GA_ID` prázdné nebo `G-` + velká písmena a číslice, `META_PIXEL_ID` prázdné nebo
+číslice; jinak chyba), upozorní, když stránka nemá atribut v `<html>` nebo když CSP neobsahuje domény
+zapnutého nástroje, a upozorní i na rozdíl mezi CSP v `<meta>` a v `site/_headers`. Po doplnění `GA_ID`
+stačí build a nasazení – lišta se pak všem zobrazí znovu (záznam souhlasu bez nové kategorie je neplatný),
+CSP už domény Google Analytics obsahuje a texty v `legal/cookies.html` platí pro oba stavy. Změňte jen
+`UPDATED`, pokud se tím mění právní texty.
+
+**Kategorie souhlasu** (uloženo v `localStorage` `nv-consent`, verze záznamu `v: 2`, platnost 6 měsíců):
+
+| Kategorie | Lišta / nastavení | Co se načte po souhlasu |
+|---|---|---|
+| `nezbytne` | Nezbytné – vždy zapnuté | nic, jen uložení volby |
+| `externi` | Externí obsah | rezervační Kalendář Google (`[data-consent-embed="externi"]`) |
+| `analytika` | Analytické – jen při vyplněném `GA_ID` | `gtag.js` z `www.googletagmanager.com`; `config` s `allow_google_signals: false` a `allow_ad_personalization_signals: false`, reklamní úložiště v Consent Mode `denied`; odešle `page_view` |
+| `marketing` | Marketingové – jen při vyplněném `META_PIXEL_ID` | `fbevents.js` z `connect.facebook.net`; `fbq.disablePushState = true` před vložením fbevents.js (kotvy přes `history.replaceState` neposílají další PageView), `fbq('set', 'autoConfig', false, ID)` před `fbq('init', ID)` (bez údajů o uživateli), pak `PageView`. Text lišty i dialogu žádá výslovný souhlas (čl. 9 GDPR – Meta se dozví o návštěvě webu výživové poradkyně) |
+
+- „Přijmout vše“, „Odmítnout vše“ a „Nastavení“ jsou v liště stejně velká tlačítka; „Odmítnout vše“ vypne
+  všechny volitelné kategorie. Text lišty jmenuje jen zapnuté nástroje.
+- **Konverze:** `site.js` posílá na `document` události `nv:lead` (úspěšně odeslaný kontaktní formulář)
+  a `nv:booking` (klik na „Souhlasím, načíst kalendář“ nebo na „Otevřít rezervaci v novém okně“ včetně
+  prostředního tlačítka; samotné načtení kalendáře se nepočítá). `consent.js` je předá jen nástrojům se
+  souhlasem: GA `generate_lead` / `booking_open`, Meta `Lead` / `BookingOpen`. Dokončenou rezervaci uvnitř
+  kalendáře Googlu web zjistit nemůže. Detail událostí se nečte – do GA ani Mety nikdy
+  nejdou jména, e-maily, telefony, text zprávy ani jiné údaje z formulářů.
+- **Odvolání souhlasu:** `consent.js` smaže cookies nástroje na aktuální doméně i nadřazené (`_ga`, `_ga_*`,
+  `_gid` / `_fbp`, `_fbc`) a stránku jednou znovu načte, aby skripty zmizely. Odvolání v jiné záložce
+  nástroj jen vypne (`ga-disable-<ID>` + `gtag('consent', 'update', {analytics_storage: 'denied'})`,
+  `fbq('consent', 'revoke')`) bez reloadu. Bez souhlasu
+  `consent.js` při každém načtení stránky smaže případné staré cookies těchto nástrojů.
+- CSP (`site/_headers` i `<meta>` ve všech šablonách) povoluje `www.googletagmanager.com` (skripty
+  i pomocný iframe gtag.js ve `frame-src`), `*.google-analytics.com`, `*.analytics.google.com`,
+  `connect.facebook.net` a `www.facebook.com`.
+  Při změně nástrojů upravte obě místa.
+
+**Jednorázové nastavení u majitelky (mimo kód) – udělejte před nasazením / hned po doplnění ID:**
+
+1. **Google Analytics:** Správce → Shromažďování a úprava dat → **Uchovávání dat** → událostní data
+   **14 měsíců** (výchozí jsou 2 měsíce; zásady uvádějí 14 měsíců).
+2. **Google Analytics:** Správce → Shromažďování a úprava dat → Shromažďování dat → **Google signály vypnuté**
+   (kód je vypíná také, nastavení v administraci platí pro celou službu).
+3. **Google Analytics:** nepoužívejte User-ID ani import údajů o uživatelích; s Google Ads GA nepropojujte
+   bez úpravy zásad. Správce → Nastavení účtu: přijmout **Podmínky zpracování dat** a v Nastavení sdílení
+   dat vše vypnout (jinak Google není jen zpracovatel, jak uvádějí zásady). Správce → Shromažďování dat →
+   **Shromažďování údajů poskytnutých uživateli: vypnuto** (jinak by GA mohl číst e-mail a telefon
+   z formuláře).
+3a. **Google Analytics:** v DebugView ověřte, že klik na kotvu (#cena, #kontakt) nevytvoří nový `page_view`;
+   pokud ano, vypněte v Datový stream → Rozšířené měření → Zobrazení stránek → Upřesnit volbu „Změny
+   stránky na základě událostí historie prohlížeče“.
+4. **Meta Events Manager** → datová sada `2179144532809624` → Nastavení: **Automatické rozšířené párování
+   (Automatic Advanced Matching) VYPNOUT** a vypnout i „Automatické sledování událostí bez kódu“ /
+   automatickou konfiguraci. Kód posílá `autoConfig: false`, ale párování údajů z formulářů řídí nastavení
+   v Events Manageru – jinak by pixel mohl posílat zahašovaný e-mail nebo telefon z formuláře, což
+   zásady vylučují.
+5. **Meta:** v Events Manageru zkontrolujte, že přicházejí jen `PageView`, `Lead` a `BookingOpen` bez
+   dalších parametrů. Meta může web zařadit mezi weby o zdraví a wellness a některé konverze nebo parametry
+   pro optimalizaci reklam omezit – to se nastavuje u Mety, kód to neovlivní.
+6. Po nasazení ověřte v prohlížeči (nástroje pro vývojáře → Síť): bez souhlasu žádný požadavek na
+   `googletagmanager.com`, `google-analytics.com`, `facebook.com` ani `connect.facebook.net`; po souhlasu ano;
+   po odvolání se cookies `_ga*` / `_fbp` smažou a stránka se znovu načte.
+
+Další nástroj přidáte stejně: kategorie v `CATEGORIES` a záznam v `TRACKERS` v `consent.js` (načtení jen
+ze souboru, nikdy inline), domény v CSP na obou místech, řádky do tabulky v `_src/legal/cookies.html`
+a do zásad `_src/legal/ochrana-osobnich-udaju.html`, nové `UPDATED`. Novou kategorii stačí přidat –
+uložené souhlasy bez ní se považují za neplatné a lišta se zobrazí znovu.

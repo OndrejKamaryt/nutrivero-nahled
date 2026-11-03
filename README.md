@@ -13,6 +13,13 @@ Statický web Nutrivero (výživové poradenství, Tereza Ševčíková).
   a zapnuté v Google Admin → Gmail → Ověřit e-mail), DMARC `p=none`.
 - **Google Search Console:** vlastnost typu Doména `nutrivero.cz` (účet info@nutrivero.cz), ověřená
   záznamem `google-site-verification` v DNS – ten nemazat; odeslaná sitemapa `https://nutrivero.cz/sitemap.xml`.
+- **Měření se souhlasem (od 3. 11. 2026):** Meta pixel `2179144532809624` (`META_PIXEL_ID` v `_src/config.json`)
+  a Google Analytics 4 (`GA_ID` – zatím prázdné, tedy vypnuté; po doplnění Measurement ID `G-…` stačí build
+  a nasazení). Načítá je jen `site/assets/js/consent.js` po souhlasu v liště cookies (kategorie Analytické /
+  Marketingové; prázdné ID = kategorie se nezobrazí). Podrobnosti v [`_src/README.md`](_src/README.md#měření-se-souhlasem-google-analytics-a-meta-pixel).
+  **Úkoly mimo kód:** GA → Uchovávání dat **14 měsíců** a **Google signály vypnuté**; Meta Events Manager →
+  datová sada → **automatické rozšířené párování (Automatic Advanced Matching) vypnuté** a automatické
+  sledování událostí vypnuté.
 - **Starý náhled na GitHub Pages:** https://ondrejkamaryt.github.io/nutrivero-nahled/ jen přesměrovává na
   https://nutrivero.cz/ (workflow `.github/workflows/pages.yml` publikuje `.github/pages-redirect/`).
 - **Zdroje:** `_src/` (šablony, právní texty, `config.json`, `build.py`) – podrobný návod je v [`_src/README.md`](_src/README.md)

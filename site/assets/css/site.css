@@ -197,6 +197,81 @@ html.nv-menu-open .menu-backdrop { z-index: 9150 !important; }
 .hero-deco { display: none; }
 @media (min-width: 1360px) { .hero-deco { display: block; } }
 
+/* ───────── Domovská stránka – „Pro koho je program určen“ ─────────
+   V návrhu stavy pk* podle šířky okna: do 599 px jeden sloupec bez fotky, 600–819 px nadpis a seznam
+   přes celou šířku a pod nimi box vedle fotky, od 820 px text vlevo a fotka 280 px vpravo. */
+.pk-grid {
+  display: grid; align-items: start;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "h" "l" "b";
+  gap: 22px 14px;
+}
+.pk-h { grid-area: h; min-width: 0; }
+.pk-l { grid-area: l; min-width: 0; }
+.pk-box {
+  grid-area: b; min-width: 0; align-self: start;
+  display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start;
+  gap: 14px; padding: 20px 18px;
+  border-radius: var(--radius-lg); background-color: var(--color-accent-2-200);
+}
+.pk-leaf {
+  flex: none; width: 22px; height: 22px; margin-top: 4px;
+  border-radius: 0 100% 0 100%; background-color: #035144;
+}
+.pk-box-text {
+  margin: 0; font-size: 16px; line-height: 1.42; font-weight: 500; letter-spacing: -0.01em; text-wrap: pretty;
+}
+.pk-foto { grid-area: f; min-width: 0; width: 100%; min-height: 200px; display: none; }
+@media (min-width: 600px) {
+  .pk-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "h h" "l l" "b f"; }
+  .pk-box { align-self: stretch; flex-direction: column; justify-content: center; gap: 12px; padding: 18px 16px; }
+  .pk-leaf { margin-top: 0; }
+  .pk-box-text { font-size: 15px; }
+  .pk-foto { display: block; align-self: stretch; }
+}
+@media (min-width: 820px) {
+  .pk-grid {
+    grid-template-columns: minmax(0, 1fr) 280px; grid-template-areas: "h f" "l f" "b f";
+    column-gap: clamp(32px, 5vw, 64px);
+  }
+  .pk-box { align-self: start; flex-direction: row; justify-content: flex-start; gap: 18px; padding: clamp(24px, 3vw, 34px); }
+  .pk-leaf { margin-top: 4px; }
+  .pk-box-text { font-size: clamp(17px, 1.7vw, 20.5px); }
+  .pk-foto { align-self: start; aspect-ratio: 4 / 5; }
+}
+
+/* ───────── Domovská stránka – „Proč změny stravy často nevydrží“ (čtyři karty) ─────────
+   Sloupce jako v návrhu: 4 od šířky seznamu 928 px, 2 od 456 px, jinak 1. Nadpis karty (v návrhu procHead)
+   má velikost (šířka karty − 71 px) / 10,6 v rozmezí 14–18 px; šířku karty dává jednotka cqw seznamu.
+   Prohlížeč bez container queries použije 16 px. */
+.proc-list {
+  container-type: inline-size;
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: clamp(20px, 2.6vw, 28px) 16px;
+  grid-template-columns: repeat(auto-fit, minmax(max(calc(25% - 12px), min(calc(50% - 8px), calc((928px - 100%) * 999)), min(100%, calc((456px - 100%) * 999))), 1fr));
+}
+.proc-head {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: clamp(18px, 2vw, 22px) 14px;
+  border-radius: var(--radius-lg); background-color: var(--color-surface);
+}
+.proc-num {
+  flex: none; font-size: 28px; line-height: 1; font-weight: 300; letter-spacing: -0.03em;
+  color: var(--color-accent-2-700);
+}
+.proc-title {
+  margin: calc((28px - 1.35em) / 2) 0 0;
+  font-size: 16px;
+  font-size: clamp(14px, (100cqw - 71px) / 10.6, 18px);
+  line-height: 1.35; font-weight: 500; letter-spacing: -0.01em; text-wrap: balance;
+}
+@container (min-width: 456px) {
+  .proc-title { font-size: clamp(14px, (50cqw - 79px) / 10.6, 18px); }
+}
+@container (min-width: 928px) {
+  .proc-title { font-size: clamp(14px, (25cqw - 83px) / 10.6, 18px); }
+}
+
 /* ───────── Domovská stránka – hover stavy z prototypu ───────── */
 .ref-prev:hover, .ref-prev:focus-visible { background-color: var(--color-bg) !important; }
 .ref-next:hover, .ref-next:focus-visible { opacity: 0.88 !important; }

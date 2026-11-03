@@ -1,17 +1,29 @@
 /*!
- * Nutrivero – správa souhlasu s cookies a externím obsahem (consent.js)
+ * Nutrivero – správa souhlasu s cookies, externím obsahem a měřením (consent.js)
  *
  * Bez závislostí, bezpečné pro <script defer>, žádný inline kód ani vkládané <style>.
  * Vzhled: /assets/css/consent.css (třídy s prefixem "nvc-").
  *
- * Úložiště:  localStorage "nv-consent" = {"v":1,"ts":"<ISO>","categories":{"externi":true|false}}
+ * Úložiště:  localStorage "nv-consent" = {"v":2,"ts":"<ISO>","categories":{"externi":true|false, …}}
  *            Platnost 6 měsíců; chybějící, poškozený, prošlý nebo jinak verzovaný záznam = bez souhlasu.
+ *            Záznam musí obsahovat všechny zobrazené volitelné kategorie – po přidání kategorie
+ *            (např. doplněním GA_ID) se lišta zobrazí znovu.
  * API:       window.nvConsent = { has(cat), grant(cat), revoke(cat), set(obj), get(), openSettings(), refresh() }
- * Událost:   document → CustomEvent "nv:consent", detail = kategorie (např. {externi: true})
+ * Událost:   document → CustomEvent "nv:consent", detail = kategorie (např. {externi: true, marketing: false})
  * Háčky:     [data-consent-open]                      – otevře nastavení
  *            [data-consent-embed="kat"][data-src][data-title][data-height]
  *                                                      – obsah se vloží jako <iframe> až po souhlasu
  *            [data-consent-accept="kat"]               – udělí souhlas jen s danou kategorií
+ *
+ * Měření (načítá se jen odsud a jen po souhlasu; ID dodává build do <html>):
+ *   <html data-ga-id="G-…">              – Google Analytics 4, kategorie "analytika" (prázdné = vypnuto,
+ *                                          kategorie se nezobrazí a nic se nenačte)
+ *   <html data-meta-pixel-id="123…">     – Meta pixel, kategorie "marketing" (prázdné = vypnuto)
+ *   Konverze: document → CustomEvent "nv:lead" (odeslaný kontaktní formulář) a "nv:booking" (otevřená
+ *   rezervace; posílá site.js). Předají se jen nástrojům se souhlasem a bez jakýchkoli údajů z formuláře
+ *   (detail události se ignoruje): GA generate_lead / booking_open, Meta Lead / BookingOpen.
+ *   Odvolání souhlasu: smaže cookies nástroje (_ga, _ga_*, _gid / _fbp, _fbc) na této doméně i nadřazené
+ *   a stránku jednou znovu načte, aby skripty zmizely. Změna z jiné záložky je jen vypne (bez reloadu).
  */
 (function () {
   'use strict';
@@ -22,8 +34,19 @@
   /* Konfigurace                                                         */
   /* ------------------------------------------------------------------ */
 
-  // Kategorie souhlasu. Novou volitelnou kategorii (např. "analytika") stačí přidat sem:
-  // uložené souhlasy, které ji ještě neobsahují, se považují za neplatné a lišta se zobrazí znovu.
+  var root = document.documentElement;
+
+  // ID nástrojů měření z <html> (build: %%GA_ID%%, %%META_PIXEL_ID%%). Neplatné nebo prázdné = vypnuto.
+  function readId(attr, re) {
+    var v = (root.getAttribute(attr) || '').trim();
+    return re.test(v) ? v : '';
+  }
+  var GA_ID = readId('data-ga-id', /^G-[A-Z0-9]+$/);
+  var META_PIXEL_ID = readId('data-meta-pixel-id', /^[0-9]+$/);
+
+  // Kategorie souhlasu. Novou volitelnou kategorii stačí přidat sem: uložené souhlasy, které ji
+  // ještě neobsahují, se považují za neplatné a lišta se zobrazí znovu.
+  // meta = krátký řádek s poskytovatelem a cookies pod popisem v nastavení.
   var CATEGORIES = [
     {
       id: 'nezbytne',
@@ -39,13 +62,40 @@
       description: 'Načte rezervační Kalendář Google přímo na stránce, abyste si mohli vybrat termín nezávazného hovoru. ' +
         'Obsah poskytuje Google Ireland Limited (Irsko) a Google LLC (USA). Při načtení Google získá vaši IP adresu ' +
         'a může ukládat vlastní cookies podle svých zásad. Bez souhlasu se kalendář nenačte; rezervaci můžete ' +
-        'i tak otevřít v novém okně přímo na webu Google.'
+        'i tak otevřít v novém okně přímo na webu Google.',
+      meta: 'Google Ireland Limited · cookies Googlu, např. NID, AEC, SOCS'
     }
-    // { id: 'analytika', required: false, title: 'Analytika', description: '…' }
   ];
+  if (GA_ID) {
+    CATEGORIES.push({
+      id: 'analytika',
+      required: false,
+      title: 'Analytické',
+      description: 'Google Analytics – souhrnné statistiky návštěvnosti: kolik lidí web navštívilo, ' +
+        'odkud přišli a které stránky je zajímají. Konkrétního člověka podle nich poznat nelze a reklamy se ' +
+        'podle nich necílí (Google signály a personalizace reklam jsou vypnuté). Google Analytics pro ' +
+        'provozovatelku webu provozuje Google jako zpracovatel. Bez souhlasu se Google Analytics nenačte.',
+      meta: 'Google Ireland Limited · cookies _ga, _ga_* (2 roky)'
+    });
+  }
+  if (META_PIXEL_ID) {
+    CATEGORIES.push({
+      id: 'marketing',
+      required: false,
+      title: 'Marketingové',
+      description: 'Meta pixel – měření, kolik lidí přišlo z reklam na Facebooku a Instagramu a kolik z nich pak ' +
+        'otevřelo rezervaci hovoru nebo napsalo zprávu. Meta se tím dozví, že jste navštívili web výživové ' +
+        'poradkyně, z čehož lze nepřímo usuzovat na váš zájem o výživu, hmotnost nebo zdraví, a může tyto údaje ' +
+        'spojit s vaším účtem na Facebooku nebo Instagramu a cílit podle nich reklamy. Povolením této kategorie ' +
+        '(i tlačítkem „Přijmout vše“) s tím výslovně souhlasíte. Za získání a předání těchto údajů odpovídá ' +
+        'provozovatelka webu společně se společností Meta Platforms Ireland Limited (společní správci). Jméno, ' +
+        'e-mail, telefon ani obsah formuláře se Metě neposílají. Bez souhlasu se Meta pixel nenačte.',
+      meta: 'Meta Platforms Ireland Limited · cookies _fbp, _fbc (3 měsíce)'
+    });
+  }
 
   var STORAGE_KEY = 'nv-consent';
-  var VERSION = 1;
+  var VERSION = 2;
   var MAX_AGE_MONTHS = 6;
   var EVENT_NAME = 'nv:consent';
   // Web může běžet v podsložce (náhled na GitHub Pages: /nutrivero-nahled). Build ji zapíše
@@ -59,14 +109,15 @@
     try { return new URL('../../', src).pathname.replace(/\/+$/, ''); } catch (e) { return ''; }
   })();
   var COOKIES_URL = BASE_PATH + '/cookies/';
-  var PRIVACY_URL = BASE_PATH + '/ochrana-osobnich-udaju/';
+  var PRIVACY_URL = BASE_PATH + '/ochrana-osobnich-udaju/#cookies';
   var DEFAULT_EMBED_HEIGHT = 620;
+  var GA_SCRIPT = 'https://www.googletagmanager.com/gtag/js?id=';
+  var META_SCRIPT = 'https://connect.facebook.net/en_US/fbevents.js';
 
   /* ------------------------------------------------------------------ */
   /* Stav                                                                */
   /* ------------------------------------------------------------------ */
 
-  var root = document.documentElement;
   var storageOk = true;   // false, jakmile localStorage vyhodí výjimku
   var memory = null;      // záloha v paměti (platí jen pro aktuální stránku)
   var current = null;     // platný záznam souhlasu, nebo null
@@ -257,7 +308,7 @@
     optionalCats().forEach(function (c) { norm[c.id] = cats[c.id] === true; });
     current = { v: VERSION, ts: new Date().toISOString(), categories: norm };
     storageWrite(JSON.stringify(current));
-    applyState(true);
+    applyState(true, false);
     return copy(norm);
   }
 
@@ -267,12 +318,15 @@
     return commit(cats);
   }
 
-  function applyState(notify) {
+  // external = změna přišla odjinud (jiná záložka, návrat z bfcache) – měření se jen vypne, bez reloadu.
+  function applyState(notify, external) {
+    var reload = syncTrackers(!external);
     syncEmbeds();
     syncDialog();
     if (current) hideBanner();
     else if (ready) showBanner();
     if (notify) dispatch();
+    if (reload) scheduleReload();
   }
 
   function dispatch() {
@@ -285,6 +339,171 @@
       ev.initCustomEvent(EVENT_NAME, false, false, detail);
     }
     document.dispatchEvent(ev);
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Měření: Google Analytics 4 a Meta pixel (jen po souhlasu)           */
+  /* ------------------------------------------------------------------ */
+
+  function injectScript(src) {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = src;
+    (document.head || root).appendChild(s);
+  }
+
+  // gtag() podle oficiálního fragmentu – do dataLayer musí jít objekt arguments, ne pole.
+  function gtag() {
+    window.dataLayer.push(arguments);
+  }
+
+  var TRACKERS = {
+    analytika: {
+      enabled: !!GA_ID,
+      loaded: false,   // skript je na této stránce vložený
+      paused: false,   // souhlas odvolán v jiné záložce – vypnuto do příštího načtení stránky
+      cookies: [/^_ga$/, /^_ga_/, /^_gid$/],
+      load: function () {
+        window.dataLayer = window.dataLayer || [];
+        window['ga-disable-' + GA_ID] = false;
+        if (typeof window.gtag !== 'function') window.gtag = gtag;
+        // Souhlas se týká jen statistik: reklamní úložiště a signály zůstávají zakázané.
+        gtag('consent', 'default', {
+          analytics_storage: 'granted',
+          ad_storage: 'denied',
+          ad_user_data: 'denied',
+          ad_personalization: 'denied'
+        });
+        gtag('js', new Date());
+        // config odešle page_view (send_page_view je ve výchozím stavu zapnuté).
+        gtag('config', GA_ID, {
+          allow_google_signals: false,
+          allow_ad_personalization_signals: false
+        });
+        injectScript(GA_SCRIPT + encodeURIComponent(GA_ID));
+      },
+      // ga-disable gtag čte hlavně při startu, proto navíc aktualizace souhlasu (platí i pro běžící gtag).
+      pause: function () {
+        window['ga-disable-' + GA_ID] = true;
+        gtag('consent', 'update', { analytics_storage: 'denied' });
+      },
+      resume: function () {
+        window['ga-disable-' + GA_ID] = false;
+        gtag('consent', 'update', { analytics_storage: 'granted' });
+      },
+      lead: function () { gtag('event', 'generate_lead'); },
+      booking: function () { gtag('event', 'booking_open'); }
+    },
+    marketing: {
+      enabled: !!META_PIXEL_ID,
+      loaded: false,
+      paused: false,
+      cookies: [/^_fbp$/, /^_fbc$/],
+      load: function () {
+        // Standardní zavaděč fbq (bez inline <script> a bez <noscript> obrázku).
+        var n = window.fbq;
+        if (typeof n !== 'function') {
+          n = window.fbq = function () {
+            if (n.callMethod) n.callMethod.apply(n, arguments);
+            else n.queue.push(arguments);
+          };
+          if (!window._fbq) window._fbq = n;
+          n.push = n;
+          n.loaded = true;
+          n.version = '2.0';
+          n.queue = [];
+          // Žádné další PageView při změně kotvy (#cena, #kontakt…) přes history.replaceState v site.js.
+          n.disablePushState = true;
+          injectScript(META_SCRIPT);
+        }
+        // Před init: vypnout automatickou konfiguraci (sledování kliknutí, metadat stránky a polí formulářů).
+        n('set', 'autoConfig', false, META_PIXEL_ID);
+        n('init', META_PIXEL_ID); // bez údajů o uživateli (žádné advanced matching)
+        n('track', 'PageView');
+      },
+      pause: function () { if (typeof window.fbq === 'function') window.fbq('consent', 'revoke'); },
+      resume: function () { if (typeof window.fbq === 'function') window.fbq('consent', 'grant'); },
+      lead: function () { window.fbq('track', 'Lead'); },
+      booking: function () { window.fbq('trackCustom', 'BookingOpen'); }
+    }
+  };
+
+  // Domény, pro které mohl nástroj nastavit cookie: aktuální hostitel a všechny nadřazené (kromě TLD).
+  function cookieDomains() {
+    var host = window.location.hostname;
+    var out = [''];
+    if (!host || /^[0-9.]+$/.test(host) || host.indexOf(':') !== -1) return out; // IP adresa
+    var parts = host.split('.');
+    for (var i = 0; i < parts.length - 1; i++) out.push(parts.slice(i).join('.'));
+    return out;
+  }
+
+  function deleteCookies(patterns) {
+    var raw;
+    try { raw = document.cookie || ''; } catch (e) { return; }
+    var names = raw.split(';').map(function (c) {
+      return c.split('=')[0].replace(/^\s+|\s+$/g, '');
+    }).filter(function (name) {
+      return name && patterns.some(function (re) { return re.test(name); });
+    });
+    if (!names.length) return;
+    var domains = cookieDomains();
+    names.forEach(function (name) {
+      domains.forEach(function (d) {
+        try {
+          // GA i Meta ukládají cookies s path=/
+          document.cookie = name + '=; Max-Age=0; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/' +
+            (d ? '; domain=' + d : '');
+        } catch (e) { /* ignore */ }
+      });
+    });
+  }
+
+  // Načte, vypne nebo znovu zapne nástroje podle souhlasu. Vrací true, pokud je po odvolání
+  // souhlasu potřeba stránku znovu načíst (jen při změně na této stránce: allowReload).
+  function syncTrackers(allowReload) {
+    var reload = false;
+    for (var id in TRACKERS) {
+      if (!Object.prototype.hasOwnProperty.call(TRACKERS, id)) continue;
+      var t = TRACKERS[id];
+      if (!t.enabled) continue;
+      if (has(id)) {
+        if (!t.loaded) {
+          t.loaded = true;
+          try { t.load(); } catch (e) { /* nástroj nesmí rozbít web */ }
+        } else if (t.paused) {
+          t.paused = false;
+          try { t.resume(); } catch (e) { /* ignore */ }
+        }
+      } else {
+        if (t.loaded && !t.paused) {
+          t.paused = true;
+          try { t.pause(); } catch (e) { /* ignore */ }
+          if (allowReload) reload = true;
+        }
+        deleteCookies(t.cookies); // i staré cookies z dřívějšího (prošlého) souhlasu
+      }
+    }
+    return reload;
+  }
+
+  var reloading = false;
+  function scheduleReload() {
+    if (reloading) return;
+    reloading = true;
+    window.setTimeout(function () { window.location.reload(); }, 0);
+  }
+
+  // Konverze ze site.js: nv:lead po odeslání formuláře, nv:booking jen po kliknutí na „Souhlasím, načíst
+  // kalendář“ nebo na odkaz rezervace v novém okně (samotné načtení kalendáře se nepočítá).
+  // Detail události se záměrně nečte – žádná data z formuláře ani jiné údaje se nikam neposílají.
+  function onConversion(kind) {
+    for (var id in TRACKERS) {
+      if (!Object.prototype.hasOwnProperty.call(TRACKERS, id)) continue;
+      var t = TRACKERS[id];
+      if (!t.enabled || !t.loaded || t.paused || !has(id)) continue;
+      try { t[kind](); } catch (e) { /* ignore */ }
+    }
   }
 
   /* ------------------------------------------------------------------ */
@@ -348,12 +567,35 @@
   /* Lišta (nemodální, dole)                                             */
   /* ------------------------------------------------------------------ */
 
+  // „a, b a c“
+  function joinCs(items) {
+    if (items.length < 2) return items.join('');
+    return items.slice(0, -1).join(', ') + ' a ' + items[items.length - 1];
+  }
+
+  // Text lišty jmenuje jen nástroje, které jsou na webu opravdu zapnuté.
+  function bannerText() {
+    var tools = ['rezervační Kalendář Google'];
+    if (TRACKERS.analytika.enabled) tools.push('Google Analytics k měření návštěvnosti');
+    if (TRACKERS.marketing.enabled) tools.push('Meta pixel k měření reklam na Facebooku a Instagramu');
+    var text = 'Bez souhlasu si web ukládá jen vaši volbu. Se souhlasem načte ' + joinCs(tools) + '. ';
+    text += tools.length > 1
+      ? 'Tyto služby ukládají vlastní cookies a zpracovávají vaši IP adresu. '
+      : 'Kalendář může ukládat vlastní cookies a zpracovává vaši IP adresu. ';
+    if (TRACKERS.marketing.enabled) {
+      text += 'Meta se díky pixelu dozví, že jste navštívili web výživové poradkyně (z toho lze usuzovat ' +
+        'na zájem o výživu, hmotnost či zdraví), může to spojit s vaším účtem a cílit podle toho reklamy. ' +
+        'Povolením Meta pixelu (i tlačítkem „Přijmout vše“) s tím výslovně souhlasíte. ';
+    }
+    return text + 'Volbu změníte kdykoli odkazem Nastavení cookies v patičce. Více v ';
+  }
+
   function buildBanner() {
-    var title = el('p', { 'class': 'nvc-banner__title' }, 'Cookies a externí obsah');
+    var measuring = TRACKERS.analytika.enabled || TRACKERS.marketing.enabled;
+    var title = el('p', { 'class': 'nvc-banner__title' },
+      measuring ? 'Cookies, externí obsah a měření' : 'Cookies a externí obsah');
     var text = el('p', { 'class': 'nvc-banner__text' }, [
-      'Web si ukládá jen vaši volbu, analytické ani reklamní cookies nepoužívá. Se souhlasem načte ' +
-      'rezervační Kalendář Google, který může ukládat vlastní cookies a zpracovává vaši IP adresu. ' +
-      'Volbu změníte kdykoli odkazem Nastavení cookies v patičce. Více v ',
+      bannerText(),
       el('a', { href: COOKIES_URL }, 'zásadách cookies'),
       ' a ',
       el('a', { href: PRIVACY_URL }, 'zpracování osobních údajů'),
@@ -414,7 +656,7 @@
     var id = 'nvc-cat-' + c.id;
     var input = el('input', {
       type: 'checkbox', role: 'switch', id: id, 'class': 'nvc-switch',
-      'aria-describedby': id + '-desc', 'data-nvc-cat': c.id
+      'aria-describedby': id + '-desc' + (c.meta ? ' ' + id + '-meta' : ''), 'data-nvc-cat': c.id
     });
     if (c.required) {
       input.checked = true;
@@ -432,7 +674,8 @@
         state,
         input
       ]),
-      el('p', { 'class': 'nvc-cat__desc', id: id + '-desc' }, c.description)
+      el('p', { 'class': 'nvc-cat__desc', id: id + '-desc' }, c.description),
+      c.meta ? el('p', { 'class': 'nvc-cat__meta', id: id + '-meta' }, c.meta) : null
     ]);
   }
 
@@ -507,7 +750,8 @@
       statusEl.textContent = typo('Vaše volba je uložená od ' + formatDate(ts) + ' a platí do ' +
         formatDate(addMonths(ts, MAX_AGE_MONTHS)) + '. Potom se vás web zeptá znovu.');
     } else {
-      statusEl.textContent = typo('Zatím nemáte uloženou žádnou volbu. Dokud ji neuložíte, externí obsah se nenačte.');
+      statusEl.textContent = typo('Zatím nemáte uloženou žádnou volbu. Dokud ji neuložíte, web nenačte nic ' +
+        'z volitelných kategorií.');
     }
   }
 
@@ -612,7 +856,7 @@
   function onStorage(e) {
     if (e.key !== null && e.key !== STORAGE_KEY) return;
     current = loadStored();
-    applyState(true);
+    applyState(true, true);
   }
 
   function onPageShow(e) {
@@ -620,9 +864,12 @@
     var rec = loadStored();
     if (JSON.stringify(rec) !== JSON.stringify(current)) {
       current = rec;
-      applyState(true);
+      applyState(true, true);
     }
   }
+
+  function onLead() { onConversion('lead'); }
+  function onBooking() { onConversion('booking'); }
 
   /* ------------------------------------------------------------------ */
   /* Veřejné API                                                         */
@@ -678,6 +925,7 @@
     document.addEventListener('keydown', onKeydown);
     window.addEventListener('storage', onStorage);
     window.addEventListener('pageshow', onPageShow);
+    syncTrackers(false); // měření jen s uloženým souhlasem; bez něj jen úklid starých cookies
     syncEmbeds();
     if (current) dispatch();
     else showBanner();
@@ -685,6 +933,8 @@
 
   current = loadStored();
   window.nvConsent = api;
+  document.addEventListener('nv:lead', onLead);
+  document.addEventListener('nv:booking', onBooking);
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
