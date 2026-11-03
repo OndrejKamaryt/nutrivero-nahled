@@ -198,12 +198,13 @@ html.nv-menu-open .menu-backdrop { z-index: 9150 !important; }
 @media (min-width: 1360px) { .hero-deco { display: block; } }
 
 /* ───────── Domovská stránka – „Pro koho je program určen“ ─────────
-   V návrhu stavy pk* podle šířky okna: do 599 px jeden sloupec bez fotky, 600–819 px nadpis a seznam
-   přes celou šířku a pod nimi box vedle fotky, od 820 px text vlevo a fotka 280 px vpravo. */
+   V návrhu stavy pk* podle šířky okna: do 599 px jeden sloupec (fotka na přání majitelky i tady, pod boxem,
+   na šířku 4 : 3), 600–819 px nadpis a seznam přes celou šířku a pod nimi box vedle fotky, od 820 px text
+   vlevo a fotka 280 px vpravo. */
 .pk-grid {
   display: grid; align-items: start;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-areas: "h" "l" "b";
+  grid-template-areas: "h" "l" "b" "f";
   gap: 22px 14px;
 }
 .pk-h { grid-area: h; min-width: 0; }
@@ -221,13 +222,15 @@ html.nv-menu-open .menu-backdrop { z-index: 9150 !important; }
 .pk-box-text {
   margin: 0; font-size: 16px; line-height: 1.42; font-weight: 500; letter-spacing: -0.01em; text-wrap: pretty;
 }
-.pk-foto { grid-area: f; min-width: 0; width: 100%; min-height: 200px; display: none; }
+.pk-foto { grid-area: f; min-width: 0; width: 100%; min-height: 200px; aspect-ratio: 4 / 3; }
+.pk-foto img { object-position: 50% 45%; }
 @media (min-width: 600px) {
   .pk-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "h h" "l l" "b f"; }
   .pk-box { align-self: stretch; flex-direction: column; justify-content: center; gap: 12px; padding: 18px 16px; }
   .pk-leaf { margin-top: 0; }
   .pk-box-text { font-size: 15px; }
-  .pk-foto { display: block; align-self: stretch; }
+  .pk-foto { align-self: stretch; aspect-ratio: auto; }
+  .pk-foto img { object-position: 50% 50%; }
 }
 @media (min-width: 820px) {
   .pk-grid {

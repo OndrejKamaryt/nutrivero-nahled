@@ -573,21 +573,20 @@
     return items.slice(0, -1).join(', ') + ' a ' + items[items.length - 1];
   }
 
-  // Text lišty jmenuje jen nástroje, které jsou na webu opravdu zapnuté.
+  // Text lišty jmenuje jen nástroje, které jsou na webu opravdu zapnuté. Je záměrně krátký;
+  // podrobnosti (poskytovatelé, cookies, společná odpovědnost s Metou) jsou v dialogu Nastavení.
+  // Věta o výslovném souhlasu u Meta pixelu musí zůstat (čl. 9 GDPR: návštěva webu výživové poradkyně).
   function bannerText() {
     var tools = ['rezervační Kalendář Google'];
     if (TRACKERS.analytika.enabled) tools.push('Google Analytics k měření návštěvnosti');
-    if (TRACKERS.marketing.enabled) tools.push('Meta pixel k měření reklam na Facebooku a Instagramu');
-    var text = 'Bez souhlasu si web ukládá jen vaši volbu. Se souhlasem načte ' + joinCs(tools) + '. ';
-    text += tools.length > 1
-      ? 'Tyto služby ukládají vlastní cookies a zpracovávají vaši IP adresu. '
-      : 'Kalendář může ukládat vlastní cookies a zpracovává vaši IP adresu. ';
+    if (TRACKERS.marketing.enabled) tools.push('Meta pixel k měření reklam');
+    var text = 'Se souhlasem web načte ' + joinCs(tools) + '. ';
+    if (tools.length === 1) text += 'Kalendář ukládá vlastní cookies a zpracovává vaši IP adresu. ';
     if (TRACKERS.marketing.enabled) {
-      text += 'Meta se díky pixelu dozví, že jste navštívili web výživové poradkyně (z toho lze usuzovat ' +
-        'na zájem o výživu, hmotnost či zdraví), může to spojit s vaším účtem a cílit podle toho reklamy. ' +
-        'Povolením Meta pixelu (i tlačítkem „Přijmout vše“) s tím výslovně souhlasíte. ';
+      text += 'Meta se tak dozví, že jste navštívili web výživové poradkyně, a může to spojit s vaším účtem – ' +
+        'tlačítkem „Přijmout vše“ s tím výslovně souhlasíte. ';
     }
-    return text + 'Volbu změníte kdykoli odkazem Nastavení cookies v patičce. Více v ';
+    return text + 'Volbu změníte kdykoli v Nastavení cookies v patičce. Více v ';
   }
 
   function buildBanner() {
