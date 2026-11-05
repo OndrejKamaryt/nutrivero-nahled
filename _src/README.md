@@ -349,8 +349,9 @@ CSP už domény Google Analytics obsahuje a texty v `legal/cookies.html` platí 
 - „Přijmout vše“, „Odmítnout vše“ a „Nastavení“ jsou v liště stejně velká tlačítka; „Odmítnout vše“ vypne
   všechny volitelné kategorie. Text lišty jmenuje jen zapnuté nástroje.
 - **Konverze:** `site.js` posílá na `document` události `nv:lead` (úspěšně odeslaný kontaktní formulář)
-  a `nv:booking` (klik na „Souhlasím, načíst kalendář“ nebo na „Otevřít rezervaci v novém okně“ včetně
-  prostředního tlačítka; samotné načtení kalendáře se nepočítá). `consent.js` je předá jen nástrojům se
+  a `nv:booking` (klik na tlačítko vedoucí na `#rezervace`, na „Souhlasím, načíst kalendář“ nebo na „Otevřít
+  rezervaci v novém okně“ včetně prostředního tlačítka; samotné načtení kalendáře se nepočítá a „Rezervovat
+  konzultaci“ vede na `#kontakt`, takže také ne; jedna návštěva může poslat víc událostí). `consent.js` je předá jen nástrojům se
   souhlasem: GA `generate_lead` / `booking_open`, Meta `Lead` / `BookingOpen`. Dokončenou rezervaci uvnitř
   kalendáře Googlu web zjistit nemůže. Detail událostí se nečte – do GA ani Mety nikdy
   nejdou jména, e-maily, telefony, text zprávy ani jiné údaje z formulářů.

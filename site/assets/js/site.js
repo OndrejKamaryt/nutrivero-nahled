@@ -10,7 +10,8 @@
   if (doc.documentElement.classList) doc.documentElement.classList.add('js');
 
   /* Signály konverzí pro consent.js: document → CustomEvent "nv:lead" (zpráva z kontaktního formuláře
-     odeslána) a "nv:booking" (klik na „Souhlasím, načíst kalendář“ nebo na „Otevřít rezervaci v novém okně“).
+     odeslána) a "nv:booking" (klik na tlačítko vedoucí na rezervaci, na „Souhlasím, načíst kalendář“
+     nebo na „Otevřít rezervaci v novém okně“).
      consent.js je předá Google Analytics / Meta pixelu jen se souhlasem. V detailu je jen zdroj události,
      nikdy obsah formuláře ani jiné osobní údaje. */
   function signal(name, source) {
@@ -257,9 +258,11 @@
   }
 
   /* ───────── Rezervace: signál nv:booking ─────────
-     Signál se pošle jen při vědomém kroku návštěvníka: klik na „Souhlasím, načíst kalendář“ v bloku
-     rezervace nebo na odkaz „Otevřít rezervaci v novém okně“ (data-booking-link). Samotné načtení
-     kalendáře se nepočítá – kdo už souhlas dal, tomu se kalendář načte sám při posunu stránky.
+     Signál se pošle jen při vědomém kroku návštěvníka: klik na tlačítko vedoucí na rezervaci (odkaz
+     na #rezervace, např. „Domluvit nezávazný hovor“), na „Souhlasím, načíst kalendář“ v bloku rezervace
+     nebo na odkaz „Otevřít rezervaci v novém okně“ (data-booking-link). Samotné načtení kalendáře se
+     nepočítá – kdo už souhlas dal, tomu se kalendář načte sám při posunu stránky. Tlačítko „Rezervovat
+     konzultaci“ vede na kontaktní formulář (#kontakt), proto se nepočítá; odeslání formuláře je nv:lead.
      Dokončenou rezervaci uvnitř kalendáře Googlu web zjistit nemůže.
      Posluchač běží ve fázi zachycení, tedy dřív, než consent.js tlačítko nahradí kalendářem. */
   function onBookingIntent(e) {
@@ -268,6 +271,7 @@
     var t = e.target;
     if (!t || typeof t.closest !== 'function') return;
     if (t.closest('a[data-booking-link]')) signal('nv:booking', 'odkaz');
+    else if (t.closest('a[href$="#rezervace"]')) signal('nv:booking', 'tlacitko');
     else if (e.type === 'click' && t.closest('[data-consent-embed] [data-consent-accept]')) signal('nv:booking', 'kalendar');
   }
   doc.addEventListener('click', onBookingIntent, true);
