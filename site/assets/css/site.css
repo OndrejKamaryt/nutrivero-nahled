@@ -123,9 +123,16 @@ html:not(.js) .js-only { display: none !important; }
 
 /* ───────── Animace ───────── */
 @keyframes nv-sway { 0%, 100% { transform: rotate(-3deg) } 50% { transform: rotate(3deg) } }
+@keyframes nv-cta-pulse { 0% { box-shadow: 0 0 0 0 rgba(37,79,68,0.45); } 70% { box-shadow: 0 0 0 14px rgba(37,79,68,0); } 100% { box-shadow: 0 0 0 0 rgba(37,79,68,0); } }
+@keyframes nv-cta-nudge { 0%, 60%, 100% { transform: translateX(0); } 70% { transform: translateX(5px); } 80% { transform: translateX(0); } 90% { transform: translateX(3px); } }
+/* Postupné zobrazení řádků: atribut data-nv-ready nastaví až site.js, bez JavaScriptu je vše vidět hned. */
+[data-nv-ready] [data-nv-reveal] { transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+[data-nv-ready] [data-nv-reveal="l"]:not([data-nv-in]) { opacity: 0; transform: translateX(-18px); }
+[data-nv-ready] [data-nv-reveal="r"]:not([data-nv-in]) { opacity: 0; transform: translateY(14px); }
 @media (prefers-reduced-motion: reduce) {
   [data-nv-anim] { animation: none !important; }
   [data-ref-track] { scroll-behavior: auto !important; }
+  [data-nv-ready] [data-nv-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 
 /* ───────── Tlačítka ───────── */
@@ -149,6 +156,11 @@ html:not(.js) .js-only { display: none !important; }
 .btn:hover, .btn:active, .btn:focus-visible { color: #E1C243 !important; }
 /* Žlutý text jen na tmavých tlačítkách; na světlém sekundárním by byl nečitelný (1,4 : 1). */
 .btn-secondary:hover, .btn-secondary:active, .btn-secondary:focus-visible { color: var(--color-text) !important; }
+/* Žluté tlačítko na tmavé kartě FULL: text zůstává tmavý. */
+.btn-yellow:hover, .btn-yellow:active, .btn-yellow:focus-visible {
+  background-color: #EBD06A !important;
+  color: var(--color-accent) !important;
+}
 
 /* Tlačítko, které vypadá jako odkaz v patičce */
 .link-button {
@@ -198,81 +210,111 @@ html.nv-menu-open .menu-backdrop { z-index: 9150 !important; }
 @media (min-width: 1360px) { .hero-deco { display: block; } }
 
 /* ───────── Domovská stránka – „Pro koho je program určen“ ─────────
-   V návrhu stavy pk* podle šířky okna: do 599 px jeden sloupec (fotka na přání majitelky i tady, pod boxem,
-   na šířku 4 : 3), 600–819 px nadpis a seznam přes celou šířku a pod nimi box vedle fotky, od 820 px text
-   vlevo a fotka 280 px vpravo. */
+   V návrhu stavy pk* a pb* podle šířky okna: do 599 px jeden sloupec (fotka na přání majitelky i tady, nad tlačítkem,
+   na šířku 4 : 3), 600–819 px dva stejné sloupce, od 820 px text vlevo a sloupec 280 px vpravo, fotka a tlačítko
+   posunuté o 56 px doleva. */
 .pk-grid {
   display: grid; align-items: start;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-areas: "h" "l" "b" "f";
+  grid-template-areas: "h" "l" "f" "c";
   gap: 22px 14px;
 }
 .pk-h { grid-area: h; min-width: 0; }
 .pk-l { grid-area: l; min-width: 0; }
-.pk-box {
-  grid-area: b; min-width: 0; align-self: start;
-  display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start;
-  gap: 14px; padding: 20px 18px;
-  border-radius: var(--radius-lg); background-color: var(--color-accent-2-200);
+.pk-note {
+  margin: 12px -6px 0; max-width: 600px;
+  display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px 10px 10px;
+  border-radius: 20px; background-color: var(--color-accent-2-200);
+  font-size: 15px; line-height: 1.45; font-weight: 500; text-wrap: pretty;
 }
-.pk-leaf {
-  flex: none; width: 22px; height: 22px; margin-top: 4px;
-  border-radius: 0 100% 0 100%; background-color: #035144;
+.pk-note-ic {
+  flex: none; width: 24px; height: 24px; border-radius: 50%; background-color: #FDFBF7;
+  display: flex; align-items: center; justify-content: center;
 }
-.pk-box-text {
-  margin: 0; font-size: 16px; line-height: 1.42; font-weight: 500; letter-spacing: -0.01em; text-wrap: pretty;
+.pk-note-text { padding-top: 1px; }
+.pk-foto { grid-area: f; position: relative; min-width: 0; width: 100%; min-height: 200px; aspect-ratio: 4 / 3; }
+.pk-foto-img {
+  display: block; width: 100%; height: 100%; max-width: none;
+  object-fit: cover; object-position: 50% 45%; border-radius: 28px;
 }
-.pk-foto { grid-area: f; min-width: 0; width: 100%; min-height: 200px; aspect-ratio: 4 / 3; }
-.pk-foto img { object-position: 50% 45%; }
+.pk-cta { grid-area: c; min-width: 0; align-self: end; display: flex; justify-content: flex-start; padding-left: 60px; }
+.pk-cta-btn { width: 318px; padding: 0 28px; gap: 10px; font-size: 16px; transition: transform .2s ease; }
+.pk-cta-btn:hover { transform: translateY(-2px); }
+/* Na nejužších telefonech se text tlačítka vedle odsazení nevejde. */
+@media (max-width: 389.98px) {
+  .pk-cta { padding-left: 0; }
+  .pk-cta-btn { width: 100%; padding: 0 12px; }
+}
 @media (min-width: 600px) {
-  .pk-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "h h" "l l" "b f"; }
-  .pk-box { align-self: stretch; flex-direction: column; justify-content: center; gap: 12px; padding: 18px 16px; }
-  .pk-leaf { margin-top: 0; }
-  .pk-box-text { font-size: 15px; }
-  .pk-foto { align-self: stretch; aspect-ratio: auto; }
-  .pk-foto img { object-position: 50% 50%; }
+  .pk-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "h f" "l f" "l c"; }
+  .pk-note { margin: 16px 0 0; gap: 12px; padding: 12px 20px 12px 12px; font-size: 16px; }
+  .pk-note-ic { width: 30px; height: 30px; }
+  .pk-note-text { padding-top: 4px; }
+  .pk-foto { align-self: start; aspect-ratio: auto; }
+  .pk-foto-img { height: 336px; object-position: 50% 50%; }
+  .pk-cta { justify-content: center; padding-left: 0; }
+}
+/* Dva úzké sloupce: text tlačítka se do 640 px nevejde s plným odsazením. */
+@media (min-width: 600px) and (max-width: 639.98px) {
+  .pk-cta-btn { padding: 0 8px; gap: 6px; font-size: 15px; }
 }
 @media (min-width: 820px) {
-  .pk-grid {
-    grid-template-columns: minmax(0, 1fr) 280px; grid-template-areas: "h f" "l f" "b f";
-    column-gap: clamp(32px, 5vw, 64px);
-  }
-  .pk-box { align-self: start; flex-direction: row; justify-content: flex-start; gap: 18px; padding: clamp(24px, 3vw, 34px); }
-  .pk-leaf { margin-top: 4px; }
-  .pk-box-text { font-size: clamp(17px, 1.7vw, 20.5px); }
-  .pk-foto { align-self: start; aspect-ratio: 4 / 5; }
+  .pk-grid { grid-template-columns: minmax(0, 1fr) 280px; column-gap: clamp(32px, 5vw, 64px); }
+  .pk-foto { align-self: start; aspect-ratio: 4 / 5; margin-left: -56px; }
+  .pk-foto-img { width: 360px; }
+  .pk-cta { margin-left: -56px; }
 }
 
-/* ───────── Domovská stránka – „Proč změny stravy často nevydrží“ (čtyři karty) ─────────
-   Sloupce jako v návrhu: 4 od šířky seznamu 928 px, 2 od 456 px, jinak 1. Nadpis karty (v návrhu procHead)
-   má velikost (šířka karty − 71 px) / 10,6 v rozmezí 14–18 px; šířku karty dává jednotka cqw seznamu.
-   Prohlížeč bez container queries použije 16 px. */
-.proc-list {
-  container-type: inline-size;
-  list-style: none; margin: 0; padding: 0;
-  display: grid; gap: clamp(20px, 2.6vw, 28px) 16px;
-  grid-template-columns: repeat(auto-fit, minmax(max(calc(25% - 12px), min(calc(50% - 8px), calc((928px - 100%) * 999)), min(100%, calc((456px - 100%) * 999))), 1fr));
+/* ───────── Domovská stránka – „Proč změny stravy často nevydrží“ (v návrhu mr*: dva sloupce od 720 px) ───────── */
+.mr-head {
+  display: none; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 28px;
+  padding: 14px 70px 6px 0;
+  font-size: 13px; line-height: 1.2; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #035144;
 }
-.proc-head {
-  display: flex; align-items: flex-start; gap: 8px;
-  padding: clamp(18px, 2vw, 22px) 14px;
-  border-radius: var(--radius-lg); background-color: var(--color-surface);
+.mr-row { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px 28px; align-items: start; padding: 14px 0; }
+.mr-row + .mr-row { border-top: 2px dashed var(--color-accent-2-300); }
+@media (min-width: 720px) {
+  .mr-head { display: grid; }
+  .mr-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); }
 }
-.proc-num {
-  flex: none; font-size: 28px; line-height: 1; font-weight: 300; letter-spacing: -0.03em;
-  color: var(--color-accent-2-700);
+
+/* ───────── Domovská stránka – „O mně“ (v návrhu omStack: nadpis nad fotkou do šířky 835 px) ───────── */
+.om-grid {
+  max-width: 1120px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 56px);
+  display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: "h" "f" "t";
+  gap: clamp(32px, 5vw, 64px);
 }
-.proc-title {
-  margin: calc((28px - 1.35em) / 2) 0 0;
-  font-size: 16px;
-  font-size: clamp(14px, (100cqw - 71px) / 10.6, 18px);
-  line-height: 1.35; font-weight: 500; letter-spacing: -0.01em; text-wrap: balance;
+.om-h { grid-area: h; min-width: 0; }
+.om-foto { grid-area: f; position: relative; min-width: 0; width: 100%; max-width: 330px; aspect-ratio: 4 / 5; }
+.om-t { grid-area: t; position: relative; min-width: 0; max-width: 600px; display: flex; flex-direction: column; gap: 20px; }
+@media (min-width: 836px) {
+  .om-grid {
+    grid-template-columns: 330px minmax(0, 600px); grid-template-areas: "f h" "f t";
+    gap: 20px clamp(32px, 5vw, 64px); justify-content: start;
+  }
+  .om-foto { align-self: center; }
+  .om-h { align-self: end; }
+  .om-t { align-self: start; }
 }
-@container (min-width: 456px) {
-  .proc-title { font-size: clamp(14px, (50cqw - 79px) / 10.6, 18px); }
+
+/* ───────── Domovská stránka – „Vaše cesta během 20 minut“ (v návrhu j*: vodorovně od 720 px) ───────── */
+.j-list {
+  position: relative; list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px clamp(16px, 2.4vw, 28px);
 }
-@container (min-width: 928px) {
-  .proc-title { font-size: clamp(14px, (25cqw - 83px) / 10.6, 18px); }
+.j-step { position: relative; z-index: 1; min-width: 0; display: flex; flex-direction: row; align-items: flex-start; gap: 14px; text-align: left; }
+.j-body { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding-top: 6px; }
+/* Svislá čára mezi kroky: kreslí ji každý krok kromě posledního (22 px mezera + 24 px do středu dalšího kolečka). */
+.j-step:not(:last-child)::before {
+  content: ""; position: absolute; z-index: -1; left: 23px; top: 24px; bottom: -46px;
+  border-left: 3px dashed var(--color-accent-2);
+}
+@media (max-width: 719.98px) { .j-wide { display: none !important; } }
+@media (min-width: 720px) {
+  .j-step:not(:last-child)::before { content: none; }
+  .j-list { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 0; }
+  .j-step { flex-direction: column; align-items: center; text-align: center; }
+  .j-body { align-items: center; padding-top: 0; }
 }
 
 /* ───────── Domovská stránka – hover stavy z prototypu ───────── */
@@ -423,4 +465,5 @@ textarea.form-control { min-height: 120px; padding: 14px 18px; resize: vertical;
   .legal a[href^="http"]::after { content: " (" attr(href) ")"; font-weight: 400; overflow-wrap: anywhere; }
   .legal .note { border: 1px solid #999; background: none; }
   * { box-shadow: none !important; animation: none !important; transition: none !important; }
+  [data-nv-reveal] { opacity: 1 !important; transform: none !important; }
 }

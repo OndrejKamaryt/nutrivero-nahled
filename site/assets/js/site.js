@@ -1,4 +1,4 @@
-/* Nutrivero – chování stránky (menu, plynulá navigace, FAQ, reference, kontaktní formulář, květinový slider).
+/* Nutrivero – chování stránky (menu, plynulá navigace, FAQ, reference, O mně, kontaktní formulář, květinový slider).
    Bez závislostí; bezpečné pro defer i pro podstránky, kde některé prvky chybí. */
 (function () {
   'use strict';
@@ -10,7 +10,8 @@
   if (doc.documentElement.classList) doc.documentElement.classList.add('js');
 
   /* Signály konverzí pro consent.js: document → CustomEvent "nv:lead" (zpráva z kontaktního formuláře
-     odeslána) a "nv:booking" (klik na „Souhlasím, načíst kalendář“ nebo na „Otevřít rezervaci v novém okně“).
+     odeslána) a "nv:booking" (klik na tlačítko vedoucí na rezervaci, na „Souhlasím, načíst kalendář“
+     nebo na „Otevřít rezervaci v novém okně“).
      consent.js je předá Google Analytics / Meta pixelu jen se souhlasem. V detailu je jen zdroj události,
      nikdy obsah formuláře ani jiné osobní údaje. */
   function signal(name, source) {
@@ -153,6 +154,39 @@
   if (refTrack && refPrev) refPrev.addEventListener('click', function () { refMove(-1); });
   if (refTrack && refNext) refNext.addEventListener('click', function () { refMove(1); });
 
+  /* ───────── O mně: „Víc o mém přístupu“ ─────────
+     Bez JavaScriptu je text vidět celý (noscript v hlavičce) a tlačítko je skryté (.js-only). */
+  var omToggle = doc.querySelector('[data-om-toggle]');
+  var omMore = doc.getElementById('o-mne-vic');
+  if (omToggle && omMore) {
+    var omLabel = omToggle.querySelector('[data-om-label]');
+    var omSign = omToggle.querySelector('[data-om-sign]');
+    var omLabelClosed = omLabel ? omLabel.textContent : '';
+    omToggle.addEventListener('click', function () {
+      var open = omToggle.getAttribute('aria-expanded') !== 'true';
+      omToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      omMore.hidden = !open;
+      if (omLabel) omLabel.textContent = open ? 'Méně' : omLabelClosed;
+      if (omSign) omSign.textContent = open ? '\u2212' : '+';
+    });
+  }
+
+  /* ───────── Proč změny nevydrží: postupné zobrazení řádků ─────────
+     Stejně jako v návrhu: řádek se ukáže, když je z 25 % ve viewportu. Prohlížeč bez IntersectionObserver
+     a bez JavaScriptu ukáže všechno hned (viz [data-nv-ready] v site.css). */
+  var revealItems = doc.querySelectorAll('[data-nv-reveal]');
+  if (revealItems.length && 'IntersectionObserver' in window) {
+    doc.documentElement.setAttribute('data-nv-ready', '');
+    var revealObserver = new window.IntersectionObserver(function (entries) {
+      Array.prototype.forEach.call(entries, function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.setAttribute('data-nv-in', '');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.25, rootMargin: '0px 0px -8% 0px' });
+    Array.prototype.forEach.call(revealItems, function (item) { revealObserver.observe(item); });
+  }
+
   /* ───────── Kontaktní formulář (Netlify Forms) ─────────
      Bez JavaScriptu (nebo bez fetch/FormData/URLSearchParams) se formulář odešle klasicky: POST na action
      (/dekujeme/), Netlify zprávu uloží a zobrazí stránku s poděkováním. S JavaScriptem se odešle AJAXem
@@ -257,9 +291,11 @@
   }
 
   /* ───────── Rezervace: signál nv:booking ─────────
-     Signál se pošle jen při vědomém kroku návštěvníka: klik na „Souhlasím, načíst kalendář“ v bloku
-     rezervace nebo na odkaz „Otevřít rezervaci v novém okně“ (data-booking-link). Samotné načtení
-     kalendáře se nepočítá – kdo už souhlas dal, tomu se kalendář načte sám při posunu stránky.
+     Signál se pošle jen při vědomém kroku návštěvníka: klik na tlačítko vedoucí na rezervaci (odkaz
+     na #rezervace, např. „Domluvit nezávazný hovor“), na „Souhlasím, načíst kalendář“ v bloku rezervace
+     nebo na odkaz „Otevřít rezervaci v novém okně“ (data-booking-link). Samotné načtení kalendáře se
+     nepočítá – kdo už souhlas dal, tomu se kalendář načte sám při posunu stránky. Tlačítko „Rezervovat
+     konzultaci“ vede na kontaktní formulář (#kontakt), proto se nepočítá; odeslání formuláře je nv:lead.
      Dokončenou rezervaci uvnitř kalendáře Googlu web zjistit nemůže.
      Posluchač běží ve fázi zachycení, tedy dřív, než consent.js tlačítko nahradí kalendářem. */
   function onBookingIntent(e) {
@@ -268,6 +304,7 @@
     var t = e.target;
     if (!t || typeof t.closest !== 'function') return;
     if (t.closest('a[data-booking-link]')) signal('nv:booking', 'odkaz');
+    else if (t.closest('a[href$="#rezervace"]')) signal('nv:booking', 'tlacitko');
     else if (e.type === 'click' && t.closest('[data-consent-embed] [data-consent-accept]')) signal('nv:booking', 'kalendar');
   }
   doc.addEventListener('click', onBookingIntent, true);
