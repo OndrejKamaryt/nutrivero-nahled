@@ -9,7 +9,7 @@
   "TELEFON_HREF": "+420734575195",
   "UPDATED": "3. 11. 2026",
   "_poznamka_lastmod": "HOME_UPDATED_ISO = datum poslední podstatné změny hlavní stránky (RRRR-MM-DD, lastmod v sitemap ostrého webu). Měňte jen při změně obsahu. U právních stránek se lastmod odvozuje z UPDATED.",
-  "HOME_UPDATED_ISO": "2026-11-03",
+  "HOME_UPDATED_ISO": "2026-11-08",
   "REZERVACE_URL": "https://calendar.google.com/calendar/appointments/schedules/AcZssZ184ZqiSgOzjD5QXCZ1QP874Atri4Vy8Hoh7TzJnww-TjB95qRIxQk1Cfc8cOlZwfdk7UG57-i4?gv=true",
   "REZERVACE_LINK": "https://calendar.app.google/SrVPgZXT7hp6RAMHA",
   "_poznamka_mereni": "Měření se souhlasem (lišta cookies, consent.js). GA_ID = Measurement ID služby Google Analytics 4 ve tvaru G-XXXXXXXXXX; prázdné = Google Analytics je vypnuté a kategorie Analytické se v liště vůbec nezobrazí. META_PIXEL_ID = ID datové sady (pixelu) Meta, jen číslice; prázdné = Meta pixel vypnutý, kategorie Marketingové se nezobrazí. Obě hodnoty se zapisují do <html data-ga-id / data-meta-pixel-id>. Po doplnění GA_ID stačí build a nasazení (CSP i texty v legal/cookies.html s tím už počítají; lišta se všem zobrazí znovu).",

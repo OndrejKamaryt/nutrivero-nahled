@@ -1,4 +1,4 @@
-/* Nutrivero – chování stránky (menu, plynulá navigace, FAQ, reference, kontaktní formulář, květinový slider).
+/* Nutrivero – chování stránky (menu, plynulá navigace, FAQ, reference, O mně, kontaktní formulář, květinový slider).
    Bez závislostí; bezpečné pro defer i pro podstránky, kde některé prvky chybí. */
 (function () {
   'use strict';
@@ -153,6 +153,39 @@
   var refNext = doc.querySelector('[data-ref-next]');
   if (refTrack && refPrev) refPrev.addEventListener('click', function () { refMove(-1); });
   if (refTrack && refNext) refNext.addEventListener('click', function () { refMove(1); });
+
+  /* ───────── O mně: „Víc o mém přístupu“ ─────────
+     Bez JavaScriptu je text vidět celý (noscript v hlavičce) a tlačítko je skryté (.js-only). */
+  var omToggle = doc.querySelector('[data-om-toggle]');
+  var omMore = doc.getElementById('o-mne-vic');
+  if (omToggle && omMore) {
+    var omLabel = omToggle.querySelector('[data-om-label]');
+    var omSign = omToggle.querySelector('[data-om-sign]');
+    var omLabelClosed = omLabel ? omLabel.textContent : '';
+    omToggle.addEventListener('click', function () {
+      var open = omToggle.getAttribute('aria-expanded') !== 'true';
+      omToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      omMore.hidden = !open;
+      if (omLabel) omLabel.textContent = open ? 'Méně' : omLabelClosed;
+      if (omSign) omSign.textContent = open ? '\u2212' : '+';
+    });
+  }
+
+  /* ───────── Proč změny nevydrží: postupné zobrazení řádků ─────────
+     Stejně jako v návrhu: řádek se ukáže, když je z 25 % ve viewportu. Prohlížeč bez IntersectionObserver
+     a bez JavaScriptu ukáže všechno hned (viz [data-nv-ready] v site.css). */
+  var revealItems = doc.querySelectorAll('[data-nv-reveal]');
+  if (revealItems.length && 'IntersectionObserver' in window) {
+    doc.documentElement.setAttribute('data-nv-ready', '');
+    var revealObserver = new window.IntersectionObserver(function (entries) {
+      Array.prototype.forEach.call(entries, function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.setAttribute('data-nv-in', '');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.25, rootMargin: '0px 0px -8% 0px' });
+    Array.prototype.forEach.call(revealItems, function (item) { revealObserver.observe(item); });
+  }
 
   /* ───────── Kontaktní formulář (Netlify Forms) ─────────
      Bez JavaScriptu (nebo bez fetch/FormData/URLSearchParams) se formulář odešle klasicky: POST na action
