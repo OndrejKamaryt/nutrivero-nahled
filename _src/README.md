@@ -171,8 +171,9 @@ nad hlavičkou hlavní stránky.
   bez zaškrtnutí pole chybí), skrytá `form-name`, `subject`, `akce` (název a termín akce) a past `bot-field`.
   S JavaScriptem se odešle AJAXem na `/` a `site.js` pak přesměruje na `/workshop/dekujeme/`; bez JavaScriptu
   se odešle klasicky přímo tam. Při chybě se pod formulářem ukáže výzva napsat e-mail.
-- **V Netlify po prvním nasazení:** Forms → zkontrolovat, že přibyl formulář `workshop`, a ve Form notifications
-  přidat e-mailové upozornění i pro něj (stávající upozornění je jen pro `kontakt`), pak poslat zkušební přihlášku.
+- **V Netlify:** formulář `workshop` se po nasazení 10. 11. 2026 objevil ve Forms. E-mailové upozornění bylo v tu chvíli
+  jedno a bez omezení na formulář, mělo by tedy platit i pro přihlášky; ověřte to zkušební přihláškou
+  (Forms → Form notifications).
   Odkaz na Google Meet den předem rozesílá majitelka sama (export přihlášek do CSV ve Forms → workshop).
   Souhlas se zasíláním tipů mají jen přihlášky s `souhlas-novinky = ano`; přihlášky mažte podle lhůt v zásadách.
 - **Děkovací stránka** ukazuje odkaz na Google Meet a tlačítko „Přidat do Google Kalendáře“. Je statická, takže
