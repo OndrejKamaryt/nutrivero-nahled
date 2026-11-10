@@ -24,7 +24,9 @@ na něm nefunguje – GitHub Pages neumí přijímat odeslané formuláře.
 _src/                    zdroje – TADY se edituje
   config.json            hodnoty tokenů: společné + "targets" (netlify-nahled / preview / production)
   build.py               sestaví HTML, robots.txt a sitemap.xml (sitemap jen u ostrého webu)
-  index.html             hlavní stránka (včetně kontaktního formuláře)
+  index.html             hlavní stránka (včetně kontaktního formuláře a pruhu s pozvánkou na workshop)
+  workshop.html          stránka workshopu /workshop/ (vlastní rozvržení, přihláška přes Netlify Forms)
+  workshop-dekujeme.html děkovací stránka /workshop/dekujeme/ s odkazem na Google Meet (noindex, není v sitemap)
   page-template.html     společná šablona podstránek (hlavička, patička, <head>)
   404.html               stránka „nenalezeno“
   legal/*.html           obsah podstránek: právní texty (GDPR, cookies, obchodní podmínky, odstoupení)
@@ -37,7 +39,8 @@ site/                    statické soubory + výchozí výstup buildu (HTML v si
   _headers               HTTP hlavičky pro Netlify (CSP, HSTS, cache …) – jen cíle s NETLIFY true
   _redirects             301 přesměrování starých/krátkých adres (/gdpr, /vop …) – jen cíle s NETLIFY true
   site.webmanifest, favicon.ico, apple-touch-icon.png
-  assets/css/            fonts.css (DM Sans, hostováno lokálně), site.css, consent.css
+  assets/css/            fonts.css (DM Sans, hostováno lokálně), site.css, consent.css,
+                         workshop.css (jen stránka workshopu a její děkovací stránka)
   assets/js/             site.js, consent.js (cookie lišta, nastavení, Google Analytics a Meta pixel po souhlasu)
   assets/fonts/          DM Sans (woff2) + licence OFL
   assets/img/            fotky (webp/jpg), ikony, icons/, og-image-4.jpg (náhled pro sociální sítě,
@@ -58,9 +61,11 @@ nutrivero-web-hotov/     původní návrh (prototyp) – jen pro referenci, nena
   Seznam adres v `_src/sitemap.xml` je psaný ručně. Build ho u ostrého webu porovná se stránkami:
   stránka se `"sitemap": false` nebo s `noindex` v sitemap = **chyba**, indexovatelná stránka, která
   v sitemap chybí, = upozornění. Novou indexovatelnou podstránku proto doplňte i do `_src/sitemap.xml`.
-- Při podstatné změně právních textů změňte v `config.json` datum `UPDATED` (formát `30. 10. 2026`).
-  Při podstatné změně obsahu hlavní stránky změňte `HOME_UPDATED_ISO` (formát `2026-10-30`).
-  Obě data jsou `lastmod` v sitemap – měňte je jen při skutečné změně obsahu, ne při každém buildu.
+- Při podstatné změně obchodních podmínek nebo formuláře pro odstoupení změňte v `config.json` datum `UPDATED`
+  (formát `30. 10. 2026`), při změně zásad zpracování osobních údajů nebo zásad cookies datum `ZASADY_UPDATED`. Data jsou zvlášť,
+  aby změna zásad neposunula datum účinnosti obchodních podmínek.
+  Při podstatné změně obsahu hlavní stránky nebo stránky workshopu změňte `HOME_UPDATED_ISO` (formát `2026-10-30`).
+  Všechna tři data jsou `lastmod` v sitemap – měňte je jen při skutečné změně obsahu, ne při každém buildu.
 - Hosting v právních textech uvádějte **jen tokeny** `%%HOSTING_NAME%%`, `%%HOSTING_SERVICE%%`,
   `%%HOSTING_ADDRESS%%`, `%%HOSTING_PRIVACY_URL%%` – náhled tak uvede GitHub, ostrý web Netlify.
 - Odkazy a obrázky pište jako kořenové cesty (`/cookies/`, `/assets/img/…`). Build před ně u náhledu
@@ -86,8 +91,9 @@ cíl (`"production"`). Klíče začínající `_` jsou komentáře.
 | `%%EMAIL%%` | společné | kontaktní e-mail (i pro odkazy `mailto:`) |
 | `%%TELEFON%%` | společné | telefon pro zobrazení, např. `+420 777 123 456` |
 | `%%TELEFON_HREF%%` | společné | telefon pro odkaz `tel:`, bez mezer, např. `+420777123456` |
-| `%%UPDATED%%` | společné | datum účinnosti právních textů (formát `26. 10. 2026`) |
-| `%%HOME_UPDATED_ISO%%` | společné | datum poslední podstatné změny hlavní stránky, `RRRR-MM-DD` (`lastmod` v sitemap) |
+| `%%UPDATED%%` | společné | datum účinnosti obchodních podmínek a formuláře pro odstoupení (formát `26. 10. 2026`) |
+| `%%ZASADY_UPDATED%%` | společné | datum účinnosti zásad zpracování osobních údajů a zásad používání cookies (stejný formát) |
+| `%%HOME_UPDATED_ISO%%` | společné | datum poslední podstatné změny hlavní stránky a stránky workshopu, `RRRR-MM-DD` (`lastmod` v sitemap) |
 | `%%REZERVACE_URL%%` | společné | rezervační stránka Google Kalendáře pro vložení (s `?gv=true`) |
 | `%%REZERVACE_LINK%%` | společné | stejná adresa bez `gv` – odkaz „otevřít v novém okně“ |
 | `%%GA_ID%%` | společné | Measurement ID služby Google Analytics 4 (`G-XXXXXXXXXX`); **prázdné = Google Analytics vypnuté** (kategorie Analytické se v liště nezobrazí). Viz [Měření se souhlasem](#měření-se-souhlasem-google-analytics-a-meta-pixel) |
@@ -102,7 +108,8 @@ cíl (`"production"`). Klíče začínající `_` jsou komentáře.
 | `%%HOSTING_PRIVACY_URL%%` | cíl | odkaz na jeho zásady ochrany osobních údajů |
 | `%%ROBOTS%%` | build | `noindex,nofollow` (náhled) / `index,follow` (ostrý web); u podstránky ho může přepsat `"robots"` v meta |
 | `%%ROBOTS_404%%` | build | robots stránky 404: `noindex,nofollow` (náhled) / `noindex,follow` (ostrý web) |
-| `%%UPDATED_ISO%%` | build | `UPDATED` ve tvaru `RRRR-MM-DD` (`lastmod` právních stránek v sitemap) |
+| `%%UPDATED_ISO%%` | build | `UPDATED` ve tvaru `RRRR-MM-DD` (`lastmod` obchodních podmínek a odstoupení v sitemap) |
+| `%%ZASADY_UPDATED_ISO%%` | build | `ZASADY_UPDATED` ve tvaru `RRRR-MM-DD` (`lastmod` zásad zpracování osobních údajů a stránky o cookies) |
 | `%%BUILD_DATE%%` | build | datum buildu (`RRRR-MM-DD`); do sitemap se nepoužívá |
 
 Cesta v `SITE_URL` musí odpovídat `BASE_PATH`, jinak build skončí chybou.
@@ -148,6 +155,40 @@ Build s `--strict` odmítne zástupné hodnoty začínající `[` (např. `[e-ma
    (zkontrolujte i složku se spamem ve schránce).
 
 Odeslané zprávy najdete v administraci Netlify: web → **Forms** → **kontakt** (export do CSV tamtéž).
+
+### Workshop (stránka /workshop/, formulář „workshop“)
+
+Od 10. 11. 2026 má web stránku workshopu podle návrhu majitelky „Nutrivero workshop na webu“ (mobil 390 px,
+počítač 1440 px). Vede na ni položka **Webináře** v menu (hlavní stránka, podstránky i stránka 404) a pruh
+nad hlavičkou hlavní stránky.
+
+- Zdroje: `_src/workshop.html` → `/workshop/` (indexovatelná, je v sitemap), `_src/workshop-dekujeme.html` →
+  `/workshop/dekujeme/` (`noindex`, není v sitemap), styl `site/assets/css/workshop.css`, obsluha formuláře a pruhu
+  v `site/assets/js/site.js`. Obě stránky jsou samostatné (seznam `STANDALONE_PAGES` v `build.py`), nepoužívají
+  `page-template.html`. Fotka v úvodu je výřez `tereza-stul-detail-*` (stejná fotka jako na hlavní stránce).
+- **Přihláška** je druhý formulář Netlify Forms, `name="workshop"`. Pole (neměňte názvy): `jmeno`, `email`,
+  `telefon` (nepovinné), `souhlas-novinky` (nepovinný souhlas se zasíláním tipů a nabídek; hodnota `ano`, u přihlášky
+  bez zaškrtnutí pole chybí), skrytá `form-name`, `subject`, `akce` (název a termín akce) a past `bot-field`.
+  S JavaScriptem se odešle AJAXem na `/` a `site.js` pak přesměruje na `/workshop/dekujeme/`; bez JavaScriptu
+  se odešle klasicky přímo tam. Při chybě se pod formulářem ukáže výzva napsat e-mail.
+- **V Netlify po prvním nasazení:** Forms → zkontrolovat, že přibyl formulář `workshop`, a ve Form notifications
+  přidat e-mailové upozornění i pro něj (stávající upozornění je jen pro `kontakt`), pak poslat zkušební přihlášku.
+  Odkaz na Google Meet den předem rozesílá majitelka sama (export přihlášek do CSV ve Forms → workshop).
+  Souhlas se zasíláním tipů mají jen přihlášky s `souhlas-novinky = ano`; přihlášky mažte podle lhůt v zásadách.
+- **Děkovací stránka** ukazuje odkaz na Google Meet a tlačítko „Přidat do Google Kalendáře“. Je statická, takže
+  ji uvidí každý, kdo zná její adresu.
+- **Měření:** úspěšná přihláška pošle signál `nv:registration` → se souhlasem GA `sign_up` a Meta
+  `CompleteRegistration` (bez údajů z formuláře). Bez JavaScriptu se neměří.
+- **Pruh na hlavní stránce** (`<aside class="ws-pruh">` v `_src/index.html`, styl v `site.css`): atribut
+  `data-skryt-po` je konec akce (ISO 8601 s časovým pásmem); po něm ho `site.js` skryje a build na prošlý termín
+  upozorní. Po akci pruh odstraňte nebo přepište na další termín.
+- **Nový termín nebo jiná akce** – termín a název jsou v textu na více místech (hledejte `19.`):
+  `_src/workshop.html` (title, description, og/twitter, JSON-LD `Event`, úvodní pás, karta Kdy / Kde / Jak dlouho,
+  blok Přihláška, skryté pole `akce`), `_src/workshop-dekujeme.html` (termín, odkaz na Meet dvakrát, odkaz do
+  Google Kalendáře), pruh v `_src/index.html` (text a `data-skryt-po`). Pak změňte `HOME_UPDATED_ISO` a zvyšte `?v=`.
+- **Po akci** stránka sama nic nezmění (kromě pruhu): přihláška i odkaz na Meet zůstávají, dokud je neupravíte.
+- Právní texty: zásady zpracování osobních údajů (řádek „Webináře, kurzy a další akce“, souhlas se zasíláním tipů)
+  a zásady cookies (odstavec „Přihláška na webinář nebo jinou akci“, události v kapitolách 6 a 7).
 
 ## Build
 
@@ -348,7 +389,8 @@ CSP už domény Google Analytics obsahuje a texty v `legal/cookies.html` platí 
 
 - „Přijmout vše“, „Odmítnout vše“ a „Nastavení“ jsou v liště stejně velká tlačítka; „Odmítnout vše“ vypne
   všechny volitelné kategorie. Text lišty jmenuje jen zapnuté nástroje.
-- **Konverze:** `site.js` posílá na `document` události `nv:lead` (úspěšně odeslaný kontaktní formulář)
+- **Konverze:** `site.js` posílá na `document` události `nv:lead` (úspěšně odeslaný kontaktní formulář),
+  `nv:registration` (úspěšně odeslaná přihláška na workshop; GA `sign_up`, Meta `CompleteRegistration`)
   a `nv:booking` (klik na tlačítko vedoucí na `#rezervace`, na „Souhlasím, načíst kalendář“ nebo na „Otevřít
   rezervaci v novém okně“ včetně prostředního tlačítka; samotné načtení kalendáře se nepočítá a „Rezervovat
   konzultaci“ vede na `#kontakt`, takže také ne; jedna návštěva může poslat víc událostí). `consent.js` je předá jen nástrojům se
@@ -384,8 +426,8 @@ CSP už domény Google Analytics obsahuje a texty v `legal/cookies.html` platí 
    automatickou konfiguraci. Kód posílá `autoConfig: false`, ale párování údajů z formulářů řídí nastavení
    v Events Manageru – jinak by pixel mohl posílat zahašovaný e-mail nebo telefon z formuláře, což
    zásady vylučují.
-5. **Meta:** v Events Manageru zkontrolujte, že přicházejí jen `PageView`, `Lead` a `BookingOpen` bez
-   dalších parametrů. Meta může web zařadit mezi weby o zdraví a wellness a některé konverze nebo parametry
+5. **Meta:** v Events Manageru zkontrolujte, že přicházejí jen `PageView`, `Lead`, `CompleteRegistration`
+   a `BookingOpen` bez dalších parametrů. Meta může web zařadit mezi weby o zdraví a wellness a některé konverze nebo parametry
    pro optimalizaci reklam omezit – to se nastavuje u Mety, kód to neovlivní.
 6. Po nasazení ověřte v prohlížeči (nástroje pro vývojáře → Síť): bez souhlasu žádný požadavek na
    `googletagmanager.com`, `google-analytics.com`, `facebook.com` ani `connect.facebook.net`; po souhlasu ano;

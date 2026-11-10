@@ -1,4 +1,5 @@
-/* Nutrivero – chování stránky (menu, plynulá navigace, FAQ, reference, O mně, kontaktní formulář, květinový slider).
+/* Nutrivero – chování stránky (menu, plynulá navigace, FAQ, reference, O mně, kontaktní formulář, přihláška
+   na workshop, pruh s pozvánkou, květinový slider).
    Bez závislostí; bezpečné pro defer i pro podstránky, kde některé prvky chybí. */
 (function () {
   'use strict';
@@ -10,8 +11,8 @@
   if (doc.documentElement.classList) doc.documentElement.classList.add('js');
 
   /* Signály konverzí pro consent.js: document → CustomEvent "nv:lead" (zpráva z kontaktního formuláře
-     odeslána) a "nv:booking" (klik na tlačítko vedoucí na rezervaci, na „Souhlasím, načíst kalendář“
-     nebo na „Otevřít rezervaci v novém okně“).
+     odeslána), "nv:registration" (přihláška na workshop odeslána) a "nv:booking" (klik na tlačítko vedoucí
+     na rezervaci, na „Souhlasím, načíst kalendář“ nebo na „Otevřít rezervaci v novém okně“).
      consent.js je předá Google Analytics / Meta pixelu jen se souhlasem. V detailu je jen zdroj události,
      nikdy obsah formuláře ani jiné osobní údaje. */
   function signal(name, source) {
@@ -426,4 +427,83 @@
     if (doc.fonts && doc.fonts.ready && doc.fonts.ready.then) doc.fonts.ready.then(onSlideScroll);
     window.setTimeout(onSlideScroll, 50);
   }
+
+  /* ───────── Přihláška na workshop (/workshop/, Netlify Forms, formulář „workshop“) ─────────
+     Jako kontaktní formulář: s JavaScriptem POST na kořen webu (application/x-www-form-urlencoded) včetně
+     skrytých polí form-name, subject a akce i pasti bot-field. Po úspěchu pošle signál nv:registration
+     a přesměruje na stránku z atributu action (/workshop/dekujeme/ s odkazem na Google Meet); krátká prodleva
+     nechá měřicím nástrojům čas konverzi odeslat. Při chybě nebo po 20 s bez odpovědi ukáže výzvu napsat
+     e-mail. Vyplněná past se tváří jako úspěch, ale nic se neodešle. Bez JavaScriptu (nebo ve starém
+     prohlížeči) se formulář odešle klasicky na action. */
+  var wForm = doc.querySelector('[data-workshop-form]');
+  if (wForm && window.fetch && window.FormData && window.URLSearchParams) {
+    var wButton = wForm.querySelector('[data-workshop-submit]');
+    var wButtonLabel = wButton ? wButton.textContent : '';
+    var wError = doc.querySelector('[data-workshop-chyba]');
+    var wSending = false;
+    var wEndpoint = (doc.documentElement.getAttribute('data-base') || '') + '/';
+    var wSetSending = function (on) {
+      wSending = on;
+      wForm.setAttribute('aria-busy', on ? 'true' : 'false');
+      if (!wButton) return;
+      wButton.textContent = on ? 'Odesílám…' : wButtonLabel;
+      if (on) wButton.setAttribute('aria-disabled', 'true');
+      else wButton.removeAttribute('aria-disabled');
+    };
+    var wDone = function () {
+      window.location.assign(wForm.getAttribute('action') || '/workshop/dekujeme/');
+    };
+    var wFail = function () {
+      if (wError) wError.hidden = false;
+      wSetSending(false);
+    };
+    // Návrat tlačítkem Zpět z děkovací stránky (stránka z mezipaměti): formulář znovu odemknout.
+    window.addEventListener('pageshow', function (e) { if (e.persisted) wSetSending(false); });
+
+    wForm.addEventListener('submit', function (e) {
+      var body = '';
+      try {
+        body = new window.URLSearchParams(new window.FormData(wForm)).toString();
+      } catch (err) { body = ''; }
+      if (body.indexOf('form-name=') === -1) return;
+      e.preventDefault();
+      if (wSending) return;
+      if (wError) wError.hidden = true;
+
+      var bot = wForm.elements['bot-field'];
+      if (bot && typeof bot.value === 'string' && bot.value.trim()) { wDone(); return; }
+
+      wSetSending(true);
+      var ctrl = window.AbortController ? new window.AbortController() : null;
+      var timer = ctrl ? window.setTimeout(function () { ctrl.abort(); }, 20000) : null;
+      var opts = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body
+      };
+      if (ctrl) opts.signal = ctrl.signal;
+
+      window.fetch(wEndpoint, opts)
+        .then(function (r) {
+          if (timer) window.clearTimeout(timer);
+          if (!r.ok) { wFail(); return; }
+          signal('nv:registration', 'workshop');
+          // Vyprázdnit pole: po návratu tlačítkem Zpět z děkovací stránky nesvádí k druhému odeslání.
+          wForm.reset();
+          window.setTimeout(wDone, 400);
+        })
+        .catch(function () {
+          if (timer) window.clearTimeout(timer);
+          wFail();
+        });
+    });
+  }
+
+  /* ───────── Pruh s pozvánkou na akci: po termínu skrýt ─────────
+     Prvek s data-skryt-po="2026-11-19T19:45:00+01:00" (ISO 8601 s časovým pásmem) se po tomto okamžiku skryje,
+     aby web nezval na akci, která už proběhla. Neplatné datum se ignoruje (prvek zůstane vidět). */
+  Array.prototype.forEach.call(doc.querySelectorAll('[data-skryt-po]'), function (node) {
+    var until = Date.parse(node.getAttribute('data-skryt-po') || '');
+    if (!isNaN(until) && Date.now() >= until) node.hidden = true;
+  });
 })();

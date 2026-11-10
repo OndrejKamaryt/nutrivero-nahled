@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="cs" data-base="%%BASE_PATH%%" data-ga-id="%%GA_ID%%" data-meta-pixel-id="%%META_PIXEL_ID%%">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com https://connect.facebook.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.facebook.com https://*.google-analytics.com https://*.googletagmanager.com; font-src 'self'; frame-src https://calendar.google.com https://www.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://www.facebook.com https://connect.facebook.net; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Děkovací stránka po přihlášce na workshop (action formuláře „workshop“ v _src/workshop.html; návrh z 10. 11. 2026).
+     Neindexuje se a není v sitemap. Je na ní odkaz na Google Meet – při dalším termínu změňte termín, oba výskyty odkazu
+     na Meet a odkaz „Přidat do Google Kalendáře“ (parametry text, dates, details, location). Stránka je statická:
+     kdo zná její adresu, odkaz na Meet uvidí i bez přihlášky. -->
+<title>Přihláška je odeslaná · Nutrivero</title>
+<meta name="description" content="Přihláška na online workshop Nutrivero je odeslaná. Na této stránce najdete odkaz na Google Meet.">
+<link rel="canonical" href="%%SITE_URL%%/workshop/dekujeme/">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#C3CE94">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="/assets/img/icons/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/assets/fonts/dm-sans-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/dm-sans-latin-ext-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/fonts.css">
+<link rel="stylesheet" href="/assets/css/site.css?v=20261110">
+<link rel="stylesheet" href="/assets/css/workshop.css?v=20261110">
+<link rel="stylesheet" href="/assets/css/consent.css">
+</head>
+<body>
+<a class="skip-link" href="#obsah">Přeskočit na obsah</a>
+<div class="ws-wrap">
+
+  <!-- Hlavička a menu jsou stejné jako na ostatních stránkách (kopie z _src/page-template.html);
+       při změně menu upravte i _src/index.html, _src/page-template.html a _src/404.html. -->
+  <header style="position:sticky; top:0; z-index:20; background-color:rgba(247,244,238,0.92); backdrop-filter:saturate(1.3) blur(10px)">
+    <div style="max-width:1232px; margin:0 auto; padding:0 clamp(16px,5vw,56px); min-height:72px; display:flex; align-items:center; justify-content:space-between; gap:12px">
+      <a href="/" aria-label="Nutrivero, výživové poradenství" style="flex:none; display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--color-accent)">
+        <img src="/assets/img/logogram.webp" alt="" width="40" height="43" style="display:block; width:clamp(32px,8vw,40px); height:auto">
+        <span style="max-width:clamp(0px, (100vw - 480px) * 999, 240px); overflow:hidden; display:flex; flex-direction:column; gap:1px; line-height:1; white-space:nowrap">
+          <span style="font-size:clamp(16px,4.25vw,18.5px); font-weight:500; letter-spacing:-0.01em">Nutrivero</span>
+          <span style="max-height:clamp(0px, (100vw - 560px) * 999, 18px); overflow:hidden; font-size:11.5px; line-height:1.3; font-weight:500">výživové poradenství</span>
+        </span>
+      </a>
+
+      <div style="display:flex; align-items:center; gap:clamp(8px,1.4vw,16px)">
+        <nav class="only-wide" aria-label="Hlavní menu">
+          <ul style="list-style:none; margin:0; padding:0; display:flex; align-items:center; gap:2px">
+            <li><a href="/#jak-pracuji" class="nav-link" style="display:flex; align-items:center; min-height:40px; padding:0 12px; border-radius:999px; font-size:15px; font-weight:500; color:var(--color-text); text-decoration:none; white-space:nowrap; transition:background-color .15s ease">Jak pracuji</a></li>
+            <li><a href="/#cena" class="nav-link" style="display:flex; align-items:center; min-height:40px; padding:0 12px; border-radius:999px; font-size:15px; font-weight:500; color:var(--color-text); text-decoration:none; white-space:nowrap; transition:background-color .15s ease">Cena</a></li>
+            <li><a href="/#o-mne" class="nav-link" style="display:flex; align-items:center; min-height:40px; padding:0 12px; border-radius:999px; font-size:15px; font-weight:500; color:var(--color-text); text-decoration:none; white-space:nowrap; transition:background-color .15s ease">O&nbsp;mně</a></li>
+            <li><a href="/#otazky" class="nav-link" style="display:flex; align-items:center; min-height:40px; padding:0 12px; border-radius:999px; font-size:15px; font-weight:500; color:var(--color-text); text-decoration:none; white-space:nowrap; transition:background-color .15s ease">Časté otázky</a></li>
+            <li><a href="/workshop/" class="nav-link" style="display:flex; align-items:center; min-height:40px; padding:0 12px; border-radius:999px; font-size:15px; font-weight:500; color:var(--color-text); text-decoration:none; white-space:nowrap; transition:background-color .15s ease">Webináře</a></li>
+            <li><a href="/#kontakt" class="nav-link" style="display:flex; align-items:center; min-height:40px; padding:0 12px; border-radius:999px; font-size:15px; font-weight:500; color:var(--color-text); text-decoration:none; white-space:nowrap; transition:background-color .15s ease">Kontakt</a></li>
+          </ul>
+        </nav>
+        <a href="/#rezervace" class="btn btn-primary" style="min-height:44px; padding:0 clamp(14px,3.4vw,20px); font-size:15px; font-weight:600; white-space:nowrap">Úvodní hovor zdarma</a>
+        <button type="button" class="menu-toggle only-narrow" data-menu-toggle aria-expanded="false" aria-controls="mobilni-menu" aria-label="Otevřít menu" style="flex:none; width:44px; height:44px; display:flex; align-items:center; justify-content:center; padding:0; border:0; border-radius:50%; background-color:var(--color-accent-2-200); color:var(--color-accent); cursor:pointer; transition:background-color .15s ease">
+          <svg class="ico-open" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16"></path><path d="M4 12h16"></path><path d="M4 18h16"></path></svg>
+          <svg class="ico-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+        </button>
+      </div>
+    </div>
+    <nav id="mobilni-menu" class="only-narrow" aria-label="Menu" hidden style="position:absolute; top:calc(100% + 6px); right:clamp(10px,4vw,48px); width:min(380px, calc(100% - 2 * clamp(10px,4vw,48px))); padding:8px; border-radius:24px; background-color:#FDFBF7; box-shadow:var(--shadow-lg)">
+      <ul style="list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:2px">
+        <li><a href="/#jak-pracuji" class="nav-link" style="display:flex; align-items:center; min-height:52px; padding:0 18px; border-radius:16px; font-size:17px; font-weight:500; color:var(--color-text); text-decoration:none; transition:background-color .15s ease">Jak pracuji</a></li>
+        <li><a href="/#cena" class="nav-link" style="display:flex; align-items:center; min-height:52px; padding:0 18px; border-radius:16px; font-size:17px; font-weight:500; color:var(--color-text); text-decoration:none; transition:background-color .15s ease">Cena</a></li>
+        <li><a href="/#o-mne" class="nav-link" style="display:flex; align-items:center; min-height:52px; padding:0 18px; border-radius:16px; font-size:17px; font-weight:500; color:var(--color-text); text-decoration:none; transition:background-color .15s ease">O&nbsp;mně</a></li>
+        <li><a href="/#otazky" class="nav-link" style="display:flex; align-items:center; min-height:52px; padding:0 18px; border-radius:16px; font-size:17px; font-weight:500; color:var(--color-text); text-decoration:none; transition:background-color .15s ease">Časté otázky</a></li>
+        <li><a href="/workshop/" class="nav-link" style="display:flex; align-items:center; min-height:52px; padding:0 18px; border-radius:16px; font-size:17px; font-weight:500; color:var(--color-text); text-decoration:none; transition:background-color .15s ease">Webináře</a></li>
+        <li><a href="/#kontakt" class="nav-link" style="display:flex; align-items:center; min-height:52px; padding:0 18px; border-radius:16px; font-size:17px; font-weight:500; color:var(--color-text); text-decoration:none; transition:background-color .15s ease">Kontakt</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div class="menu-backdrop only-narrow" data-menu-backdrop hidden aria-hidden="true" style="position:fixed; inset:0; z-index:19; background-color:rgba(32,30,29,0.24)"></div>
+
+  <main id="obsah">
+    <div class="ws-dk">
+      <span class="ws-deco ws-dk-d1" aria-hidden="true"></span>
+      <span class="ws-deco ws-dk-d2" aria-hidden="true"></span>
+      <span class="ws-dk-ok" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+      <h1 class="ws-dk-h1">Přihláška je odeslaná.</h1>
+      <p class="ws-dk-p">Workshop začíná ve čtvrtek 19.&nbsp;11. v&nbsp;19:00 přes Google Meet.</p>
+      <div class="ws-dk-karta">
+        <p class="ws-dk-karta-nadpis">Připojíte se tady:</p>
+        <a class="btn btn-primary ws-dk-btn" href="https://meet.google.com/otw-cvis-rqw" target="_blank" rel="noopener">Otevřít Google Meet</a>
+        <p class="ws-dk-adresa">meet.google.com/otw-cvis-rqw</p>
+      </div>
+      <p class="ws-dk-p2">Uložte si odkaz, den předem vám ho pošlu i&nbsp;e-mailem.</p>
+      <a class="ws-dk-obrys" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Workshop%3A%20Jak%20hubnout%20bez%20ide%C3%A1ln%C3%ADch%20podm%C3%ADnek%20%28Nutrivero%29&amp;dates=20261119T190000%2F20261119T194500&amp;ctz=Europe%2FPrague&amp;details=Online%20workshop%20zdarma%20s%20Terezou%20%C5%A0ev%C4%8D%C3%ADkovou%20%28Nutrivero%29.%20P%C5%99ipoj%C3%ADte%20se%20p%C5%99es%20Google%20Meet%3A%20https%3A%2F%2Fmeet.google.com%2Fotw-cvis-rqw&amp;location=https%3A%2F%2Fmeet.google.com%2Fotw-cvis-rqw" target="_blank" rel="noopener">Přidat do Google Kalendáře</a>
+    </div>
+    <p class="ws-dk-zpet"><a href="/">Zpět na nutrivero.cz</a></p>
+  </main>
+
+  <footer class="ws-footer">
+    <div style="max-width:1120px; margin:0 auto; padding:clamp(32px,4vw,48px) clamp(20px,5vw,56px) clamp(32px,4vw,48px); display:flex; flex-direction:column; gap:22px; font-size:14px; line-height:1.65">
+      <div style="display:flex; align-items:center; gap:12px">
+        <img src="/assets/img/logogram.webp" alt="" width="34" height="37" loading="lazy" decoding="async" style="display:block; width:34px; height:auto">
+        <span style="display:flex; flex-direction:column; gap:3px; line-height:1">
+          <span style="font-size:16px; font-weight:500">Nutrivero</span>
+          <span style="font-size:10px; font-weight:500">výživové poradenství</span>
+        </span>
+      </div>
+      <p style="margin:0; text-wrap:pretty">Nutrivero&nbsp;· %%JMENO%%&nbsp;· IČO&nbsp;%%ICO%%&nbsp;· zapsaná v&nbsp;živnostenském rejstříku&nbsp;· <a href="mailto:%%EMAIL%%">%%EMAIL%%</a>&nbsp;· <a href="tel:%%TELEFON_HREF%%">%%TELEFON%%</a></p>
+      <div class="footer-links" style="display:flex; flex-wrap:wrap; align-items:center; gap:12px 24px">
+        <a href="/obchodni-podminky/">Obchodní podmínky</a>
+        <a href="/ochrana-osobnich-udaju/">Zásady zpracování osobních údajů</a>
+        <a href="/cookies/">Cookies</a>
+        <button type="button" class="link-button js-only" data-consent-open>Nastavení cookies</button>
+      </div>
+      <p style="margin:0; text-wrap:pretty">Výživové poradenství nenahrazuje lékařskou péči. Se zdravotními potížemi se prosím obraťte na svého lékaře.</p>
+      <p style="margin:0">©&nbsp;2026 Nutrivero</p>
+    </div>
+  </footer>
+
+</div>
+<script src="/assets/js/site.js?v=20261110" defer></script>
+<script src="/assets/js/consent.js?v=20261110" defer></script>
+</body>
+</html>

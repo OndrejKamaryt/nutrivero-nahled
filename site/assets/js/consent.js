@@ -19,9 +19,10 @@
  *   <html data-ga-id="G-…">              – Google Analytics 4, kategorie "analytika" (prázdné = vypnuto,
  *                                          kategorie se nezobrazí a nic se nenačte)
  *   <html data-meta-pixel-id="123…">     – Meta pixel, kategorie "marketing" (prázdné = vypnuto)
- *   Konverze: document → CustomEvent "nv:lead" (odeslaný kontaktní formulář) a "nv:booking" (klik vedoucí
- *   k rezervaci; posílá site.js). Předají se jen nástrojům se souhlasem a bez jakýchkoli údajů z formuláře
- *   (detail události se ignoruje): GA generate_lead / booking_open, Meta Lead / BookingOpen.
+ *   Konverze: document → CustomEvent "nv:lead" (odeslaný kontaktní formulář), "nv:registration" (odeslaná
+ *   přihláška na workshop) a "nv:booking" (klik vedoucí k rezervaci); posílá je site.js. Předají se jen
+ *   nástrojům se souhlasem a bez jakýchkoli údajů z formuláře (detail události se ignoruje):
+ *   GA generate_lead / sign_up / booking_open, Meta Lead / CompleteRegistration / BookingOpen.
  *   Odvolání souhlasu: smaže cookies nástroje (_ga, _ga_*, _gid / _fbp, _fbc) na této doméně i nadřazené
  *   a stránku jednou znovu načte, aby skripty zmizely. Změna z jiné záložky je jen vypne (bez reloadu).
  */
@@ -392,6 +393,7 @@
         gtag('consent', 'update', { analytics_storage: 'granted' });
       },
       lead: function () { gtag('event', 'generate_lead'); },
+      registration: function () { gtag('event', 'sign_up'); },
       booking: function () { gtag('event', 'booking_open'); }
     },
     marketing: {
@@ -424,6 +426,7 @@
       pause: function () { if (typeof window.fbq === 'function') window.fbq('consent', 'revoke'); },
       resume: function () { if (typeof window.fbq === 'function') window.fbq('consent', 'grant'); },
       lead: function () { window.fbq('track', 'Lead'); },
+      registration: function () { window.fbq('track', 'CompleteRegistration'); },
       booking: function () { window.fbq('trackCustom', 'BookingOpen'); }
     }
   };
@@ -494,7 +497,8 @@
     window.setTimeout(function () { window.location.reload(); }, 0);
   }
 
-  // Konverze ze site.js: nv:lead po odeslání formuláře, nv:booking jen po kliknutí na tlačítko vedoucí
+  // Konverze ze site.js: nv:lead po odeslání formuláře, nv:registration po odeslání přihlášky na workshop,
+  // nv:booking jen po kliknutí na tlačítko vedoucí
   // na rezervaci, na „Souhlasím, načíst kalendář“ nebo na odkaz rezervace v novém okně (samotné načtení
   // kalendáře se nepočítá).
   // Detail události se záměrně nečte – žádná data z formuláře ani jiné údaje se nikam neposílají.
@@ -869,6 +873,7 @@
   }
 
   function onLead() { onConversion('lead'); }
+  function onRegistration() { onConversion('registration'); }
   function onBooking() { onConversion('booking'); }
 
   /* ------------------------------------------------------------------ */
@@ -934,6 +939,7 @@
   current = loadStored();
   window.nvConsent = api;
   document.addEventListener('nv:lead', onLead);
+  document.addEventListener('nv:registration', onRegistration);
   document.addEventListener('nv:booking', onBooking);
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

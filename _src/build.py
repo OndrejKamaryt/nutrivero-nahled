@@ -22,7 +22,8 @@ Cíle (config.json → "targets"):
 
 Co dělá:
   * načte _src/config.json, doplní vypočtené tokeny %%BUILD_DATE%% (dnešní datum, ISO),
-    %%UPDATED_ISO%% (UPDATED „26. 10. 2026“ jako 2026-10-26, lastmod právních stránek),
+    %%UPDATED_ISO%% (UPDATED „26. 10. 2026“ jako 2026-10-26, lastmod obchodních podmínek a odstoupení),
+    %%ZASADY_UPDATED_ISO%% (ZASADY_UPDATED stejně; lastmod zásad zpracování osobních údajů a stránky o cookies),
     %%ROBOTS%% (index,follow / noindex,nofollow podle PREVIEW) a %%ROBOTS_404%% (vždy noindex),
   * měření se souhlasem: GA_ID (Google Analytics 4, „G-…“) a META_PIXEL_ID (Meta pixel, číslice) smí být
     prázdné = nástroj je vypnutý (consent.js pak jeho kategorii v liště nezobrazí); build ověří jejich tvar,
@@ -33,6 +34,8 @@ Co dělá:
                      -> <výstup>/<slug>/index.html; volitelné klíče meta: "robots" (např. "noindex,nofollow",
                      přepíše {{ROBOTS}} stránky u ostrého webu; náhled je vždy noindex,nofollow) a "sitemap": false
                      (stránka nemá být v sitemap ostrého webu – build ověří, že v _src/sitemap.xml není),
+  * samostatné stránky s vlastním rozvržením (STANDALONE_PAGES: _src/workshop.html -> <výstup>/workshop/index.html,
+    _src/workshop-dekujeme.html -> <výstup>/workshop/dekujeme/index.html); stránka mimo sitemap má mít robots noindex,
   * _src/404.html    -> <výstup>/404.html
   * _src/robots.txt (ostrý web) nebo _src/robots-preview.txt (náhled) -> <výstup>/robots.txt
   * _src/sitemap.xml -> <výstup>/sitemap.xml jen u ostrého webu (lastmod = HOME_UPDATED_ISO
@@ -45,6 +48,8 @@ Co dělá:
   * v HTML doplní BASE_PATH před každou kořenovou adresu ("/…") v atributech href, src, srcset,
     imagesrcset, poster, action a data-src (nemění "//…", absolutní URL, mailto:, tel:, "#…"),
   * selže (exit 1) a vypíše soubor + token, pokud ve výstupu zůstane %%…%% nebo {{…}},
+  * upozorní na prvek s data-skryt-po (pruh s pozvánkou na akci), jehož termín už uplynul, a odmítne datum
+    bez časového pásma nebo ve špatném tvaru,
   * zkontroluje formuláře Netlify Forms (data-netlify="true"): atribut name, skryté pole form-name
     se stejnou hodnotou a existenci stránky z action (např. /dekujeme/),
   * pokud je výstupní složka jiná než site/, zkopíruje do ní ze site/ i statické soubory
@@ -73,6 +78,13 @@ SITE = ROOT / "site"  # statické soubory (assets, ikony…) a výchozí výstup
 
 TARGET_NAMES = ("netlify-nahled", "preview", "production")
 DEFAULT_TARGET = "netlify-nahled"
+
+# Samostatné stránky s vlastním rozvržením (mimo šablonu podstránek page-template.html):
+# (zdroj v _src/, cesta na webu, má být v sitemap ostrého webu). Stránka mimo sitemap má mít robots noindex.
+STANDALONE_PAGES = [
+    ("workshop.html", "/workshop/", True),
+    ("workshop-dekujeme.html", "/workshop/dekujeme/", False),
+]
 
 # Statické soubory ze site/, které se kopírují do jiné výstupní složky (--out).
 STATIC_COMMON = ["assets", "favicon.ico", "apple-touch-icon.png", "site.webmanifest"]
@@ -115,10 +127,12 @@ HTML_COMMENT_RE = re.compile(r"<!--.*?-->", re.S)
 FORM_RE = re.compile(r"(<form\b[^>]*>)(.*?)</form\s*>", re.S | re.I)
 INPUT_TAG_RE = re.compile(r"<input\b[^>]*>", re.I)
 SITEMAP_LOC_RE = re.compile(r"<loc>\s*([^<\s]+)\s*</loc>")
+# Prvek, který má site.js po daném okamžiku skrýt (pruh s pozvánkou na akci): data-skryt-po="2026-11-19T19:45:00+01:00".
+SKRYT_PO_RE = re.compile(r"data-skryt-po=\"([^\"]*)\"")
 
 REQUIRED_TOKENS = [
     "JMENO", "ICO", "ADRESA", "EMAIL", "TELEFON", "TELEFON_HREF",
-    "SITE_URL", "UPDATED", "HOME_UPDATED_ISO", "REZERVACE_URL", "REZERVACE_LINK",
+    "SITE_URL", "UPDATED", "ZASADY_UPDATED", "HOME_UPDATED_ISO", "REZERVACE_URL", "REZERVACE_LINK",
     "HOSTING_NAME", "HOSTING_SERVICE", "HOSTING_ADDRESS", "HOSTING_PRIVACY_URL",
 ]
 # Hodnoty, které končí v URL (href/src/mailto/tel) – nesmí obsahovat mezery.
@@ -141,7 +155,7 @@ TRACKING_CSP = [
 CSP_META_RE = re.compile(r"<meta\s+http-equiv=\"Content-Security-Policy\"\s+content=\"([^\"]*)\"", re.I)
 HTML_TAG_RE = re.compile(r"<html\b[^>]*>", re.I)
 # Tokeny, které počítá build – v config.json se nezadávají.
-COMPUTED_TOKENS = ["BUILD_DATE", "UPDATED_ISO", "ROBOTS", "ROBOTS_404"]
+COMPUTED_TOKENS = ["BUILD_DATE", "UPDATED_ISO", "ZASADY_UPDATED_ISO", "ROBOTS", "ROBOTS_404"]
 TEMPLATE_KEYS = ["TITLE", "DESCRIPTION", "PATH", "H1", "LEAD", "CONTENT", "ROBOTS"]
 META_KEYS = ["title", "description", "h1", "lead", "path"]
 META_OPTIONAL_KEYS = ["robots", "sitemap"]
@@ -286,20 +300,24 @@ def load_config(strict: bool, target_arg: str | None) -> tuple[dict[str, str], s
 
     # --- data pro <lastmod> v sitemap: mění se jen se změnou obsahu, ne s každým buildem
     today = _dt.date.today()
-    updated = cfg.get("UPDATED", "")
-    updated_date = None
-    m = re.fullmatch(r"(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})", updated)
-    if m:
-        try:
-            updated_date = _dt.date(int(m.group(3)), int(m.group(2)), int(m.group(1)))
-        except ValueError:
-            pass
-    if updated_date:
-        cfg["UPDATED_ISO"] = updated_date.isoformat()
-    else:
-        if updated and not updated.startswith("["):
-            errors.append(f"config.json: UPDATED musí být datum ve tvaru \"26. 10. 2026\" ({updated!r})")
-        cfg["UPDATED_ISO"] = cfg["BUILD_DATE"]
+    # UPDATED = obchodní podmínky a odstoupení, ZASADY_UPDATED = zásady zpracování osobních údajů (a cookies).
+    legal_dates: dict[str, _dt.date | None] = {}
+    for key in ("UPDATED", "ZASADY_UPDATED"):
+        value = cfg.get(key, "")
+        date = None
+        m = re.fullmatch(r"(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4})", value)
+        if m:
+            try:
+                date = _dt.date(int(m.group(3)), int(m.group(2)), int(m.group(1)))
+            except ValueError:
+                pass
+        if date:
+            cfg[key + "_ISO"] = date.isoformat()
+        else:
+            if value and not value.startswith("["):
+                errors.append(f"config.json: {key} musí být datum ve tvaru \"26. 10. 2026\" ({value!r})")
+            cfg[key + "_ISO"] = cfg["BUILD_DATE"]
+        legal_dates[key] = date
     home = cfg.get("HOME_UPDATED_ISO", "")
     if home:
         home_date = None
@@ -312,8 +330,9 @@ def load_config(strict: bool, target_arg: str | None) -> tuple[dict[str, str], s
             errors.append(f"config.json: HOME_UPDATED_ISO musí být datum ve tvaru RRRR-MM-DD ({home!r})")
         elif home_date > today:
             warnings.append(f"config.json: HOME_UPDATED_ISO ({home}) je v budoucnosti – lastmod v sitemap by byl neplatný")
-    if updated_date and updated_date > today and not preview:
-        warnings.append(f"config.json: UPDATED ({updated}) je v budoucnosti – lastmod právních stránek v sitemap by byl neplatný")
+    for key, date in legal_dates.items():
+        if date and date > today and not preview:
+            warnings.append(f"config.json: {key} ({cfg[key]}) je v budoucnosti – lastmod právních stránek v sitemap by byl neplatný")
 
     # --- kontrola tvaru hodnot
     for key in URL_TOKENS:
@@ -638,6 +657,17 @@ def check_page(result: str, label: str, preview: bool, base: str) -> None:
         if m:
             line = result.count("\n", 0, m.start()) + 1
             errors.append(f"{label}:{line}: inline url(/…) nefunguje v podsložce {base} – použijte relativní cestu")
+    for m in SKRYT_PO_RE.finditer(result):
+        try:
+            until = _dt.datetime.fromisoformat(m.group(1))
+        except ValueError:
+            errors.append(f"{label}: data-skryt-po={m.group(1)!r} není datum ve tvaru 2026-11-19T19:45:00+01:00")
+            continue
+        if until.tzinfo is None:
+            errors.append(f"{label}: data-skryt-po={m.group(1)!r} nemá časové pásmo (např. +01:00)")
+        elif until <= _dt.datetime.now(_dt.timezone.utc):
+            warnings.append(f"{label}: prvek s data-skryt-po={m.group(1)!r} je po termínu – návštěvníkům ho skrývá až skript; "
+                            "odstraňte ho ze zdroje, nebo ho přepište na další termín")
 
 
 def tag_attrs(tag: str) -> dict[str, str]:
@@ -766,6 +796,12 @@ def build(strict: bool, target_arg: str | None, out_arg: str | None) -> int:
     pages: dict[str, bool] = {"/": True}
 
     jobs.append((out / "index.html", read(SRC / "index.html"), "html"))
+    for src_name, page_path, in_sitemap in STANDALONE_PAGES:
+        text = read(SRC / src_name)
+        if not in_sitemap and not re.search(r"<meta\s+name=\"robots\"\s+content=\"(?:noindex|none)\b", text, re.I):
+            warnings.append(f"_src/{src_name}: stránka není v sitemap, ale nemá <meta name=\"robots\" content=\"noindex…\">")
+        pages[page_path] = in_sitemap
+        jobs.append((out / page_path.strip("/") / "index.html", text, "html"))
 
     template = read(SRC / "page-template.html")
     check_template(template)

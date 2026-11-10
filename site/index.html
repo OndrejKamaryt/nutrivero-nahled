@@ -34,7 +34,7 @@
 <link rel="preload" href="/assets/fonts/dm-sans-latin-ext-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="/assets/img/tereza-stul-1200.webp" imagesrcset="/assets/img/tereza-stul-640.webp 640w, /assets/img/tereza-stul-900.webp 900w, /assets/img/tereza-stul-1200.webp 1200w" imagesizes="(min-width: 437px) 488px, 112vw" type="image/webp" fetchpriority="high">
 <link rel="stylesheet" href="/assets/css/fonts.css">
-<link rel="stylesheet" href="/assets/css/site.css?v=20261108">
+<link rel="stylesheet" href="/assets/css/site.css?v=20261110">
 <link rel="stylesheet" href="/assets/css/consent.css">
 <script type="application/ld+json">
 {
@@ -218,6 +218,12 @@
 <a class="skip-link" href="#obsah">Přeskočit na obsah</a>
 <div style="background-color:var(--color-bg); color:var(--color-text); font-family:var(--font-body); overflow-x:clip">
 
+  <aside class="ws-pruh" aria-label="Pozvánka na online workshop" data-skryt-po="2026-11-19T19:45:00+01:00">
+    <span class="ws-pruh-dot" aria-hidden="true"></span>
+    <p class="ws-pruh-text"><strong>Online workshop zdarma: Jak hubnout bez ideálních podmínek.</strong> Čtvrtek 19.&nbsp;11. v&nbsp;19:00.</p>
+    <a class="ws-pruh-btn" href="/workshop/">Více a&nbsp;přihláška</a>
+  </aside>
+
   <header style="position:sticky; top:0; z-index:20; background-color:rgba(247,244,238,0.92); backdrop-filter:saturate(1.3) blur(10px)">
     <div style="max-width:1232px; margin:0 auto; padding:0 clamp(16px,5vw,56px); min-height:72px; display:flex; align-items:center; justify-content:space-between; gap:12px">
       <a href="/" aria-label="Nutrivero, výživové poradenství" style="flex:none; display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--color-accent)">
@@ -235,6 +241,7 @@
             <li><a href="#cena" class="nav-link" style="display:flex; align-items:center; min-height:40px; padding:0 12px; border-radius:999px; font-size:15px; font-weight:500; color:var(--color-text); text-decoration:none; white-space:nowrap; transition:background-color .15s ease">Cena</a></li>
             <li><a href="#o-mne" class="nav-link" style="display:flex; align-items:center; min-height:40px; padding:0 12px; border-radius:999px; font-size:15px; font-weight:500; color:var(--color-text); text-decoration:none; white-space:nowrap; transition:background-color .15s ease">O&nbsp;mně</a></li>
             <li><a href="#otazky" class="nav-link" style="display:flex; align-items:center; min-height:40px; padding:0 12px; border-radius:999px; font-size:15px; font-weight:500; color:var(--color-text); text-decoration:none; white-space:nowrap; transition:background-color .15s ease">Časté otázky</a></li>
+            <li><a href="/workshop/" class="nav-link" style="display:flex; align-items:center; min-height:40px; padding:0 12px; border-radius:999px; font-size:15px; font-weight:500; color:var(--color-text); text-decoration:none; white-space:nowrap; transition:background-color .15s ease">Webináře</a></li>
             <li><a href="#kontakt" class="nav-link" style="display:flex; align-items:center; min-height:40px; padding:0 12px; border-radius:999px; font-size:15px; font-weight:500; color:var(--color-text); text-decoration:none; white-space:nowrap; transition:background-color .15s ease">Kontakt</a></li>
           </ul>
         </nav>
@@ -251,6 +258,7 @@
         <li><a href="#cena" class="nav-link" style="display:flex; align-items:center; min-height:52px; padding:0 18px; border-radius:16px; font-size:17px; font-weight:500; color:var(--color-text); text-decoration:none; transition:background-color .15s ease">Cena</a></li>
         <li><a href="#o-mne" class="nav-link" style="display:flex; align-items:center; min-height:52px; padding:0 18px; border-radius:16px; font-size:17px; font-weight:500; color:var(--color-text); text-decoration:none; transition:background-color .15s ease">O&nbsp;mně</a></li>
         <li><a href="#otazky" class="nav-link" style="display:flex; align-items:center; min-height:52px; padding:0 18px; border-radius:16px; font-size:17px; font-weight:500; color:var(--color-text); text-decoration:none; transition:background-color .15s ease">Časté otázky</a></li>
+        <li><a href="/workshop/" class="nav-link" style="display:flex; align-items:center; min-height:52px; padding:0 18px; border-radius:16px; font-size:17px; font-weight:500; color:var(--color-text); text-decoration:none; transition:background-color .15s ease">Webináře</a></li>
         <li><a href="#kontakt" class="nav-link" style="display:flex; align-items:center; min-height:52px; padding:0 18px; border-radius:16px; font-size:17px; font-weight:500; color:var(--color-text); text-decoration:none; transition:background-color .15s ease">Kontakt</a></li>
       </ul>
     </nav>
@@ -272,7 +280,7 @@
           </div>
           <div style="max-width:100%; display:flex; flex-direction:column; align-items:flex-start; gap:16px">
             <a href="#rezervace" class="btn btn-primary" style="min-height:56px; padding:0 32px; font-size:16px; font-weight:600">Domluvit nezávazný hovor</a>
-            <div style="display:flex; flex-wrap:wrap; gap:8px 16px; font-size:14px; line-height:1.4; font-weight:500; white-space:nowrap"><span style="display:inline-flex; align-items:center; gap:7px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>20&nbsp;minut online</span><span style="display:inline-flex; align-items:center; gap:7px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>zdarma a&nbsp;nezávazně</span><span style="display:inline-flex; align-items:center; gap:7px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>akreditovaná poradkyně</span></div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px 16px; font-size:14px; line-height:1.4; font-weight:500; white-space:nowrap"><span style="display:inline-flex; align-items:center; gap:7px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>20&nbsp;minut online</span><span style="display:inline-flex; align-items:center; gap:7px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>zdarma a&nbsp;nezávazně</span><span style="display:inline-flex; align-items:center; gap:7px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>certifikovaná poradkyně</span></div>
             <span style="display:inline-flex; width:max-content; max-width:100%; align-items:center; gap:10px; padding:7px 16px 7px 7px; border-radius:999px; background-color:#FDFBF7; font-size:14px; line-height:1.35; font-weight:500">
               <span aria-hidden="true" style="flex:none; width:30px; height:30px; border-radius:50%; background-color:#E1C243; color:var(--color-accent); display:flex; align-items:center; justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"></rect><path d="M12 8v13"></path><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"></path></svg></span>
               <span>Po hovoru vám pošlu písemné shrnutí a&nbsp;první 2&nbsp;až 3&nbsp;kroky na míru</span>
@@ -392,7 +400,7 @@
       </div>
       <div class="om-t">
         <p style="margin:0; font-size:clamp(16px,1.44vw,18.5px); line-height:1.5; font-weight:500; text-wrap:pretty">Jmenuji se Tereza Ševčíková a&nbsp;stojím za značkou Nutrivero.</p>
-        <p style="margin:0; font-size:16px; line-height:1.65; text-wrap:pretty">Jsem výživová poradkyně s&nbsp;akreditací od roku 2024 a&nbsp;věřím, že zdravé stravování nemusí být o&nbsp;striktních pravidlech, zákazech ani neustálé kontrole. Mým cílem je pomáhat lidem najít cestu ke stravování, které podporuje jejich zdraví, odpovídá jejich individuálním potřebám a&nbsp;zároveň je dlouhodobě udržitelné.</p>
+        <p style="margin:0; font-size:16px; line-height:1.65; text-wrap:pretty">Jsem výživová poradkyně s&nbsp;certifikací od roku 2024 a&nbsp;věřím, že zdravé stravování nemusí být o&nbsp;striktních pravidlech, zákazech ani neustálé kontrole. Mým cílem je pomáhat lidem najít cestu ke stravování, které podporuje jejich zdraví, odpovídá jejich individuálním potřebám a&nbsp;zároveň je dlouhodobě udržitelné.</p>
         <p style="margin:0; font-size:16px; line-height:1.65; text-wrap:pretty">Pracuji vždy s&nbsp;omezeným počtem klientů současně. Je to podmínka toho, aby program fungoval tak, jak je popsán.</p>
         <div id="o-mne-vic" hidden style="display:flex; flex-direction:column; gap:20px">
           <p style="margin:0; font-size:16px; line-height:1.65; text-wrap:pretty">Ve své praxi vycházím z&nbsp;vědecky podložených informací. Zakládám si na tom, aby doporučení měla oporu v&nbsp;aktuálních poznatcích, nikoliv v&nbsp;módních trendech nebo výživových mýtech.</p>
@@ -545,7 +553,7 @@
               </div>
             </div>
           </div>
-          <div style="margin-top:14px; display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 28px">
+          <div style="margin-top:14px; display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 300px), 1fr)); align-items:baseline; gap:6px 28px">
             <p style="margin:0; font-size:14px; line-height:1.5">Kalendář se nenačetl? <a href="https://calendar.app.google/SrVPgZXT7hp6RAMHA" target="_blank" rel="noopener" data-booking-link style="font-weight:600">Otevřít rezervaci v&nbsp;novém okně</a></p>
             <p style="margin:0; font-size:16px; line-height:1.5">Raději byste nejdřív napsali? <a href="mailto:info@nutrivero.cz" style="font-weight:600">info@nutrivero.cz</a></p>
           </div>
@@ -738,7 +746,7 @@
   </footer>
 
 </div>
-<script src="/assets/js/site.js?v=20261108" defer></script>
-<script src="/assets/js/consent.js" defer></script>
+<script src="/assets/js/site.js?v=20261110" defer></script>
+<script src="/assets/js/consent.js?v=20261110" defer></script>
 </body>
 </html>

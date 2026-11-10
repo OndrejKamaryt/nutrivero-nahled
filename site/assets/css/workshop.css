@@ -1,0 +1,331 @@
+/* Nutrivero – stránka workshopu (/workshop/) a děkovací stránka po přihlášce (/workshop/dekujeme/).
+   Podle návrhu „Nutrivero workshop na webu“ z 10. 11. 2026 (mobil 390 px, počítač 1440 px).
+   Základ je mobilní rozvržení; od 1000 px platí dvousloupcové rozvržení z návrhu pro počítač
+   a velikosti písma se mezi oběma návrhy mění plynule (clamp). Barvy a písmo jsou ze site.css (:root).
+   Hlavička s menu je společná s ostatními stránkami (styly v site.css). Načítá se až po site.css. Při změně zvyšte ?v= v _src/workshop.html a _src/workshop-dekujeme.html. */
+
+/* ───────── Základ ───────── */
+.ws-wrap {
+  min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column;
+  background-color: var(--color-bg); color: var(--color-text);
+  font-family: var(--font-body); font-size: 16px; overflow-x: clip;
+}
+.ws-wrap > main { flex: 1 0 auto; }
+/* :where() drží nízkou specificitu, aby tyto výchozí hodnoty přebila každá třída níže. */
+.ws-wrap :where(p) { margin: 0; }
+.ws-wrap :where(ul, ol) { list-style: none; margin: 0; padding: 0; }
+.ws-sec { max-width: 1120px; margin: 0 auto; padding-left: clamp(20px, 5vw, 40px); padding-right: clamp(20px, 5vw, 40px); }
+.ws-deco { position: absolute; pointer-events: none; }
+.ws-h2 {
+  margin: 0; font-size: clamp(34px, 0.952vw + 30.29px, 44px); line-height: 1.08;
+  font-weight: 400; letter-spacing: -0.026em;
+}
+/* Lístek v kroužku (ozdoba u odstavců) */
+.ws-list { flex: none; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+.ws-list > span { display: block; background-color: var(--color-accent); border-radius: 0 100%; }
+/* Tmavý čtverec s lístkem (ozdoba u fotek) */
+.ws-ctverec { position: absolute; display: flex; align-items: center; justify-content: center; background-color: var(--color-accent); }
+.ws-ctverec > span { display: block; background-color: var(--color-accent-2); border-radius: 0 100%; }
+
+/* ───────── Úvod (zelený pás) ───────── */
+.ws-hero {
+  position: relative; overflow: hidden; width: calc(100% - 24px); max-width: 1400px; margin: 4px auto 0;
+  background-color: var(--color-accent-2); border-radius: 32px;
+}
+.ws-hero-d1 { left: -46px; top: -46px; width: 130px; height: 130px; border-radius: 50%; background-color: rgba(253, 251, 247, 0.4); }
+.ws-hero-d2 { left: -10px; bottom: 190px; width: 46px; height: 46px; border-radius: 0 100%; background-color: rgba(253, 251, 247, 0.45); transform: rotate(-12deg); }
+.ws-hero-d3 { display: none; left: 70px; bottom: 18px; width: 46px; height: 46px; border-radius: 100% 0; background-color: rgba(253, 251, 247, 0.35); }
+.ws-hero-in { position: relative; padding: 32px 22px 28px; display: flex; flex-direction: column; gap: 18px; }
+.ws-hero-text { min-width: 0; display: flex; flex-direction: column; gap: 18px; }
+.ws-badge {
+  align-self: flex-start; display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 999px;
+  background-color: var(--color-card); font-size: 14px; font-weight: 600; line-height: 1;
+}
+.ws-dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background-color: var(--color-highlight); }
+.ws-h1 {
+  margin: 0; font-size: clamp(40px, 2.286vw + 31.09px, 64px); line-height: 1.05;
+  font-weight: 400; letter-spacing: -0.035em; text-wrap: balance;
+}
+.ws-cta { display: flex; min-height: 54px; padding: 0 24px; font-size: 16px; font-weight: 600; text-align: center; }
+.ws-facts { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 14px; line-height: 1.4; }
+.ws-facts li { display: flex; align-items: center; gap: 6px; }
+.ws-facts svg { flex: none; display: block; }
+.ws-hero-foto { display: flex; justify-content: center; margin-top: 10px; }
+.ws-hero-foto-box { position: relative; flex: none; width: 280px; height: 320px; }
+.ws-hero-kruh { position: absolute; right: -6px; top: -4px; width: 150px; height: 150px; border-radius: 50%; background-color: rgba(253, 251, 247, 0.55); }
+.ws-hero-img { position: absolute; left: 14px; top: 14px; width: 240px; height: 300px; max-width: none; object-fit: cover; border-radius: 50%; }
+.ws-hero-ctverec { right: 8px; top: 18px; width: 44px; height: 44px; border-radius: 12px; }
+.ws-hero-ctverec > span { width: 18px; height: 18px; }
+.ws-hero-srdce { position: absolute; left: 0; bottom: 10px; width: 46px; height: 42px; stroke-width: 5; }
+@media (max-width: 359.98px) {
+  .ws-hero-foto-box { transform: scale(0.86); margin: -22px 0; }
+}
+@media (min-width: 560px) {
+  .ws-cta { align-self: flex-start; }
+}
+@media (min-width: 1000px) {
+  .ws-hero { width: calc(100% - 48px); border-radius: 48px; }
+  .ws-hero-d1 { left: -70px; top: -70px; width: 200px; height: 200px; }
+  .ws-hero-d2 { left: 20px; bottom: 30px; width: 70px; height: 70px; transform: rotate(-14deg); }
+  .ws-hero-d3 { display: block; }
+  .ws-hero-in { max-width: 1120px; margin: 0 auto; padding: 64px 40px; flex-direction: row; align-items: center; gap: 40px; }
+  .ws-hero-text { flex: 999 1 520px; gap: 22px; }
+  .ws-badge { padding: 11px 16px; font-size: 15px; }
+  .ws-h1 { line-height: 1.04; }
+  .ws-cta { min-height: 56px; padding: 0 32px; }
+  .ws-facts { gap: 8px 20px; font-size: 15px; }
+  .ws-hero-foto { flex: 1 1 360px; margin-top: 0; }
+  .ws-hero-foto-box { width: 400px; height: 470px; }
+  .ws-hero-kruh { right: 0; top: 0; width: 220px; height: 220px; }
+  .ws-hero-img { left: 30px; top: 24px; width: 340px; height: 430px; }
+  .ws-hero-ctverec { right: 12px; top: 30px; width: 60px; height: 60px; border-radius: 16px; }
+  .ws-hero-ctverec > span { width: 24px; height: 24px; }
+  .ws-hero-srdce { bottom: 34px; width: 70px; height: 64px; stroke-width: 4.5; }
+}
+
+/* ───────── Teze a karta s termínem ───────── */
+.ws-intro { padding-top: 40px; padding-bottom: 8px; display: flex; flex-direction: column; gap: 26px; }
+.ws-intro-text { min-width: 0; display: flex; flex-direction: column; gap: 18px; }
+.ws-teze { font-size: clamp(28px, 1.524vw + 22.06px, 44px); line-height: 1.2; font-weight: 400; letter-spacing: -0.026em; }
+.ws-hl {
+  margin: 0 -2px; padding: 0 3px;
+  background: linear-gradient(transparent 60%, rgba(225, 194, 67, 0.45) 60%);
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+.ws-slib { display: flex; align-items: center; gap: 12px; font-size: clamp(18px, 0.571vw + 15.77px, 24px); line-height: 1.35; font-weight: 500; }
+.ws-slib > span:last-child { text-wrap: balance; }
+.ws-slib .ws-list { width: 38px; height: 38px; background-color: var(--color-accent-2); }
+.ws-slib .ws-list > span { width: 14px; height: 14px; }
+.ws-info {
+  min-width: 0; display: flex; flex-direction: column; padding: 4px 20px; border-radius: 24px;
+  background-color: var(--color-accent); color: var(--color-bg);
+}
+.ws-info li { display: flex; align-items: center; gap: 14px; padding: 16px 0; }
+.ws-info li + li { border-top: 1px solid rgba(247, 244, 238, 0.18); }
+.ws-info-ic {
+  flex: none; width: 44px; height: 44px; border-radius: 50%; background-color: var(--color-accent-2);
+  color: var(--color-accent); display: flex; align-items: center; justify-content: center;
+}
+.ws-info-ic svg { display: block; width: 22px; height: 22px; }
+.ws-info-t { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.ws-info-k { font-size: 12px; font-weight: 700; line-height: 1.55; letter-spacing: 1px; text-transform: uppercase; color: var(--color-accent-2); }
+.ws-info-v { font-size: clamp(18px, 0.762vw + 15.03px, 26px); line-height: 1.3; font-weight: 500; }
+@media (min-width: 1000px) {
+  .ws-intro { padding-top: 80px; padding-bottom: 16px; flex-direction: row; align-items: center; gap: 48px; }
+  .ws-intro-text { flex: 1 1 440px; gap: 28px; }
+  .ws-teze { line-height: 1.12; }
+  .ws-hl { padding: 0 4px; }
+  .ws-slib { gap: 16px; line-height: 1.3; }
+  .ws-slib .ws-list { width: 44px; height: 44px; }
+  .ws-slib .ws-list > span { width: 16px; height: 16px; }
+  .ws-info { flex: 1 1 440px; padding: 8px 32px; border-radius: 28px; }
+  .ws-info li { gap: 20px; padding: 22px 0; }
+  .ws-info-ic { width: 56px; height: 56px; }
+  .ws-info-ic svg { width: 26px; height: 26px; }
+  .ws-info-t { gap: 4px; }
+  .ws-info-k { font-size: 13px; letter-spacing: 1.2px; }
+  .ws-info-v { line-height: 1.25; }
+}
+
+/* ───────── Ozdobný předěl ───────── */
+.ws-ornament { display: flex; align-items: center; gap: 12px; padding-top: 28px; padding-bottom: 8px; }
+.ws-ornament-2 { padding-top: 36px; }
+.ws-ornament::before, .ws-ornament::after { content: ""; flex: 1; height: 1px; background-color: var(--color-accent-2-300); }
+.ws-ornament > span { display: flex; align-items: center; gap: 6px; }
+.ws-ornament i { display: block; width: 14px; height: 14px; background-color: var(--color-accent); border-radius: 0 100%; }
+.ws-ornament i:nth-child(1), .ws-ornament i:nth-child(5) { width: 11px; height: 11px; background-color: var(--color-leaf); }
+.ws-ornament i:nth-child(1), .ws-ornament i:nth-child(4) { border-radius: 100% 0; }
+.ws-ornament i:nth-child(3) { width: 8px; height: 8px; border-radius: 50%; background-color: var(--color-highlight); }
+@media (min-width: 1000px) {
+  .ws-ornament, .ws-ornament-2 { gap: 14px; padding-top: 56px; padding-bottom: 0; }
+  .ws-ornament > span { gap: 7px; }
+  .ws-ornament i { width: 16px; height: 16px; }
+  .ws-ornament i:nth-child(1), .ws-ornament i:nth-child(5) { width: 13px; height: 13px; }
+  .ws-ornament i:nth-child(3) { width: 9px; height: 9px; }
+}
+
+/* ───────── Co si odnesete ───────── */
+.ws-odnesete { padding-top: 28px; padding-bottom: 8px; display: flex; flex-direction: column; gap: 20px; }
+.ws-odnesete .ws-h2 { font-size: clamp(34px, 1.905vw + 26.57px, 54px); letter-spacing: -0.027em; }
+.ws-karty { display: flex; flex-direction: column; gap: 14px; }
+.ws-karta {
+  min-width: 0; display: flex; flex-direction: column; gap: 10px; padding: 20px 18px; border-radius: 24px;
+  background-color: var(--color-surface);
+}
+.ws-karta-hlava { display: flex; align-items: center; gap: 12px; }
+.ws-karta-cislo {
+  flex: none; width: 40px; height: 40px; border-radius: 13px; background-color: var(--color-card);
+  display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 600; line-height: 1;
+}
+.ws-karta h3 { margin: 0; font-size: clamp(18px, 0.381vw + 16.51px, 22px); line-height: 1.35; font-weight: 600; letter-spacing: 0; }
+.ws-karta p { font-size: clamp(16px, 0.095vw + 15.63px, 17px); line-height: 1.55; }
+@media (min-width: 700px) {
+  .ws-karty { flex-direction: row; flex-wrap: wrap; align-items: stretch; gap: 20px; }
+  .ws-karta { flex: 1 1 280px; }
+}
+@media (min-width: 960px) {
+  .ws-karty { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 1000px) {
+  .ws-odnesete { padding-top: 56px; padding-bottom: 0; gap: 28px; }
+  .ws-odnesete .ws-h2 { line-height: 1.05; }
+  .ws-karty { gap: 24px; }
+  .ws-karta { flex: 1 1 300px; gap: 14px; padding: 32px 28px; border-radius: 28px; }
+  .ws-karta-hlava { gap: 14px; }
+  .ws-karta-cislo { width: 48px; height: 48px; border-radius: 15px; font-size: 19px; }
+  .ws-karta h3 { line-height: 1.3; }
+  .ws-karta p { line-height: 1.6; }
+}
+
+/* ───────── Pro koho workshop je ─────────
+   Mobil: velký nadpis a pod ním karta. Počítač: jedna karta, nadpis je v ní jako malý popisek –
+   proto má od 1000 px pozadí vnější blok a vnitřní karta se rozpustí (display: contents). */
+.ws-prokoho { padding-top: 32px; padding-bottom: 8px; }
+.ws-prokoho-box { display: flex; flex-direction: column; gap: 16px; }
+.ws-prokoho-karta { display: flex; flex-direction: column; gap: 12px; padding: 18px; border-radius: 20px; background-color: var(--color-accent-2-200); }
+.ws-prokoho-lead, .ws-prokoho-pozn { display: flex; align-items: flex-start; gap: 14px; }
+.ws-prokoho-box .ws-list { width: 32px; height: 32px; background-color: var(--color-card); }
+.ws-prokoho-box .ws-list > span { width: 12px; height: 12px; }
+.ws-prokoho-pozn .ws-list { visibility: hidden; height: 0; }
+.ws-prokoho-box p { min-width: 0; font-size: 16px; line-height: 1.55; }
+@media (min-width: 1000px) {
+  .ws-prokoho { padding-top: 24px; padding-bottom: 16px; }
+  .ws-prokoho-box {
+    display: grid; grid-template-columns: minmax(0, 508fr) minmax(0, 388fr); grid-template-areas: "h pozn" "lead pozn";
+    column-gap: 56px; row-gap: 12px; padding: 40px 44px; border-radius: 28px; background-color: var(--color-accent-2-200);
+  }
+  .ws-prokoho-karta { display: contents; }
+  .ws-prokoho-h { grid-area: h; align-self: end; font-size: 14px; line-height: 1.55; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; }
+  .ws-prokoho-lead { grid-area: lead; align-self: start; }
+  .ws-prokoho-lead .ws-list { display: none; }
+  .ws-prokoho-lead p { font-size: 22px; line-height: 1.5; }
+  .ws-prokoho-pozn { grid-area: pozn; align-self: center; gap: 16px; }
+  .ws-prokoho-pozn .ws-list { visibility: visible; width: 44px; height: 44px; }
+  .ws-prokoho-pozn .ws-list > span { width: 16px; height: 16px; }
+  .ws-prokoho-pozn p { font-size: 18px; line-height: 1.6; }
+}
+
+/* ───────── O mně ─────────
+   Mobil: nadpis, fotka, text (blok textu se rozpustí a pořadí určuje order). Počítač: fotka vlevo, text vpravo. */
+.ws-om { padding-top: 28px; padding-bottom: 8px; display: flex; flex-direction: column; gap: 14px; }
+.ws-om-text { display: contents; }
+.ws-om-text > h2 { order: 1; }
+.ws-om-text > p { order: 3; font-size: clamp(17px, 0.095vw + 16.63px, 18px); line-height: 1.6; }
+.ws-om-text > .ws-om-lead { font-size: clamp(18px, 0.19vw + 17.26px, 20px); line-height: 1.5; font-weight: 500; }
+.ws-om-foto { order: 2; margin: 4px 0 18px; }
+.ws-om-foto-box { position: relative; max-width: 480px; aspect-ratio: 350 / 270; }
+.ws-om-kruh, .ws-om-tecka { display: none; position: absolute; border-radius: 50%; }
+.ws-om-ram { position: absolute; left: 0; top: 0; right: 0; bottom: 0; border-radius: 24px; overflow: hidden; }
+.ws-om-ram img { display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: 50% 30%; }
+.ws-om-ctverec { right: 16px; bottom: -16px; width: 48px; height: 48px; border-radius: 14px; }
+.ws-om-ctverec > span { width: 20px; height: 20px; }
+@media (min-width: 1000px) {
+  .ws-om { padding-top: 56px; padding-bottom: 16px; flex-direction: row; align-items: center; gap: 56px; }
+  .ws-om-text { flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+  .ws-om-foto { order: -1; flex: 1 1 360px; display: flex; justify-content: center; margin: 0; }
+  .ws-om-foto-box { flex: none; width: 380px; max-width: none; height: 440px; aspect-ratio: auto; }
+  .ws-om-kruh { display: block; left: 0; top: 0; width: 230px; height: 230px; background-color: var(--color-accent-2-200); }
+  .ws-om-ram { left: 30px; top: 30px; right: auto; bottom: auto; width: 330px; height: 400px; border-radius: 28px; }
+  .ws-om-ram img { object-position: 50% 40%; }
+  .ws-om-ctverec { right: 0; bottom: 44px; width: 60px; height: 60px; border-radius: 16px; }
+  .ws-om-ctverec > span { width: 24px; height: 24px; }
+  .ws-om-tecka { display: block; left: 8px; bottom: 6px; width: 18px; height: 18px; background-color: var(--color-highlight); }
+}
+
+/* ───────── Přihláška ───────── */
+.ws-prihlaska {
+  position: relative; overflow: hidden; width: calc(100% - 24px); max-width: 1400px; margin: 40px auto 0;
+  padding: 32px 16px 24px; background-color: var(--color-accent-2); border-radius: 32px;
+}
+.ws-pr-d1 { right: -40px; top: -40px; width: 120px; height: 120px; border-radius: 50%; background-color: rgba(253, 251, 247, 0.4); }
+.ws-pr-d2 { display: none; left: 30px; bottom: 26px; width: 64px; height: 64px; border-radius: 0 100%; background-color: rgba(253, 251, 247, 0.45); transform: rotate(-14deg); }
+.ws-prihlaska-in { position: relative; display: flex; flex-direction: column; gap: 20px; }
+.ws-prihlaska-text { min-width: 0; display: flex; flex-direction: column; gap: 18px; padding: 0 6px; }
+.ws-kdy { display: flex; flex-direction: column; gap: 10px; }
+.ws-kdy li { display: flex; align-items: center; gap: 12px; font-size: clamp(16px, 0.571vw + 13.77px, 22px); line-height: 1.4; font-weight: 500; }
+.ws-kdy-ic {
+  flex: none; width: 34px; height: 34px; border-radius: 50%; background-color: var(--color-card);
+  color: var(--color-accent); display: flex; align-items: center; justify-content: center;
+}
+.ws-kdy-ic svg { display: block; width: 18px; height: 18px; }
+.ws-prihlaska-p { font-size: clamp(15px, 0.476vw + 13.14px, 20px); line-height: 1.55; }
+.ws-form-karta { position: relative; min-width: 0; padding: 22px 18px; border-radius: 28px; background-color: var(--color-card); }
+.ws-form { display: flex; flex-direction: column; gap: 16px; }
+.ws-pole { display: flex; flex-direction: column; gap: 6px; }
+.ws-pole label { font-size: 15px; line-height: 1.55; font-weight: 600; }
+.ws-pole label span { font-weight: 400; }
+.ws-input {
+  width: 100%; height: 50px; margin: 0; padding: 0 14px; border: 1px solid var(--color-accent-2-700); border-radius: 14px;
+  background-color: var(--color-card); color: var(--color-text); font: inherit; font-size: 16px;
+}
+.ws-input:focus-visible { outline: none; border-color: var(--color-accent); box-shadow: 0 0 0 1px var(--color-accent); }
+.ws-input:user-invalid { border-color: #9A3B2E; }
+.ws-souhlas { display: flex; align-items: flex-start; gap: 12px; }
+.ws-souhlas input { flex: none; width: 22px; height: 22px; margin: 2px 0 0; accent-color: var(--color-accent); }
+.ws-souhlas label { font-size: 15px; line-height: 1.5; }
+.ws-form-pozn { font-size: 14px; line-height: 1.5; }
+.ws-submit { width: 100%; min-height: 54px; font-size: 16px; font-weight: 600; }
+.ws-wrap .ws-form-chyba { margin-top: 14px; font-size: 14px; line-height: 1.5; color: #9A3B2E; }
+.ws-form-chyba a { color: inherit; font-weight: 600; }
+@media (min-width: 1000px) {
+  .ws-prihlaska { width: calc(100% - 48px); margin-top: 72px; padding: 64px 0; border-radius: 48px; }
+  .ws-pr-d1 { right: -60px; top: -60px; width: 200px; height: 200px; }
+  .ws-pr-d2 { display: block; }
+  .ws-prihlaska-in { max-width: 1120px; margin: 0 auto; padding: 0 40px; flex-direction: row; align-items: center; gap: 48px; }
+  .ws-prihlaska-text { flex: 1 1 340px; gap: 26px; padding: 0; }
+  .ws-kdy { gap: 16px; }
+  .ws-kdy li { gap: 16px; line-height: 1.35; }
+  .ws-kdy-ic { width: 52px; height: 52px; }
+  .ws-kdy-ic svg { width: 26px; height: 26px; }
+  .ws-prihlaska-p { line-height: 1.6; }
+  .ws-form-karta { flex: 1 1 460px; padding: 32px; }
+  .ws-form { gap: 18px; }
+  .ws-input { height: 52px; padding: 0 16px; font-size: 17px; }
+  .ws-souhlas label { font-size: 16px; }
+  .ws-form-pozn { font-size: 15px; }
+  .ws-submit { min-height: 56px; }
+}
+
+/* Kotvy: site.js posouvá na horní okraj obsahu sekce pod přilepenou hlavičku; bez JavaScriptu stačí odsazení. */
+#odnesete, #omne, #prihlaska { scroll-margin-top: 72px; }
+
+/* ───────── Patička ───────── */
+.ws-footer { margin-top: 24px; }
+@media (min-width: 1000px) { .ws-footer { margin-top: 40px; } }
+
+/* ───────── Děkovací stránka ───────── */
+.ws-dk {
+  position: relative; overflow: hidden; width: calc(100% - 24px); max-width: 560px; margin: 8px auto 0;
+  padding: 32px 18px 24px; display: flex; flex-direction: column; gap: 18px;
+  background-color: var(--color-accent-2); border-radius: 32px;
+}
+.ws-dk > :not(.ws-deco) { position: relative; }
+.ws-dk-d1 { right: -44px; top: -44px; width: 140px; height: 140px; border-radius: 50%; background-color: rgba(253, 251, 247, 0.4); }
+.ws-dk-d2 { left: -12px; bottom: 120px; width: 44px; height: 44px; border-radius: 0 100%; background-color: rgba(253, 251, 247, 0.45); transform: rotate(-12deg); }
+.ws-dk-ok {
+  width: 60px; height: 60px; border-radius: 50%; background-color: var(--color-card); color: var(--color-accent);
+  display: flex; align-items: center; justify-content: center;
+}
+.ws-dk-h1 { margin: 0; font-size: clamp(36px, 4.7vw + 17.67px, 44px); line-height: 1.05; font-weight: 400; letter-spacing: -0.033em; }
+.ws-dk-p { font-size: 17px; line-height: 1.5; }
+.ws-dk-karta { display: flex; flex-direction: column; gap: 12px; padding: 20px 18px; border-radius: 28px; background-color: var(--color-card); }
+.ws-dk-karta-nadpis { font-size: 16px; line-height: 1.55; font-weight: 600; }
+.ws-dk-btn { display: flex; min-height: 54px; padding: 0 20px; font-size: 16px; font-weight: 600; text-align: center; }
+.ws-dk-adresa { font-size: 14px; line-height: 1.55; text-align: center; overflow-wrap: anywhere; }
+.ws-dk-p2 { font-size: 16px; line-height: 1.5; }
+.ws-dk-obrys {
+  display: flex; align-items: center; justify-content: center; min-height: 54px; padding: 0 20px;
+  border: 1.5px solid var(--color-accent); border-radius: 999px; color: var(--color-accent);
+  font-size: 16px; line-height: 1.2; font-weight: 600; text-align: center; text-decoration: none;
+  transition: background-color .15s ease;
+}
+.ws-dk-obrys:hover, .ws-dk-obrys:focus-visible { background-color: rgba(37, 79, 68, 0.08); color: var(--color-accent); }
+.ws-dk-zpet { padding: 22px 20px 0; text-align: center; font-size: 14px; }
+@media (min-width: 700px) {
+  .ws-dk { margin-top: 24px; padding: 40px 32px 32px; border-radius: 40px; }
+  .ws-dk-karta { padding: 24px; }
+}
+
+@media print {
+  .ws-deco { display: none; }
+}

@@ -38,6 +38,8 @@ Nastavení v administraci Netlify (web `nutrivero-nahled`) – hotovo:
 
 1. **Forms → Enable form detection** (formuláře se hledají při nasazení).
 2. **Forms → Form notifications → Email notification** → formulář `kontakt`, adresa `info@nutrivero.cz`.
+   **Zbývá po prvním nasazení stránky workshopu:** přidat stejné upozornění pro formulář `workshop`
+   (přihlášky na workshop ze stránky `/workshop/`, viz `_src/README.md`, část Workshop).
 3. **Domain management:** hlavní doména `nutrivero.cz`, alias `www.nutrivero.cz`, certifikát Let's Encrypt.
 
 Odeslané zprávy z formuláře: administrace Netlify → web → **Forms → kontakt** (mazat do 30 dnů od vyřízení

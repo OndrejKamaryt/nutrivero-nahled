@@ -8,7 +8,9 @@ Thumbs.db
 desktop.ini
 .DS_Store
 # Exporty návrhu z Claude Design (velké, s vloženými fotkami) – necommitovat
-/Nutrivero web*.html
+/Nutrivero*.html
+# Podklady od majitelky v PDF (např. nové znění zásad) – necommitovat
+/*.pdf
 # Netlify CLI (netlify link / deploy) – lokální stav
 .netlify/
 # Právní podklady ve Wordu (pracovní verze) – necommitovat
