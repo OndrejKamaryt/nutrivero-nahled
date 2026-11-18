@@ -159,8 +159,8 @@ Odeslané zprávy najdete v administraci Netlify: web → **Forms** → **kontak
 ### Workshop (stránka /workshop/, formulář „workshop“)
 
 Od 10. 11. 2026 má web stránku workshopu podle návrhu majitelky „Nutrivero workshop na webu“ (mobil 390 px,
-počítač 1440 px). Vede na ni položka **Webináře** v menu (hlavní stránka, podstránky i stránka 404) a pruh
-nad hlavičkou hlavní stránky.
+počítač 1440 px). Vede na ni položka **Webináře** v menu (hlavní stránka, podstránky i stránka 404); pruh
+nad hlavičkou hlavní stránky byl 18. 11. 2026 odstraněn.
 
 - Zdroje: `_src/workshop.html` → `/workshop/` (indexovatelná, je v sitemap), `_src/workshop-dekujeme.html` →
   `/workshop/dekujeme/` (`noindex`, není v sitemap), styl `site/assets/css/workshop.css`, obsluha formuláře a pruhu
@@ -180,9 +180,10 @@ nad hlavičkou hlavní stránky.
   ji uvidí každý, kdo zná její adresu.
 - **Měření:** úspěšná přihláška pošle signál `nv:registration` → se souhlasem GA `sign_up` a Meta
   `CompleteRegistration` (bez údajů z formuláře). Bez JavaScriptu se neměří.
-- **Pruh na hlavní stránce** (`<aside class="ws-pruh">` v `_src/index.html`, styl v `site.css`): atribut
-  `data-skryt-po` je konec akce (ISO 8601 s časovým pásmem); po něm ho `site.js` skryje a build na prošlý termín
-  upozorní. Po akci pruh odstraňte nebo přepište na další termín.
+- **Pruh na hlavní stránce** byl 18. 11. 2026 z `_src/index.html` odstraněn. Styl `.ws-pruh` v `site.css`
+  a obsluha `data-skryt-po` v `site.js` zůstaly, pro další akci stačí vrátit `<aside class="ws-pruh">` nad hlavičku
+  (předlohu najdete v historii gitu, commit f321359). Atribut `data-skryt-po` je konec akce (ISO 8601 s časovým
+  pásmem); po něm pruh `site.js` skryje a build na prošlý termín upozorní.
 - **Nový termín nebo jiná akce** – termín a název jsou v textu na více místech (hledejte `19.`):
   `_src/workshop.html` (title, description, og/twitter, JSON-LD `Event`, úvodní pás, karta Kdy / Kde / Jak dlouho,
   blok Přihláška, skryté pole `akce`), `_src/workshop-dekujeme.html` (termín, odkaz na Meet dvakrát, odkaz do
